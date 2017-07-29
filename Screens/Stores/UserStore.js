@@ -5,7 +5,7 @@ class  UserStore{
   @observable userName = ""
   @observable tradeToken = ""
   @observable yodleeToken = ""
-  @observable profile = ""
+  @observable sectorPref = 0
 
   getUserName(){
     return this.userName;
@@ -31,16 +31,14 @@ class  UserStore{
     this.tradeToken = token;
   }
 
-  setProfile(profile){
-    this.profile = profile;
+  setSectorPref(sectorNum){
+    this.sectorPref = sectorNum
   }
-
-  getProfile(){
-    return this.profile;
+  getSectorPref(){
+    return this.sectorPref
   }
-
 }
 
-var store = new UserStore()
+var User = new UserStore()
 
-export default store
+export default User

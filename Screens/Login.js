@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
-import store from "./Stores/UserStore"
+import User from "./Stores/UserStore"
 
 
 /******************************************************************************/
@@ -73,13 +73,13 @@ export class LoginScreen extends React.Component {
             {
                 const { navigate } = this.props.navigation;
                 console.log("---- LOGIN SUCCESSFUL ----");
-                store.setUserName(userNameInput);
-                store.setYodleeToken(responseData.yodleeToken);
+                User.setUserName(userNameInput);
+                User.setYodleeToken(responseData.yodleeToken);
                 navigate('Home');
             }
             else if (responseData.error == true) //Success, allow used in
             {
-                console.log("---- INVALID LOGIN ----");
+                console.log("---- LOGIN FAILED ----");
                 console.log(responseData);
                 Alert.alert(
                     JSON.stringify(responseData.messages))
@@ -87,6 +87,7 @@ export class LoginScreen extends React.Component {
             else
             {
               console.log("---- UNKOWN ERROR ----");
+              console.log(responseData);
             }
         })
 

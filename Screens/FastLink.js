@@ -19,18 +19,8 @@ export class FastLink extends React.Component {
   render() {
     return (
         <View>
-            
-            <View>
-                <Image source={require('../objects/TechCliksLogo.png')} />
-            </View>
-            
-            <View>
-                <Text>
-                    FastLink
-                </Text>
-            </View>
+        <Text>EMPTY</Text>
         </View>
     );
   }
 }
-

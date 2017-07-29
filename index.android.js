@@ -16,7 +16,8 @@ import { ForgotScreen } from './Screens/Forgot';
 import { FastLink } from './Screens/FastLink';
 import { TransactionScreen } from './Screens/Transactions'
 import { ProfileScreen } from './Screens/Profile';
-import store from './Screens/Stores/UserStore'
+import { StocksScreen } from './Screens/Stocks';
+
 
 /******************************************************************************/
 // Default class
@@ -53,6 +54,7 @@ const TradeLife = StackNavigator(
   FastLink: {screen: FastLink},
   Transact: {screen: TransactionScreen},
   Profile: {screen: ProfileScreen},
+  Stocks: { screen: StocksScreen },
 },
 navigationOptions =
 {
