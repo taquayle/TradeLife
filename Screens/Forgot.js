@@ -19,30 +19,30 @@ export class ForgotScreen extends React.Component {
   render() {
       const { navigate } = this.props.navigation;
     return (
-        
+
         <View style={logStyle.wrapper}>
-            
+
             <View style={logStyle.logTop}>
-                <Image source={require('../objects/TechCliksLogo.png')} />
+                <Image source={require('./Images/TechCliksLogo.png')} />
             </View>
-            
+
             <View style={logStyle.logBot}>
                 <View style={logStyle.formWrapper}>
-                    
+
                     {/* Username Field */}
                     <View style={logStyle.inputWrapper}>
-                        <TextInput 
+                        <TextInput
                             placeholder="E-Mail"
                             style={logStyle.input}
                             underlineColorAndroid="transparent"
                         />
                     </View>
-                    
+
                     {/* Submit Button */}
                     <TouchableOpacity activeOpacity={.5}
                      onPress={() => navigate('Login')}>
                         <View style={regStyle.loginButton} >
-                            <Text style={regStyle.LoginText}> 
+                            <Text style={regStyle.LoginText}>
                                 Submit
                             </Text>
                         </View>
@@ -52,16 +52,15 @@ export class ForgotScreen extends React.Component {
                     <TouchableOpacity activeOpacity={.5}
                     onPress={() => navigate('Login')}>
                         <View style={regStyle.registerButton} >
-                            <Text style={regStyle.LoginText}> 
+                            <Text style={regStyle.LoginText}>
                                 Go Back
                             </Text>
                         </View>
                     </TouchableOpacity>
-                    
+
                 </View>
             </View>
         </View>
     );
   }
 }
-

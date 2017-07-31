@@ -18,80 +18,35 @@ import {
 import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
+import Server from "./Stores/TradeLifeStore"
 
 
 /******************************************************************************/
-// Login Screen Form
+// Login Loading Screen
 @observer
 export class LoginScreen extends React.Component {
+
+    componentDidMount()
+    {
+      User.setError("")
+
+    }
     constructor(props)
     {
         super(props);
-        this.state = {  uName: "sbMemtaquayle1", //REMOVE THESE HARDCODED FIELDS
+        this.state = {  uName: User.getUserName(),
                         pWord: "sbMemtaquayle1#123",
-                        jsonData: ''};
+                        errMsg: User.getError()};
     }
 
     /**************************************************************************/
     // Login logic
     _onSubmit() // Attempt to login.
     {
-        let userNameInput = this.state.uName;
-        let passWordInput = this.state.pWord;
-
-        console.log("---- ATTEMPTING LOGIN ----");
-        fetch('http://192.168.33.10/login',
-        {
-            method: 'post',
-            headers:
-            {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify(
-            {
-                userName:userNameInput,
-                userPassword:passWordInput
-            })
-        })
-
-        .then((response) => {
-          // In this case, we check the content-type of the response
-          if (response.headers.get('content-type').match(/application\/json/)) {
-            return response.json();
-          }
-          return response.text();
-          })
-         .catch((error) =>
-         {
-             console.log(error);
-             (response) => response.text();
-         })
-        .then((responseData) =>
-        {
-            if (responseData.error == false) //Success, allow used in
-            {
-                const { navigate } = this.props.navigation;
-                console.log("---- LOGIN SUCCESSFUL ----");
-                User.setUserName(userNameInput);
-                User.setYodleeToken(responseData.yodleeToken);
-                navigate('Home');
-            }
-            else if (responseData.error == true) //Success, allow used in
-            {
-                console.log("---- LOGIN FAILED ----");
-                console.log(responseData);
-                Alert.alert(
-                    JSON.stringify(responseData.messages))
-            }
-            else
-            {
-              console.log("---- UNKOWN ERROR ----");
-              console.log(responseData);
-            }
-        })
-
-        .done();
+      const { navigate } = this.props.navigation;
+      User.setUserName(this.state.uName)
+      User.setUserPass(this.state.pWord)
+      navigate('LoginLoading');
     }
 
     render() {
@@ -100,18 +55,22 @@ export class LoginScreen extends React.Component {
             /******************************************************************/
             // Textinput and buttons
             <View style={logStyle.wrapper}>
-
                 <View style={logStyle.logTop}>
-                    <Image source={require('../objects/TechCliksLogo.png')} />
+                    <Image source={require('./Images/TechCliksLogo.png')} />
                 </View>
 
                 <View style={logStyle.logBot}>
                     <View style={logStyle.formWrapper}>
 
+                        {/* Show Login Errors*/}
+                        <Text style={logStyle.errorText}>
+                          {this.state.errMsg}
+                        </Text>
+
                         {/* Username Field */}
                         <View style={logStyle.inputWrapper}>
                             <TextInput
-                                placeholder="Username"
+                                placeholder={this.state.uName}
                                 style={logStyle.input}
                                 underlineColorAndroid="transparent"
                                 onChangeText={(uName) => this.setState({uName})}
@@ -121,7 +80,7 @@ export class LoginScreen extends React.Component {
                         {/* Password Field */}
                         <View style={logStyle.inputWrapper}>
                             <TextInput
-                                placeholder="Password"
+                                placeholder={"Password"}
                                 secureTextEntry={true}
                                 style={logStyle.input}
                                 underlineColorAndroid="transparent"
@@ -169,6 +128,14 @@ export class LoginScreen extends React.Component {
 /******************************************************************************/
 // Style Sheet
 logStyle = StyleSheet.create({
+    errorText:{
+      color: '#ff0000',
+      fontSize: 15
+    },
+    backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover', // or 'stretch'
+    },
     wrapper:{
         flex: 1,
         justifyContent: 'center'
@@ -225,5 +192,3 @@ logStyle = StyleSheet.create({
         textAlign: 'center'
     }
 })
-
-//AppRegistry.registerComponent('LoginScreen', () => LoginScreen);

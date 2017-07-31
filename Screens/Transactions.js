@@ -68,16 +68,22 @@ export class TransactionScreen extends React.Component {
   }
   render() {
     return (
-      <View>
-      {/* Login Button */}
-      <TouchableOpacity activeOpacity={.5}
-      onPress={this._onSubmit.bind(this)}>
-          <View style={logStyle.loginButton} >
-              <Text style={logStyle.LoginText}>
-                  Get Transactions
-              </Text>
-          </View>
-      </TouchableOpacity>
+      <View style={homeStyle.wrapper}>
+        <View style={homeStyle.homeTop}>
+            <Image source={require('./Images/TechCliksLogo.png')} />
+        </View>
+
+        <View style={homeStyle.homeBot}>
+          {/* Login Button */}
+          <TouchableOpacity activeOpacity={.5}
+          onPress={this._onSubmit.bind(this)}>
+              <View style={logStyle.loginButton} >
+                  <Text style={logStyle.LoginText}>
+                      Update
+                  </Text>
+              </View>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }

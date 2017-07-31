@@ -93,7 +93,7 @@ export class RegisterScreen extends React.Component {
         <View style={regStyle.wrapper}>
 
             <View style={regStyle.logTop}>
-                <Image source={require('../objects/TechCliksLogo.png')} />
+                <Image source={require('./Images/TechCliksLogo.png')} />
             </View>
 
             <View style={regStyle.logBot}>

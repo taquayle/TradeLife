@@ -3,6 +3,7 @@ import {observable } from "mobx";
 class  ProfileStore{
 
   @observable userName = ""
+  @observable profileExists = false;
   @observable desc_key = {}
   @observable cate_key = {}
   @observable cap_stocks = {}
@@ -15,8 +16,11 @@ class  ProfileStore{
     this.setCapStocks(profile['Target_Companies']['Cap']);
     this.setDisruptiveStocks(profile['Target_Companies']['Disruptive']);
     this.setTargetSectors(profile['Target_Sectors']['Sectors']);
+    this.profileExists = true;
   }
-
+  exists(){
+    return this.profileExists;
+  }
   getDescKeys(){
     return this.desc_key;
   }

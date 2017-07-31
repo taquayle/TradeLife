@@ -15,8 +15,10 @@ import { HomeScreen } from './Screens/Home';
 import { ForgotScreen } from './Screens/Forgot';
 import { FastLink } from './Screens/FastLink';
 import { TransactionScreen } from './Screens/Transactions'
-import { ProfileScreen } from './Screens/Profile';
+import { ProfileStocksScreen } from './Screens/Profile_Stocks';
 import { StocksScreen } from './Screens/Stocks';
+import { LoginLoadingScreen } from './Screens/Loading/LoginLoading'
+import { ProfileLoadingScreen } from './Screens/Loading/ProfileLoading'
 
 
 /******************************************************************************/
@@ -36,7 +38,7 @@ export default class SplashScreen extends React.Component {
   render() {
     return (
       <View style = {styles.splashScreen}>
-        <Image source={require('./objects/TechCliksLogo.png')}/>
+        <Image source={require('./Screens/Images/TechCliksLogo.png')}/>
       </View>
     );
   }
@@ -53,8 +55,10 @@ const TradeLife = StackNavigator(
   Forgot: {screen: ForgotScreen},
   FastLink: {screen: FastLink},
   Transact: {screen: TransactionScreen},
-  Profile: {screen: ProfileScreen},
+  ProfileStocks: {screen: ProfileStocksScreen},
   Stocks: { screen: StocksScreen },
+  LoginLoading: {screen: LoginLoadingScreen},
+  ProfileLoading: {screen: ProfileLoadingScreen},
 },
 navigationOptions =
 {

@@ -2,10 +2,12 @@ import {observable } from "mobx";
 
 class  UserStore{
 
-  @observable userName = ""
+  @observable userName = "sbMemtaquayle1"
+  @observable userPass = "Password"
   @observable tradeToken = ""
   @observable yodleeToken = ""
   @observable sectorPref = 0
+  @observable error = ""
 
   getUserName(){
     return this.userName;
@@ -15,6 +17,13 @@ class  UserStore{
     this.userName = name;
   }
 
+  setUserPass(pass){
+    this.userPass = pass
+  }
+
+  getUserPass(){
+    return this.userPass
+  }
   getYodleeToken(){
     return this.yodleeToken;
   }
@@ -34,9 +43,19 @@ class  UserStore{
   setSectorPref(sectorNum){
     this.sectorPref = sectorNum
   }
+
   getSectorPref(){
     return this.sectorPref
   }
+
+  setError(error){
+    this.error = error
+  }
+
+  getError(error){
+    return this.error
+  }
+
 }
 
 var User = new UserStore()
