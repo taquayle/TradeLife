@@ -18,7 +18,7 @@ import {observer} from "mobx-react";
 import { toJS } from 'mobx';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
-//import { Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
 @observer
 export class ProfileStocksScreen extends React.Component {
@@ -57,7 +57,13 @@ export class ProfileStocksScreen extends React.Component {
 
           <View style={profileStyle.profileContainer1}>
             <Text style={profileStyle.profileText1}>Stocks for: {User.getUserName()}</Text>
-            {/* Login Button */}
+            <Button
+  raised
+  icon={{name: 'home', size: 32}}
+  buttonStyle={{backgroundColor: 'red', borderRadius: 10}}
+  textStyle={{textAlign: 'center'}}
+  title={`Welcome to\nReact Native Elements`}
+/>
           </View>
 
 

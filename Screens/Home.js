@@ -7,7 +7,6 @@ import {
   AppRegistry,
   Text,
   View,
-  Button,
   StyleSheet,
   Image,
   TextInput,
@@ -17,7 +16,7 @@ import {
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
-
+import { Button } from 'react-native-elements';
 
 export class HomeScreen extends React.Component {
   constructor(props)
@@ -49,51 +48,51 @@ export class HomeScreen extends React.Component {
   render() {
       const { navigate } = this.props.navigation;
     return (
-        <View style={homeStyle.wrapper}>
 
+        <View style={homeStyle.wrapper}>
             <View style={homeStyle.homeTop}>
                 <Image source={require('./Images/TechCliksLogo.png')} />
             </View>
 
             <View style={homeStyle.homeBot}>
+              <Button
+                raised
+                icon={{name: 'room', size: 32}}
+                buttonStyle={{backgroundColor: 'red', borderRadius: 10}}
+                textStyle={{textAlign: 'center'}}
+                title={`Stocks`}
+                onPress={this._onProfileStockClick.bind(this)}
+              />
 
-                <TouchableOpacity activeOpacity={.5}
-                onPress={this._onProfileStockClick.bind(this)}>
-                    <View style={homeStyle.button} >
-                        <Text style={homeStyle.LoginText}>
-                            Stocks
-                        </Text>
-                    </View>
-                </TouchableOpacity>
 
-                <TouchableOpacity activeOpacity={.5}
-                onPress={this._onProfileKeywordClick.bind(this)}>
-                    <View style={homeStyle.button} >
-                        <Text style={homeStyle.LoginText}>
-                            Keywords
-                        </Text>
-                    </View>
-                </TouchableOpacity>
+              <Button
+                raised
+                icon={{name: 'room', size: 32}}
+                buttonStyle={{backgroundColor: 'blue', borderRadius: 10}}
+                textStyle={{textAlign: 'center'}}
+                title={`Keywords`}
+                onPress={this._onProfileStockClick.bind(this)}
+              />
 
-                {/* Register Button */}
-                <TouchableOpacity activeOpacity={.5}
-                onPress={() => navigate('Transact')}>
-                    <View style={homeStyle.button} >
-                        <Text style={homeStyle.LoginText}>
-                            Update Transactions
-                        </Text>
-                    </View>
-                </TouchableOpacity>
 
-                {/* Register Button */}
-                <TouchableOpacity activeOpacity={.5}
-                onPress={() => navigate('FastLink')}>
-                    <View style={homeStyle.button} >
-                        <Text style={homeStyle.LoginText}>
-                            FastLink, not implemented
-                        </Text>
-                    </View>
-                </TouchableOpacity>
+              <Button
+                raised
+                icon={{name: 'room', size: 32}}
+                buttonStyle={{backgroundColor: 'green', borderRadius: 10}}
+                textStyle={{textAlign: 'center'}}
+                title={`Transactions`}
+                onPress={() => navigate('Transact')}
+              />
+
+              <Button
+                raised
+                icon={{name: 'room', size: 32}}
+                buttonStyle={{backgroundColor: 'orange', borderRadius: 10}}
+                textStyle={{textAlign: 'center'}}
+                title={`FastLink`}
+                onPress={() => navigate('FastLink')}
+              />
+
             </View>
         </View>
     );
@@ -101,18 +100,17 @@ export class HomeScreen extends React.Component {
 }
 
 homeStyle = StyleSheet.create({
-
     wrapper:{
         flex: 1,
-        backgroundColor: '#000000'
+          backgroundColor: '#ffffff'
     },
     homeTop:{
         flex: 1,
-        backgroundColor: '#000000', //Black
+        backgroundColor: '#ffffff', //Black
     },
     homeBot:{
         flex: 2,
-        backgroundColor: '#000000', //Black
+        backgroundColor: '#ffffff', //Black
         flexDirection: 'column'
     },
     homeText:{
