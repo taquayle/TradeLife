@@ -5,8 +5,8 @@
 import React from 'react';
 import {
   AppRegistry,
-  Text,
   View,
+  Text,
   StyleSheet,
   Image,
   TextInput,
@@ -17,8 +17,8 @@ import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import { Card, ListItem, Button, List } from 'react-native-elements';
 
-export class StocksScreen extends React.Component {
 
+export class StocksScreen extends React.Component {
   render() {
     var stocks = Profile.getCapStocks();
     var sectorTitle = Object.values(Profile.getTargetSectors())
@@ -40,7 +40,7 @@ export class StocksScreen extends React.Component {
                 title={company['name']}
                 rightTitle={company['symbol']}
                 subtitleNumberOfLines={2}
-                subtitle={<Text>{'\t'} Cap: ${company['cap']}{'\n\t\t'}Price: ${company['price']}</Text>}
+                subtitle={<Text>{'\t\t'}Cap: ${company['cap']}{'\n\t\t'}Price: ${company['price']}</Text>}
               />
             ))
           }
@@ -52,6 +52,12 @@ export class StocksScreen extends React.Component {
 }
 
 oneStyle = StyleSheet.create({
+  container: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#f7f7f7',
+},
     oneWrapper:{
         flex: 1,
         backgroundColor:"#FFFFFF"

@@ -89,8 +89,6 @@ export class LoginLoadingScreen extends React.Component {
             navigate('Login');
           }
       })
-
-      .done();
   }
 
   getUserProfile()
@@ -146,7 +144,6 @@ export class LoginLoadingScreen extends React.Component {
         }
     })
 
-    .done();
   }
 
   render() {

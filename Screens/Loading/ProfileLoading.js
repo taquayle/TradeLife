@@ -86,8 +86,6 @@ export class ProfileLoadingScreen extends React.Component {
           console.log(responseData);
         }
     })
-
-    .done();
   }
 
 
