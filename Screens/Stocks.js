@@ -7,7 +7,6 @@ import {
   AppRegistry,
   Text,
   View,
-  Button,
   StyleSheet,
   Image,
   TextInput,
@@ -16,40 +15,38 @@ import {
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
+import { Card, ListItem, Button, List } from 'react-native-elements';
 
 export class StocksScreen extends React.Component {
-  showCompanies(input, secNum){
-    console.log("--- Companies ---")
-    console.log(input)
 
-
-    var arr = Object.values(input);
-
-    console.log(arr)
-
-    var sectorArr = Object.values(arr[secNum]);
-    return sectorArr.map(function(word, i){
-        return(<Text key={i}>
-          {i+1}. {word['name']}
-          {'\n'}      Symbol: {word['symbol']} 
-          {'\n'}      Market Cap: ${word['cap']} Million
-          {'\n'}      Trading At: ${word['price']}
-          {'\n\n'}
-          </Text>)
-    });
-  }
   render() {
-    var sector = Object.values(Profile.getTargetSectors())
+    var stocks = Profile.getCapStocks();
+    var sectorTitle = Object.values(Profile.getTargetSectors())
+    var stocksArray = Object.values(stocks)
+    var sector = Object.values(stocksArray[User.getSectorPref()])
     return (
-        <View style={oneStyle.oneWrapper}>
-          <View style={oneStyle.oneTop}>
-          <Text style={oneStyle.profileTextTitle}>{sector[User.getSectorPref()]} STOCKS</Text>
-          </View>
+      <View style={oneStyle.oneWrapper}>
 
-          <View style={oneStyle.oneBot}>
-          <Text style={oneStyle.profileText}>{this.showCompanies(Profile.getCapStocks(), User.getSectorPref())}</Text>
-          </View>
+        <View style={oneStyle.oneTop}>
+          <Text style={oneStyle.title}>{sectorTitle[User.getSectorPref()]} STOCKS</Text>
         </View>
+
+        <View style={oneStyle.oneBot}>
+          <List>
+          {
+            sector.map((company, i) => (
+              <ListItem
+                key={i}
+                title={company['name']}
+                rightTitle={company['symbol']}
+                subtitleNumberOfLines={2}
+                subtitle={<Text>{'\t'} Cap: ${company['cap']}{'\n\t\t'}Price: ${company['price']}</Text>}
+              />
+            ))
+          }
+          </List>
+        </View>
+      </View>
     );
   }
 }
@@ -57,32 +54,23 @@ export class StocksScreen extends React.Component {
 oneStyle = StyleSheet.create({
     oneWrapper:{
         flex: 1,
-        backgroundColor:"#000000"
+        backgroundColor:"#FFFFFF"
     },
     oneTop:{
       flex:.5,
-      backgroundColor:"#000000"
+      backgroundColor:"#FFFFFF"
     },
     oneBot:{
       flex:2,
-      backgroundColor:"#002613"
+      backgroundColor:"#FFFFFF"
     },
 
-    profileTextTitle:{
-        color: '#ffffff',
+    title:{
+        color: '#000000',
         fontSize: 30,
     },
     profileText:{
         color: '#00763A',
         fontSize: 20,
-    },
-    profileButton:{
-        backgroundColor: "#16608B",
-        paddingVertical: 10,
-        marginVertical: 30,
-        paddingHorizontal: 20,
-        marginHorizontal: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
     },
 })

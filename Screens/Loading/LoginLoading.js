@@ -59,7 +59,13 @@ export class LoginLoadingScreen extends React.Component {
        })
       .then((responseData) =>
       {
-          if (responseData.error == false) //Success, allow used in
+
+          if(responseData == null){
+            console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
+              User.setError("Could not connect to server")
+              navigate('Login')
+          }
+          else if (responseData.error == false) //Success, allow used in
           {
               console.log("---- LOGIN SUCCESSFUL ----");
               User.setYodleeToken(responseData.yodleeToken);
@@ -119,6 +125,7 @@ export class LoginLoadingScreen extends React.Component {
 
     .then((responseData) =>
     {
+
         if (responseData.error == false) //Success move on
         {
             const { navigate } = this.props.navigation;
@@ -148,14 +155,14 @@ export class LoginLoadingScreen extends React.Component {
         <View style={loading.bg, loading.wrapper}>
 
             <View style={loading.bg, loading.topWrap}>
-                <Image source={require('../Images/TechCliksLogo.png')} />
+                <Image style={loading.logo} source={require('../Images/TradeLife.png')} />
             </View>
 
             <View style={loading.bg, loading.midWrap}>
 
             <View style={loading.bg, loading.activityWrap}>
               <ActivityIndicator
-                color="#FFFFFF"
+                color="#000000"
                 style={[loading.bg, {transform: [{scale: 5.5}]}]}
               />
             </View>
@@ -174,18 +181,24 @@ export class LoginLoadingScreen extends React.Component {
 }
 
 loading = StyleSheet.create({
+    logo:{
+      resizeMode: 'contain',
+      height: 45,
+      backgroundColor: 'transparent'
+    },
     bg:{
-      backgroundColor: '#000000', //Black
+      backgroundColor: '#FFFFFF', //Black
     },
     centering: {
       flex: 2,
     },
     wrapper:{
         flex: 1,
-        backgroundColor: '#000000', //Black
+        backgroundColor: '#FFFFFF', //Black
     },
     topWrap:{
         flex: 1,
+        alignItems:'center'
     },
     midWrap:{
         flex: 2,
@@ -204,8 +217,9 @@ loading = StyleSheet.create({
         flex: 2,
     },
     loadingText:{
-        color: '#ffffff',
+        color: '#000000',
         fontSize: 20,
-        alignItems: 'center'
+        alignItems: 'center',
+        fontFamily:'monospace'
     },
 })

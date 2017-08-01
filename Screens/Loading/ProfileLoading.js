@@ -97,14 +97,14 @@ export class ProfileLoadingScreen extends React.Component {
         <View style={loading.bg, loading.wrapper}>
 
             <View style={loading.bg, loading.topWrap}>
-                <Image source={require('../Images/TechCliksLogo.png')} />
+                <Image style={loading.logo} source={require('../Images/TradeLife.png')} />
             </View>
 
             <View style={loading.bg, loading.midWrap}>
 
             <View style={loading.bg, loading.activityWrap}>
               <ActivityIndicator
-                color="#FFFFFF"
+                color="#000000"
                 style={[loading.bg, {transform: [{scale: 5.5}]}]}
               />
             </View>

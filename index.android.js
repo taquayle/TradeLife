@@ -38,7 +38,7 @@ export default class SplashScreen extends React.Component {
   render() {
     return (
       <View style = {styles.splashScreen}>
-        <Image source={require('./Screens/Images/TechCliksLogo.png')}/>
+        <Image source={require('./Screens/Images/TradeLife.png')} style={styles.logo}/>
       </View>
     );
   }
@@ -70,10 +70,15 @@ navigationOptions =
 styles = StyleSheet.create({
   splashScreen:{
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center'
   },
+  logo:{
+    resizeMode: 'contain',
+    height: 45,
+    backgroundColor: 'transparent'
+  }
 })
 
 

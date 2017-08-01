@@ -51,14 +51,18 @@ export class HomeScreen extends React.Component {
 
         <View style={homeStyle.wrapper}>
             <View style={homeStyle.homeTop}>
-                <Image source={require('./Images/TechCliksLogo.png')} />
+
+
+                  <Image source={require('./Images/TradeLife.png')} style={homeStyle.logo}/>
+
             </View>
 
             <View style={homeStyle.homeBot}>
+
               <Button
-                raised
+                large
                 icon={{name: 'room', size: 32}}
-                buttonStyle={{backgroundColor: 'red', borderRadius: 10}}
+                buttonStyle={{backgroundColor: 'red', borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
                 title={`Stocks`}
                 onPress={this._onProfileStockClick.bind(this)}
@@ -66,9 +70,9 @@ export class HomeScreen extends React.Component {
 
 
               <Button
-                raised
+                large
                 icon={{name: 'room', size: 32}}
-                buttonStyle={{backgroundColor: 'blue', borderRadius: 10}}
+                buttonStyle={{backgroundColor: 'blue', borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
                 title={`Keywords`}
                 onPress={this._onProfileStockClick.bind(this)}
@@ -76,23 +80,22 @@ export class HomeScreen extends React.Component {
 
 
               <Button
-                raised
+                large
                 icon={{name: 'room', size: 32}}
-                buttonStyle={{backgroundColor: 'green', borderRadius: 10}}
+                buttonStyle={{backgroundColor: 'green', borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
                 title={`Transactions`}
                 onPress={() => navigate('Transact')}
               />
 
               <Button
-                raised
+                large
                 icon={{name: 'room', size: 32}}
-                buttonStyle={{backgroundColor: 'orange', borderRadius: 10}}
+                buttonStyle={{backgroundColor: 'orange', borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
                 title={`FastLink`}
                 onPress={() => navigate('FastLink')}
               />
-
             </View>
         </View>
     );
@@ -100,6 +103,12 @@ export class HomeScreen extends React.Component {
 }
 
 homeStyle = StyleSheet.create({
+    logo:{
+      resizeMode: 'contain',
+      height: 25,
+      backgroundColor: 'transparent',
+
+    },
     wrapper:{
         flex: 1,
           backgroundColor: '#ffffff'
@@ -107,18 +116,27 @@ homeStyle = StyleSheet.create({
     homeTop:{
         flex: 1,
         backgroundColor: '#ffffff', //Black
+
+        alignItems: 'center'
     },
     homeBot:{
         flex: 2,
         backgroundColor: '#ffffff', //Black
-        flexDirection: 'column'
+
     },
     homeText:{
         color: '#ffffff',
         fontSize: 30,
     },
-    homeCont:{
-      flex: 1,
+    container1:{
+      flex: 2,
+      alignItems:'flex-start',
+      backgroundColor: "#00ff00"
+    },
+    container2:{
+      flex: 2,
+      alignItems:'flex-start',
+      backgroundColor: "#0000ff"
     },
     button:{
         backgroundColor: "#16608B",

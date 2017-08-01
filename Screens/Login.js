@@ -7,7 +7,6 @@ import {
   AppRegistry,
   Text,
   View,
-  Button,
   StyleSheet,
   Image,
   TextInput,
@@ -19,7 +18,12 @@ import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Server from "./Stores/TradeLifeStore"
-
+import {
+    Button,
+    FormInput,
+    FormLabel,
+    FormValidationMessage
+  } from 'react-native-elements';
 
 /******************************************************************************/
 // Login Loading Screen
@@ -44,8 +48,10 @@ export class LoginScreen extends React.Component {
     _onSubmit() // Attempt to login.
     {
       const { navigate } = this.props.navigation;
-      User.setUserName(this.state.uName)
-      User.setUserPass(this.state.pWord)
+      //User.setUserName(this.state.uName)
+      User.setUserName("sbMemtaquayle1")
+      //User.setUserPass(this.state.pWord)
+      User.setUserPass("sbMemtaquayle1#123")
       navigate('LoginLoading');
     }
 
@@ -56,69 +62,51 @@ export class LoginScreen extends React.Component {
             // Textinput and buttons
             <View style={logStyle.wrapper}>
                 <View style={logStyle.logTop}>
-                    <Image source={require('./Images/TechCliksLogo.png')} />
+                    <Image source={require('./Images/TradeLife.png')} style={logStyle.logo}/>
                 </View>
 
                 <View style={logStyle.logBot}>
                     <View style={logStyle.formWrapper}>
 
-                        {/* Show Login Errors*/}
-                        <Text style={logStyle.errorText}>
-                          {this.state.errMsg}
-                        </Text>
 
+                        <FormValidationMessage>{this.state.errMsg}</FormValidationMessage>
                         {/* Username Field */}
-                        <View style={logStyle.inputWrapper}>
-                            <TextInput
-                                placeholder={this.state.uName}
-                                style={logStyle.input}
-                                underlineColorAndroid="transparent"
-                                onChangeText={(uName) => this.setState({uName})}
-                            />
-                        </View>
-
+                        <FormLabel fontFamily = 'monospace'>USERNAME</FormLabel>
+                        <FormInput onChangeText={(uName) => this.setState({uName})}/>
                         {/* Password Field */}
-                        <View style={logStyle.inputWrapper}>
-                            <TextInput
-                                placeholder={"Password"}
-                                secureTextEntry={true}
-                                style={logStyle.input}
-                                underlineColorAndroid="transparent"
-                                onChangeText={(pWord) => this.setState({pWord})}
-                            />
-                        </View>
+                        <FormLabel fontFamily = 'monospace'>PASSWORD</FormLabel>
+                        <FormInput onChangeText={(pWord) => this.setState({pWord})}/>
+                    </View>
+
 
                         {/* Login Button */}
-                        <TouchableOpacity activeOpacity={.5}
-                        onPress={this._onSubmit.bind(this)}>
-                            <View style={logStyle.loginButton} >
-                                <Text style={logStyle.LoginText}>
-                                    Sign In
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                        <Button
+                          large
+                          icon={{name: 'check', size: 32}}
+                          buttonStyle={{backgroundColor: "#16608B", marginVertical: 10, borderRadius: 40}}
+                          textStyle={{textAlign: 'center', fontFamily:'monospace'}}
+                          title={`LOGIN`}
+                          onPress={this._onSubmit.bind(this)}
+                        />
 
                         {/* Register Button */}
-                        <TouchableOpacity activeOpacity={.5}
-                        onPress={() => navigate('Register')}>
-                            <View style={logStyle.registerButton} >
-                                <Text style={logStyle.LoginText}>
-                                    Register
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                        <Button
+                          icon={{name: 'room', size: 32}}
+                          buttonStyle={{backgroundColor: 'red', borderRadius: 40}}
+                          textStyle={{textAlign: 'center', fontFamily:'monospace'}}
+                          title={`REGISTER`}
+                          onPress={() => navigate('Register')}
+                        />
 
-                        {/* Forgot password button */}
-                        <TouchableOpacity activeOpacity={.5}
-                        onPress={() => navigate('Forgot')}>
-                            <View>
-                                <Text style={logStyle.forgotText}>
-                                    Forget Password
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                        {/* Forgot Password*/}
+                        <Button
+                          buttonStyle={{backgroundColor: 'white', borderRadius: 10}}
+                          textStyle={{color: '#000000', textAlign: 'center', fontFamily:'monospace'}}
+                          title={`FORGOT PASSWORD`}
+                          onPress={() => navigate('Forgot')}
+                        />
 
-                    </View>
+
                 </View>
             </View>
         );
@@ -128,6 +116,11 @@ export class LoginScreen extends React.Component {
 /******************************************************************************/
 // Style Sheet
 logStyle = StyleSheet.create({
+    logo:{
+      resizeMode: 'contain',
+      height: 45,
+      backgroundColor: 'transparent'
+    },
     errorText:{
       color: '#ff0000',
       fontSize: 15
@@ -142,13 +135,13 @@ logStyle = StyleSheet.create({
     },
     logTop:{
         flex: 1,
-        backgroundColor: '#000000', //Black
+        backgroundColor: '#FFFFFF', //Black
         justifyContent: 'center',
         alignItems: 'center'
     },
     logBot:{
         flex: 2,
-        backgroundColor: '#000000', //Black
+        backgroundColor: '#FFFFFF', //Black
     },
     defaultText:{
         color: '#ffffff',
@@ -166,21 +159,7 @@ logStyle = StyleSheet.create({
         backgroundColor:"#fff"
     },
     formWrapper:{
-       paddingHorizontal: 20
-    },
-    loginButton:{
-        backgroundColor: "#16608B",
-        paddingVertical: 15,
-        marginVertical: 15,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    registerButton:{
-        backgroundColor: "#16608B",
-        paddingVertical: 10,
-        marginVertical: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
+       alignItems: 'center'
     },
     LoginText:{
         color: '#FFFFFF', //White

@@ -18,7 +18,7 @@ import {observer} from "mobx-react";
 import { toJS } from 'mobx';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
-import { Button } from 'react-native-elements';
+import { Card, ListItem, Button, List } from 'react-native-elements';
 
 @observer
 export class ProfileStocksScreen extends React.Component {
@@ -34,76 +34,97 @@ export class ProfileStocksScreen extends React.Component {
     const { navigate } = this.props.navigation;
     navigate('ProfileLoading');
   }
-  showKeyWords(input)
-  {
-    console.log("--- Keywords ---")
-    console.log(input)
 
-    var arr = Object.values(input);
-
-    console.log(arr)
-
-    var arr0 = Object.values(arr[0]);
-    return arr.map(function(word){
-        return(<Text>{word['Name']}</Text>)
-    });
-  }
-  render() {
-    const { navigate } = this.props.navigation;
+  render(){
     var sector = Object.values(Profile.getTargetSectors())
-    return (
-
-      <View style ={profileStyle.profileWrapper}>
-
-          <View style={profileStyle.profileContainer1}>
-            <Text style={profileStyle.profileText1}>Stocks for: {User.getUserName()}</Text>
-            <Button
-  raised
-  icon={{name: 'home', size: 32}}
-  buttonStyle={{backgroundColor: 'red', borderRadius: 10}}
-  textStyle={{textAlign: 'center'}}
-  title={`Welcome to\nReact Native Elements`}
-/>
-          </View>
-
-
-            <View style={profileStyle.profileContainer2}>
-              <TouchableHighlight
-              onPress={this._onClick.bind(this, 0)}>
-                  <Text style={profileStyle.profileText2}>{sector[0]}</Text>
-              </TouchableHighlight>
-            </View>
-
-
-
-
-            <View style={profileStyle.profileContainer3}>
-              <TouchableHighlight style={profileStyle.bigButton}
-              onPress={this._onClick.bind(this,1)}>
-                  <Text style={profileStyle.profileText3}>{sector[1]}</Text>
-              </TouchableHighlight>
-            </View>
-
-            <View style={profileStyle.profileContainer4}>
-              <TouchableHighlight style={profileStyle.bigButton}
-              onPress={this._onClick.bind(this, 2)}>
-                  <Text style={profileStyle.profileText4}>{sector[2]}</Text>
-              </TouchableHighlight>
-            </View>
-
+    return(
+      <View>
+      <List>
+      {
+        sector.map((l, i) => (
+          <ListItem
+            key={i}
+            title={l}
+            onPress={this._onClick.bind(this, i)}
+          />
+        ))
+      }
+      </List>
       </View>
-    )
+    );
   }
+
+  // render(){
+  //   var sector = Object.values(Profile.getTargetSectors())
+  //   return(
+  //     <Card title="Recommended Stock Sectors">
+  //     {
+  //       sector.map((u, i) => {
+  //         return (
+  //           <View key={i}>
+  //           <Button
+  //             icon={{name: 'room', size: 32}}
+  //             buttonStyle={{backgroundColor: "#16608B", marginVertical: 10, borderRadius: 40}}
+  //             textStyle={{textAlign: 'center', fontFamily:'monospace'}}
+  //             title={u}
+  //             onPress={this._onClick.bind(this, i)}
+  //           />
+  //           </View>
+  //         );
+  //       })
+  //     }
+  //   </Card>
+  // )
+  // }
+  // render() {
+  //   const { navigate } = this.props.navigation;
+  //   var sector = Object.values(Profile.getTargetSectors())
+  //   return (
+  //
+  //     <View style ={profileStyle.profileWrapper}>
+  //
+  //         <View style={profileStyle.profileContainer1}>
+  //           <Text style={profileStyle.profileText1}>Stocks for: {User.getUserName()}</Text>
+  //         </View>
+  //
+  //
+  //           <View style={profileStyle.profileContainer2}>
+  //             <TouchableHighlight
+  //             onPress={this._onClick.bind(this, 0)}>
+  //                 <Text style={profileStyle.profileText2}>{sector[0]}</Text>
+  //             </TouchableHighlight>
+  //           </View>
+  //
+  //
+  //
+  //
+  //           <View style={profileStyle.profileContainer3}>
+  //             <TouchableHighlight style={profileStyle.bigButton}
+  //             onPress={this._onClick.bind(this,1)}>
+  //                 <Text style={profileStyle.profileText3}>{sector[1]}</Text>
+  //             </TouchableHighlight>
+  //           </View>
+  //
+  //           <View style={profileStyle.profileContainer4}>
+  //             <TouchableHighlight style={profileStyle.bigButton}
+  //             onPress={this._onClick.bind(this, 2)}>
+  //                 <Text style={profileStyle.profileText4}>{sector[2]}</Text>
+  //             </TouchableHighlight>
+  //           </View>
+  //
+  //     </View>
+  //   )
+  // }
 }
 
 profileStyle = StyleSheet.create({
     profileWrapper:{
         flex: 1,
-        backgroundColor:"#000000"
+        backgroundColor:"#FFFFFF"
     },
     profileContainer1:{
       flex:1,
-      backgroundColor:"#000000",
+      backgroundColor:"#FFFFFF",
       justifyContent: 'center',
       alignItems: 'center'
     },
@@ -128,7 +149,7 @@ profileStyle = StyleSheet.create({
       backgroundColor:"#002613"
     },
     profileText1:{
-        color: '#ffffff',
+        color: '#000000',
         fontSize: 30,
     },
     profileText2:{
