@@ -30,7 +30,7 @@ export class LoginLoadingScreen extends React.Component {
   {
       const { navigate } = this.props.navigation;
       console.log("---- ATTEMPTING LOGIN ----");
-      fetch(Server.getLoginURL(),
+      fetch(Server.loginURL(),
       {
           method: 'post',
           headers:
@@ -94,7 +94,7 @@ export class LoginLoadingScreen extends React.Component {
   getUserProfile()
   {
     console.log("---- ATTEMPTING TO GET PROFILE ----");
-    fetch(Server.getProfileURL(),
+    fetch(Server.profileGetURL(),
     {
         method: 'post',
         headers:

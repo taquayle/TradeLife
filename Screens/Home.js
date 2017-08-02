@@ -25,9 +25,8 @@ export class HomeScreen extends React.Component {
   }
 
   _onProfileStockClick(){
+    console.log("--- Going to Profile-STOCKS ---")
     const { navigate } = this.props.navigation;
-    console.log("DOES PROFILE EXIST?")
-    console.log(Profile.exists())
     if (Profile.exists()){
       navigate('ProfileStocks')
     }
@@ -38,11 +37,14 @@ export class HomeScreen extends React.Component {
   }
 
   _onProfileKeywordClick(){
+    console.log("--- Going to Profile-KEYWORDS ---")
     const { navigate } = this.props.navigation;
     if (Profile.exists()){
-      navigate('Profile')
+      navigate('ProfileKeywords')
     }
-    navigate('ProfileLoading')
+    else{
+      navigate('ProfileLoading')
+    }
   }
 
   render() {
@@ -75,7 +77,7 @@ export class HomeScreen extends React.Component {
                 buttonStyle={{backgroundColor: 'blue', borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
                 title={`Keywords`}
-                onPress={this._onProfileStockClick.bind(this)}
+                onPress={this._onProfileKeywordClick.bind(this)}
               />
 
 

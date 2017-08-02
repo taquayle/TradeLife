@@ -16,6 +16,8 @@ import { ForgotScreen } from './Screens/Forgot';
 import { FastLink } from './Screens/FastLink';
 import { TransactionScreen } from './Screens/Transactions'
 import { ProfileStocksScreen } from './Screens/Profile_Stocks';
+import { ProfileKeywordsScreen } from './Screens/Profile_Keywords';
+import { KeywordsAddScreen } from './Screens/Keywords_Add';
 import { StocksScreen } from './Screens/Stocks';
 import { LoginLoadingScreen } from './Screens/Loading/LoginLoading'
 import { ProfileLoadingScreen } from './Screens/Loading/ProfileLoading'
@@ -31,8 +33,7 @@ export default class SplashScreen extends React.Component {
     super(props);
     const { navigate } = this.props.navigation;
     setTimeout(() => { // Execute ONCE
-        this.setState(previousState => {navigate('Login')
-      });
+        this.setState(previousState => {navigate('Login')});
     }, 1000); //Milliseconds before switch
   }
   render() {
@@ -56,6 +57,8 @@ const TradeLife = StackNavigator(
   FastLink: {screen: FastLink},
   Transact: {screen: TransactionScreen},
   ProfileStocks: {screen: ProfileStocksScreen},
+  ProfileKeywords: {screen: ProfileKeywordsScreen},
+  KeywordsAdd: {screen: KeywordsAddScreen},
   Stocks: { screen: StocksScreen },
   LoginLoading: {screen: LoginLoadingScreen},
   ProfileLoading: {screen: ProfileLoadingScreen},

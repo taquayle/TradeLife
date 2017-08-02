@@ -30,7 +30,7 @@ export class ProfileLoadingScreen extends React.Component {
   {
     const { navigate } = this.props.navigation;
     console.log("---- ATTEMPTING TO GET PROFILE ----");
-    fetch(Server.getProfileURL(),
+    fetch(Server.profilePutURL(),
     {
         method: 'post',
         headers:
@@ -62,7 +62,8 @@ export class ProfileLoadingScreen extends React.Component {
         if (responseData.error == false) //Success move on
         {
             const { navigate } = this.props.navigation;
-            console.log("---- PROFILE SUCCESSFUL ----");
+            console.log("---- PROFILE GENERATION SUCCESSFUL ----");
+            console.log(responseData.profile);
             this.setState({
               message: "Profile Found.."})
             Profile.setProfile(responseData.profile)
