@@ -9,6 +9,9 @@
 import React from 'react';
 import {AppRegistry, Text, View, Button, StyleSheet, Image} from 'react-native';
 import { StackNavigator } from 'react-navigation';
+
+/******************************************************************************/
+// SCREENS
 import { LoginScreen } from './Screens/Login';
 import { RegisterScreen } from './Screens/Register';
 import { HomeScreen } from './Screens/Home';
@@ -18,8 +21,13 @@ import { TransactionScreen } from './Screens/Transactions'
 import { ProfileStocksScreen } from './Screens/Profile_Stocks';
 import { ProfileKeywordsScreen } from './Screens/Profile_Keywords';
 import { KeywordsAddScreen } from './Screens/Keywords_Add';
+import { KeywordsUserScreen } from './Screens/Keywords_User';
 import { StocksScreen } from './Screens/Stocks';
+
+/******************************************************************************/
+// LOADING SCREENS
 import { LoginLoadingScreen } from './Screens/Loading/LoginLoading'
+import { RegisterLoadingScreen } from './Screens/Loading/RegisterLoading'
 import { ProfileLoadingScreen } from './Screens/Loading/ProfileLoading'
 
 
@@ -59,9 +67,11 @@ const TradeLife = StackNavigator(
   ProfileStocks: {screen: ProfileStocksScreen},
   ProfileKeywords: {screen: ProfileKeywordsScreen},
   KeywordsAdd: {screen: KeywordsAddScreen},
+  KeywordsUser: {screen: KeywordsUserScreen},
   Stocks: { screen: StocksScreen },
   LoginLoading: {screen: LoginLoadingScreen},
   ProfileLoading: {screen: ProfileLoadingScreen},
+  RegisterLoading: {screen: RegisterLoadingScreen},
 },
 navigationOptions =
 {

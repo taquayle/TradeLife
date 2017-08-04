@@ -1,5 +1,5 @@
 // Author: Tyler Quayle
-// File: Home.js
+// File: Transactions.js
 // Date: June 30, 2017
 
 import React from 'react';
@@ -13,7 +13,7 @@ import store from "./Stores/UserStore"
 export class TransactionScreen extends React.Component {
   _onSubmit() // Attempt to login.
   {
-      let userNameInput = store.getUserName();
+      let userNameInput = store.getName();
       let yodToken = store.getYodleeToken();
 
       console.log("---- ATTEMPTING TO GET TRANSACTIONS ----");

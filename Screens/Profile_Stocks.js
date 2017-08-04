@@ -1,6 +1,6 @@
 // Author: Tyler Quayle
-// File: Home.js
-// Date: July 26, 2017
+// File: Profile_Stocks.js
+// Date: August 2, 2017
 
 import React from 'react';
 import {
@@ -66,29 +66,6 @@ export class ProfileStocksScreen extends React.Component {
       </View>
     );
   }
-
-  // render(){
-  //   var sector = Object.values(Profile.getTargetSectors())
-  //   return(
-  //     <Card title="Recommended Stock Sectors">
-  //     {
-  //       sector.map((u, i) => {
-  //         return (
-  //           <View key={i}>
-  //           <Button
-  //             icon={{name: 'room', size: 32}}
-  //             buttonStyle={{backgroundColor: "#16608B", marginVertical: 10, borderRadius: 40}}
-  //             textStyle={{textAlign: 'center', fontFamily:'monospace'}}
-  //             title={u}
-  //             onPress={this._onClick.bind(this, i)}
-  //           />
-  //           </View>
-  //         );
-  //       })
-  //     }
-  //   </Card>
-  // )
-  // }
 }
 
 profileStyle = StyleSheet.create({
@@ -96,15 +73,27 @@ profileStyle = StyleSheet.create({
         flex: 1,
         backgroundColor:"#FFFFFF"
     },
+    listContainer: {
+    width: 300
+    },
     topWrap:{
       flex:.35,
       backgroundColor:"#FFFFFF",
       justifyContent: 'center',
       alignItems: 'center'
     },
+    titleWrap:{
+      flexDirection:'row',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
     botWrap:{
       flex:.65,
       backgroundColor:"#FFFFFF"
+    },
+    buttonWrap:{
+      flex:.5,
+      flexDirection:'row'
     },
     title:{
         color: '#000000',

@@ -7,7 +7,7 @@ class  UserStore{
   @observable yodleeToken = ""
   @observable sectorPref = 0
 
-  getUserName(){
+  getName(){
     return this.userName;
   }
 }

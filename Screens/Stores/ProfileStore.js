@@ -6,6 +6,7 @@ class  ProfileStore{
   @observable profileExists = false;
   @observable desc_key = {}
   @observable cate_key = {}
+  @observable invest_date = {}
   @observable user_key = {}
   @observable cap_stocks = {}
   @observable disruptive_stocks = {}
@@ -18,6 +19,7 @@ class  ProfileStore{
     this.setCapStocks(profile['Target_Companies']['Cap']);
     this.setDisruptiveStocks(profile['Target_Companies']['Disruptive']);
     this.setTargetSectors(profile['Target_Sectors']['Sectors']);
+    this.setInvestDate(profile['Invest_Date'])
     this.profileExists = true;
   }
   exists(){
@@ -31,6 +33,16 @@ class  ProfileStore{
 
   setUserKeys(objArray){
     this.user_key = objArray
+  }
+  /****************************************************************************/
+
+  /****************************************************************************/
+  setInvestDate(objArray){
+    this.invest_date = objArray;
+  }
+
+  getInvestDate(){
+    return this.invest_date
   }
   /****************************************************************************/
 

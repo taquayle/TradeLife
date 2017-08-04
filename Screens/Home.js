@@ -2,6 +2,7 @@
 // File: Home.js
 // Date: June 23, 2017
 
+
 import React from 'react';
 import {
   AppRegistry,
@@ -19,6 +20,8 @@ import Profile from "./Stores/ProfileStore"
 import { Button } from 'react-native-elements';
 
 export class HomeScreen extends React.Component {
+
+
   constructor(props)
   {
       super(props);
@@ -73,7 +76,7 @@ export class HomeScreen extends React.Component {
 
               <Button
                 large
-                icon={{name: 'room', size: 32}}
+                icon={{name: 'vpn-key', size: 32}}
                 buttonStyle={{backgroundColor: 'blue', borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
                 title={`Keywords`}

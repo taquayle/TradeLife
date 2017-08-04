@@ -33,13 +33,12 @@ export class LoginScreen extends React.Component {
     componentDidMount()
     {
       User.setError("")
-
     }
     constructor(props)
     {
         super(props);
-        this.state = {  uName: User.getUserName(),
-                        pWord: "sbMemtaquayle1#123",
+        this.state = {  uName: User.getName(),
+                        pWord: User.getPass(),
                         errMsg: User.getError()};
     }
 
@@ -48,10 +47,10 @@ export class LoginScreen extends React.Component {
     _onSubmit() // Attempt to login.
     {
       const { navigate } = this.props.navigation;
-      //User.setUserName(this.state.uName)
-      User.setUserName("sbMemtaquayle1")
-      //User.setUserPass(this.state.pWord)
-      User.setUserPass("sbMemtaquayle1#123")
+      //User.setName(this.state.uName)
+      User.setName(this.state.uName)
+      //User.setPass(this.state.pWord)
+      User.setPass(this.state.pWord)
       navigate('LoginLoading');
     }
 
@@ -68,8 +67,9 @@ export class LoginScreen extends React.Component {
                 <View style={logStyle.logBot}>
                     <View style={logStyle.formWrapper}>
 
-
+                        {/* SHOW ERROR MESSAGE FROM SERVER */}
                         <FormValidationMessage>{this.state.errMsg}</FormValidationMessage>
+
                         {/* Username Field */}
                         <FormLabel fontFamily = 'monospace'>USERNAME</FormLabel>
                         <FormInput onChangeText={(uName) => this.setState({uName})}/>

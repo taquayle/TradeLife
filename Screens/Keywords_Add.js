@@ -16,7 +16,7 @@ import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import Server from "./Stores/TradeLifeStore"
-import { ListItem, Button, List, Icon, FormLabel, FormInput, Header } from 'react-native-elements';
+import { ListItem, Button, List, Icon, FormLabel, FormInput, FormValidationMessage, Header } from 'react-native-elements';
 
 <Header
   leftComponent={{ icon: 'menu', color: '#fff' }}
@@ -31,7 +31,7 @@ export class KeywordsAddScreen extends React.Component {
       super(props);
       this.state = {  keyword: "",
                       newScreen: true,
-                      tempKeys: ['Use + to add words and check to submit to server']};
+                      tempKeys: ['Use + to add words', 'Press [Check] to submit to server']};
   }
 
   addKey(){
@@ -49,7 +49,8 @@ export class KeywordsAddScreen extends React.Component {
     this.setState({
       keyword: "",
       newScreen: false,
-      tempKeys: temp})
+      tempKeys: temp,
+      errMsg: ""})
   }
 
   _postToServer(){
@@ -75,7 +76,7 @@ export class KeywordsAddScreen extends React.Component {
         },
         body:JSON.stringify(
         {
-            userName:User.getUserName(),
+            userName:User.getName(),
             keyWords:this.state.tempKeys
         })
     })
@@ -95,41 +96,40 @@ export class KeywordsAddScreen extends React.Component {
     .then((responseData) =>
     {
         console.log(responseData)
-        this.setState({
-          keyword: "",
-          newScreen: true,
-          tempKeys: ['Successfully Submitted']})
-        // else if (responseData.error == false) //Success, allow used in
-        // {
-        //     console.log("---- ADDING KEYWORDS SUCCESSFUL ----");
-        //     User.setYodleeToken(responseData.yodleeToken);
-        //     this.setState({
-        //       message: "Login Successful.. Getting profile"})
-        //     this.getUserProfile()
-        //     navigate('KeywordsAdd');
-        // }
-        // else if (responseData.error == true) //Success, allow used in
-        // {
-        //     console.log("---- LOGIN FAILED ----");
-        //     console.log(responseData);
-        //     User.setError(responseData.messages)
-        //     navigate('Login');
-        // }
-        // else
-        // {
-        //   console.log("---- UNKOWN ERROR ----");
-        //   console.log(responseData);
-        //   User.setError(responseData.messages)
-        //   navigate('Login');
-        // }
+
+        if (responseData.error == false) //Success, allow used in
+        {
+            console.log("---- ADDING KEYWORDS SUCCESSFUL ----");
+            Profile.setUserKeys(responseData.keywords)
+            this.setState({
+              keyword: "",
+              newScreen: true,
+              tempKeys: ['Successfully Submitted']})
+            navigate('KeywordsUser')
+        }
+        else if (responseData.error == true) //Success, allow used in
+        {
+            console.log("----  FAILED ----");
+            console.log(responseData);
+            this.setState({
+              errMsg: responseData.message})
+        }
+        else
+        {
+          console.log("---- UNKOWN ERROR ----");
+          console.log(responseData);
+          this.setState({
+            errMsg: "Unknown Error Occured"})
+        }
     })
   }
 
   render(){
     const { navigate } = this.props.navigation;
-    var keys = Object.values(Profile.getUserKeys())
+    var keys = null
+    if(Profile.getUserKeys() != null)
+      keys = Object.values(Profile.getUserKeys())
 
-    console.log(keys)
     return(
 
 
@@ -138,11 +138,15 @@ export class KeywordsAddScreen extends React.Component {
         <View style={profileStyle.topWrap}>
           <Text style={profileStyle.title}> ADD KEYWORDS</Text>
 
+          {/* SHOW ERROR MESSAGE FROM SERVER */}
+          <FormValidationMessage>{this.state.errMsg}</FormValidationMessage>
+
           <FormLabel fontFamily = 'monospace'>KEYWORD</FormLabel>
           <FormInput
           autoCapitalize='characters'
-          onChangeText={(keyword) => this.setState({keyword})}/>
-          <View style={addStyle.buttonWrap}>
+          onChangeText={(keyword) => this.setState({keyword})}
+          onEndEditing={this.addKey.bind(this)}/>
+          <View style={profileStyle.buttonWrap}>
             <Icon
               reverse
               name='add'
@@ -170,18 +174,7 @@ export class KeywordsAddScreen extends React.Component {
             </List>
 
 
-            <List>
-            {
-              keys.map((word, i) => (
-                <ListItem
-                  key={i}
-                  title={word['Name']}
-                  subtitleNumberOfLines={2}
-                  subtitle={<Text>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
-                />
-              ))
-            }
-            </List>
+            {/*{this.showUserKeys(keys)}*/}
           </ScrollView>
         </View>
       </View>
@@ -214,6 +207,7 @@ addStyle = StyleSheet.create({
     title:{
         color: '#000000',
         fontSize: 30,
+        textAlign: 'center'
     },
     text:{
         color: '#000000',

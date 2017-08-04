@@ -1,5 +1,5 @@
 // Author: Tyler Quayle
-// File: Home.js
+// File: Profile_Keywords.js
 // Date: July 26, 2017
 
 import React from 'react';
@@ -15,7 +15,7 @@ import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
-import { Card, ListItem, Button, List } from 'react-native-elements';
+import { Card, ListItem, Button, List,Icon } from 'react-native-elements';
 
 @observer
 export class ProfileKeywordsScreen extends React.Component {
@@ -26,17 +26,23 @@ export class ProfileKeywordsScreen extends React.Component {
     return(
       <View style={profileStyle.wrapper}>
         <View style={profileStyle.topWrap}>
-          <Text style={profileStyle.title}> KEYWORDS
-
-          </Text>
-
+          <View style={profileStyle.titleWrap}>
+            <Icon reverse name='vpn-key'/>
+            <Text style={profileStyle.title}>KEYWORDS</Text>
+          </View>
           <Text style={profileStyle.text}>Based on your Transactions These are the keywords TradeLife could extract</Text>
-          <Button
-            icon={{name: 'add', size: 32}}
-            buttonStyle={{backgroundColor: "#16608B", borderRadius: 40, marginVertical: 10}}
-            title={'Add'}
-            onPress={() => navigate('KeywordsAdd')}
-          />
+          <View style={profileStyle.buttonWrap}>
+            <Icon
+              reverse
+              name='add'
+              onPress={() => navigate('KeywordsAdd')}
+            />
+            <Icon
+              reverse
+              name='person'
+              onPress={() => navigate('KeywordsUser')}
+            />
+          </View>
         </View>
 
         <View style={profileStyle.botWrap}>

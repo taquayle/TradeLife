@@ -1,6 +1,6 @@
 // Author: Tyler Quayle
-// File: Home.js
-// Date: June 23, 2017
+// File: LoginLoading.js
+// Date: July 28, 2017
 
 import React from 'react';
 import {
@@ -23,7 +23,7 @@ export class LoginLoadingScreen extends React.Component {
   constructor(props)
   {
       super(props);
-      this.state = {  message: "Attempting Login"};
+      this.state = {  message: "ATTEMPTING LOGIN...."};
   }
   /**************************************************************************/
   componentDidMount() // Attempt to login.
@@ -40,8 +40,8 @@ export class LoginLoadingScreen extends React.Component {
           },
           body:JSON.stringify(
           {
-              userName:User.getUserName(),
-              userPassword:User.getUserPass()
+              userName:User.getName(),
+              userPassword:User.getPass()
           })
       })
 
@@ -70,9 +70,8 @@ export class LoginLoadingScreen extends React.Component {
               console.log("---- LOGIN SUCCESSFUL ----");
               User.setYodleeToken(responseData.yodleeToken);
               this.setState({
-                message: "Login Successful.. Getting profile"})
+                message: "LOGIN SUCCESSFUL"})
               this.getUserProfile()
-              navigate('Home');
           }
           else if (responseData.error == true) //Success, allow used in
           {
@@ -93,7 +92,10 @@ export class LoginLoadingScreen extends React.Component {
 
   getUserProfile()
   {
+    const { navigate } = this.props.navigation;
     console.log("---- ATTEMPTING TO GET PROFILE ----");
+    this.setState({
+      message: "GETTING PROFILE"})
     fetch(Server.profileGetURL(),
     {
         method: 'post',
@@ -104,7 +106,7 @@ export class LoginLoadingScreen extends React.Component {
         },
         body:JSON.stringify(
         {
-            userName:User.getUserName(),
+            userName:User.getName(),
             yodleeToken:User.getYodleeToken()
         })
     })
@@ -130,7 +132,7 @@ export class LoginLoadingScreen extends React.Component {
             console.log("---- PROFILE SUCCESSFUL ----");
             console.log(responseData.profile)
             this.setState({
-              message: "Profile Found.."})
+              message: "PROFILE FOUND"})
             Profile.setProfile(responseData.profile)
         }
         else if (responseData.error == true) // ERROR: display and remain
@@ -142,6 +144,7 @@ export class LoginLoadingScreen extends React.Component {
           console.log("---- UNKNOWN ERROR ----");
           console.log(responseData);
         }
+        navigate('Home')
     })
 
   }

@@ -1,5 +1,5 @@
 // Author: Tyler Quayle
-// File: Login.js
+// File: Forgot.js
 // Date: June 23, 2017
 
 import React from 'react';
