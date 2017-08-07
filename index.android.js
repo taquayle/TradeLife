@@ -30,6 +30,8 @@ import { LoginLoadingScreen } from './Screens/Loading/LoginLoading'
 import { RegisterLoadingScreen } from './Screens/Loading/RegisterLoading'
 import { ProfileLoadingScreen } from './Screens/Loading/ProfileLoading'
 
+/******************************************************************************/
+// STYLES
 
 /******************************************************************************/
 // Default class

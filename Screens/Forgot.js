@@ -14,6 +14,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import tradeStyle from "./Styles/Default"
 
 export class ForgotScreen extends React.Component {
   render() {

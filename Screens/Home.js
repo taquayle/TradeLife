@@ -18,6 +18,7 @@ import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import { Button } from 'react-native-elements';
+import tradeStyle from "./Styles/Default"
 
 export class HomeScreen extends React.Component {
 
@@ -54,19 +55,19 @@ export class HomeScreen extends React.Component {
       const { navigate } = this.props.navigation;
     return (
 
-        <View style={homeStyle.wrapper}>
-            <View style={homeStyle.homeTop}>
+        <View style={tradeStyle.wrapper}>
+            <View style={tradeStyle.topWrap}>
 
 
-                  <Image source={require('./Images/TradeLife.png')} style={homeStyle.logo}/>
+                  <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>
 
             </View>
 
-            <View style={homeStyle.homeBot}>
+            <View style={tradeStyle.botWrap}>
 
               <Button
                 large
-                icon={{name: 'room', size: 32}}
+                icon={{name: 'trending-up', size: 32}}
                 buttonStyle={{backgroundColor: 'red', borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
                 title={`Stocks`}
@@ -86,7 +87,7 @@ export class HomeScreen extends React.Component {
 
               <Button
                 large
-                icon={{name: 'room', size: 32}}
+                icon={{name: 'receipt', size: 32}}
                 buttonStyle={{backgroundColor: 'green', borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
                 title={`Transactions`}
@@ -95,7 +96,7 @@ export class HomeScreen extends React.Component {
 
               <Button
                 large
-                icon={{name: 'room', size: 32}}
+                icon={{name: 'link', size: 32}}
                 buttonStyle={{backgroundColor: 'orange', borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
                 title={`FastLink`}
@@ -106,54 +107,3 @@ export class HomeScreen extends React.Component {
     );
   }
 }
-
-homeStyle = StyleSheet.create({
-    logo:{
-      resizeMode: 'contain',
-      height: 25,
-      backgroundColor: 'transparent',
-
-    },
-    wrapper:{
-        flex: 1,
-          backgroundColor: '#ffffff'
-    },
-    homeTop:{
-        flex: 1,
-        backgroundColor: '#ffffff', //Black
-
-        alignItems: 'center'
-    },
-    homeBot:{
-        flex: 2,
-        backgroundColor: '#ffffff', //Black
-
-    },
-    homeText:{
-        color: '#ffffff',
-        fontSize: 30,
-    },
-    container1:{
-      flex: 2,
-      alignItems:'flex-start',
-      backgroundColor: "#00ff00"
-    },
-    container2:{
-      flex: 2,
-      alignItems:'flex-start',
-      backgroundColor: "#0000ff"
-    },
-    button:{
-        backgroundColor: "#16608B",
-        paddingVertical: 10,
-        marginVertical: 30,
-        paddingHorizontal: 20,
-        marginHorizontal: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    LoginText:{
-        color: '#FFFFFF', //White
-        fontSize: 18
-    },
-})

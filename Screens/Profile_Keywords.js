@@ -16,7 +16,7 @@ import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import { Card, ListItem, Button, List,Icon } from 'react-native-elements';
-
+import tradeStyle from "./Styles/Default"
 @observer
 export class ProfileKeywordsScreen extends React.Component {
 
@@ -24,14 +24,14 @@ export class ProfileKeywordsScreen extends React.Component {
     const { navigate } = this.props.navigation;
     var keys = Object.values(Profile.getDescKeys())
     return(
-      <View style={profileStyle.wrapper}>
-        <View style={profileStyle.topWrap}>
-          <View style={profileStyle.titleWrap}>
+      <View style={tradeStyle.wrapper}>
+        <View style={tradeStyle.topWrap}>
+          <View style={tradeStyle.titleWrap}>
             <Icon reverse name='vpn-key'/>
-            <Text style={profileStyle.title}>KEYWORDS</Text>
+            <Text style={tradeStyle.title}>KEYWORDS</Text>
           </View>
-          <Text style={profileStyle.text}>Based on your Transactions These are the keywords TradeLife could extract</Text>
-          <View style={profileStyle.buttonWrap}>
+          <Text style={tradeStyle.text}>Based on your Transactions These are the keywords TradeLife could extract</Text>
+          <View style={tradeStyle.buttonWrap}>
             <Icon
               reverse
               name='add'
@@ -45,7 +45,7 @@ export class ProfileKeywordsScreen extends React.Component {
           </View>
         </View>
 
-        <View style={profileStyle.botWrap}>
+        <View style={tradeStyle.botWrap}>
           <ScrollView >
             <List>
             {

@@ -17,7 +17,7 @@ import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import Server from "./Stores/TradeLifeStore"
 import { ListItem, Button, List, Icon, FormLabel, FormInput, FormValidationMessage, Header } from 'react-native-elements';
-
+import tradeStyle from "./Styles/Default"
 
 @observer
 export class KeywordsUserScreen extends React.Component {
@@ -25,7 +25,7 @@ export class KeywordsUserScreen extends React.Component {
   showUserKeys(keys)
   {
     if(keys == null)
-      return (<Text style={profileStyle.title}> No User Keys </Text>)
+      return (<Text style={tradeStyle.title}> No User Keys </Text>)
     return(
     <List>
     {
@@ -49,15 +49,15 @@ export class KeywordsUserScreen extends React.Component {
       keys = Object.values(Profile.getUserKeys())
 
     return(
-      <View style={profileStyle.wrapper}>
-        <View style={profileStyle.topWrap}>
-          <View style={profileStyle.titleWrap}>
+      <View style={tradeStyle.wrapper}>
+        <View style={tradeStyle.topWrap}>
+          <View style={tradeStyle.titleWrap}>
             <Icon reverse name='person'/>
-            <Text style={profileStyle.title}>USER KEYWORDS</Text>
+            <Text style={tradeStyle.title}>USER KEYWORDS</Text>
 
           </View>
-            <Text style={profileStyle.text}>Keywords added by the user</Text>
-          <View style={profileStyle.buttonWrap}>
+            <Text style={tradeStyle.text}>Keywords added by the user</Text>
+          <View style={tradeStyle.buttonWrap}>
             <Icon
               reverse
               name='add'
@@ -71,7 +71,7 @@ export class KeywordsUserScreen extends React.Component {
           </View>
         </View>
 
-        <View style={profileStyle.botWrap}>
+        <View style={tradeStyle.botWrap}>
           <ScrollView >
             {this.showUserKeys(keys)}
           </ScrollView>

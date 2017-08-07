@@ -11,18 +11,23 @@ import {
   Image,
   ScrollView
 } from 'react-native';
+import {  ListItem,
+          Button,
+          List,
+          Icon,
+          FormLabel,
+          FormInput,
+          FormValidationMessage,
+          Header
+} from 'react-native-elements';
 import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import Server from "./Stores/TradeLifeStore"
-import { ListItem, Button, List, Icon, FormLabel, FormInput, FormValidationMessage, Header } from 'react-native-elements';
+import tradeStyle from "./Styles/Default"
 
-<Header
-  leftComponent={{ icon: 'menu', color: '#fff' }}
-  centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
-  rightComponent={{ icon: 'home', color: '#fff' }}
-/>
+
 
 @observer
 export class KeywordsAddScreen extends React.Component {
@@ -134,9 +139,9 @@ export class KeywordsAddScreen extends React.Component {
 
 
 
-      <View style={profileStyle.wrapper}>
-        <View style={profileStyle.topWrap}>
-          <Text style={profileStyle.title}> ADD KEYWORDS</Text>
+      <View style={tradeStyle.wrapper}>
+        <View style={tradeStyle.topWrap}>
+          <Text style={tradeStyle.title}> ADD KEYWORDS</Text>
 
           {/* SHOW ERROR MESSAGE FROM SERVER */}
           <FormValidationMessage>{this.state.errMsg}</FormValidationMessage>
@@ -146,7 +151,7 @@ export class KeywordsAddScreen extends React.Component {
           autoCapitalize='characters'
           onChangeText={(keyword) => this.setState({keyword})}
           onEndEditing={this.addKey.bind(this)}/>
-          <View style={profileStyle.buttonWrap}>
+          <View style={tradeStyle.buttonWrap}>
             <Icon
               reverse
               name='add'
@@ -159,7 +164,7 @@ export class KeywordsAddScreen extends React.Component {
           </View>
         </View>
 
-        <View style={profileStyle.botWrap}>
+        <View style={tradeStyle.botWrap}>
           <ScrollView >
             <List>
             {

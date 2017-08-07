@@ -21,6 +21,7 @@ import {
 
 import User from "./Stores/UserStore"
 import Server from "./Stores/TradeLifeStore"
+import tradeStyle from "./Styles/Default"
 export class RegisterScreen extends React.Component {
   componentDidMount()
   {
