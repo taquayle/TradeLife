@@ -18,12 +18,15 @@ import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import { Slider, ListItem, Button, List, Icon, FormLabel, FormInput, Header } from 'react-native-elements';
 import tradeStyle from "./Styles/Default"
+import {observable} from "mobx"
+import {observer} from "mobx-react"
 import { COLOR_SCHEME, TEXT_SCHEME } from "./Styles/ColorScheme"
 import { VictoryBar, VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native'
 
 
-
+@observer
 export class StocksScreen extends React.Component {
+  @observable currentInvestment = 100; /*Mobx Variable*/
   constructor(props)
   {
       super(props);
@@ -46,7 +49,7 @@ export class StocksScreen extends React.Component {
       }
     }
 
-    return ((this.state.invest * returnValue)).toFixed(2)
+    return ((this.currentInvestment * returnValue)).toFixed(2)
   }
 
   updateInvest(val){
@@ -99,6 +102,9 @@ export class StocksScreen extends React.Component {
     return format;
   }
 
+  foo(value){
+    this.currentInvestment = value
+  }
   render() {
     var sectorTitle = Object.values(Profile.getTargetSectors())
     var stocksArray = Object.values(this.state.stocks)
@@ -115,8 +121,9 @@ export class StocksScreen extends React.Component {
             minimumValue={10}
             maximumValue={10000}
             value={this.state.invest}
-            onValueChange={(value) => this.updateInvest(value)} />
-          <Text>Investing: ${this.state.invest.toFixed(2)} on {Profile.getInvestDate()}</Text>
+
+            onSlidingComplete={(value) => this.foo(value)} />
+          <Text>Investing: ${this.currentInvestment.toFixed(2)} on {Profile.getInvestDate()}</Text>
           {/*<Icon
             reverse
             name={this.state.icon}

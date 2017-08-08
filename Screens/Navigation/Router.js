@@ -1,4 +1,4 @@
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements'
 /******************************************************************************/
 // SCREENS
@@ -20,6 +20,7 @@ import { StocksScreen } from '../Stocks';
 import { LoginLoadingScreen } from '../Loading/LoginLoading'
 import { RegisterLoadingScreen } from '../Loading/RegisterLoading'
 import { ProfileLoadingScreen } from '../Loading/ProfileLoading'
+import { KeywordAddLoadingScreen } from '../Loading/KeywordAddLoading'
 
 /******************************************************************************/
 // Routing table
@@ -37,6 +38,7 @@ export const Router = StackNavigator(
   KeywordsAdd: {screen: KeywordsAddScreen},
   KeywordsUser: {screen: KeywordsUserScreen},
   Stocks: { screen: StocksScreen },
+  KeywordAddLoading: {screen: KeywordAddLoadingScreen},
   LoginLoading: {screen: LoginLoadingScreen},
   ProfileLoading: {screen: ProfileLoadingScreen},
   RegisterLoading: {screen: RegisterLoadingScreen},
@@ -45,6 +47,56 @@ navigationOptions =
 {
   headerMode: 'none', //Get rid of headers
 });
+
+export const Drawer = DrawerNavigator({
+  Splash: {
+    screen: SplashScreen
+  },
+  Login: {
+    screen: LoginScreen
+  },
+  Register:{
+    screen: RegisterScreen},
+  Home: {
+    screen: HomeScreen
+  },
+  Forgot: {
+    screen: ForgotScreen
+  },
+  FastLink: {
+    screen: FastLink
+  },
+  Transact: {
+    screen: TransactionScreen
+  },
+  ProfileStocks: {
+    screen: ProfileStocksScreen
+  },
+  ProfileKeywords: {
+    screen: ProfileKeywordsScreen
+  },
+  KeywordsAdd: {
+    screen: KeywordsAddScreen
+  },
+  KeywordsUser: {
+    screen: KeywordsUserScreen
+  },
+  Stocks: {
+    screen: StocksScreen
+  },
+  KeywordAddLoading: {
+    screen: KeywordAddLoadingScreen
+  },
+  LoginLoading: {
+    screen: LoginLoadingScreen
+  },
+  ProfileLoading: {
+    screen: ProfileLoadingScreen
+  },
+  RegisterLoading: {
+    screen: RegisterLoadingScreen
+  },
+})
 
 export const Tab = TabNavigator({
   Login: {

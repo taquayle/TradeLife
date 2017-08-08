@@ -60,73 +60,8 @@ export class KeywordsAddScreen extends React.Component {
 
   _postToServer(){
     const { navigate } = this.props.navigation;
-    if(this.state.newScreen){
-      this.setState({
-        keyword: "",
-        newScreen: true,
-        tempKeys: ['Must Enter Keyword before submitting']})
-        return
-    }
-
-
-
-    console.log("---- ATTEMPTING TO SUBMIT NEW KEYWORDS TO SERVER ----");
-    fetch(Server.profilePostURL(),
-    {
-        method: 'post',
-        headers:
-        {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(
-        {
-            userName:User.getName(),
-            keyWords:this.state.tempKeys
-        })
-    })
-
-    .then((response) => {
-      // In this case, we check the content-type of the response
-      if (response.headers.get('content-type').match(/application\/json/)) {
-        return response.json();
-      }
-      return response.text();
-      })
-     .catch((error) =>
-     {
-         console.log(error);
-         (response) => response.text();
-     })
-    .then((responseData) =>
-    {
-        console.log(responseData)
-
-        if (responseData.error == false) //Success, allow used in
-        {
-            console.log("---- ADDING KEYWORDS SUCCESSFUL ----");
-            Profile.setUserKeys(responseData.keywords)
-            this.setState({
-              keyword: "",
-              newScreen: true,
-              tempKeys: ['Successfully Submitted']})
-            navigate('KeywordsUser')
-        }
-        else if (responseData.error == true) //Success, allow used in
-        {
-            console.log("----  FAILED ----");
-            console.log(responseData);
-            this.setState({
-              errMsg: responseData.message})
-        }
-        else
-        {
-          console.log("---- UNKOWN ERROR ----");
-          console.log(responseData);
-          this.setState({
-            errMsg: "Unknown Error Occured"})
-        }
-    })
+    User.setTempKeys(this.state.tempKeys)
+    navigate('KeywordAddLoading')
   }
 
   render(){

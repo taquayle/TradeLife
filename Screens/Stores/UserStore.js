@@ -9,6 +9,7 @@ class  UserStore{
   @observable yodleeToken = ""
   @observable sectorPref = 0
   @observable error = ""
+  @observable tempKeys = []
 
   /****************************************************************************/
   getName(){ return this.userName;}
@@ -50,6 +51,12 @@ class  UserStore{
   setMail(email){ this.userMail = email}
 
   getMail(){ return this.userMail}
+  /****************************************************************************/
+
+  /****************************************************************************/
+  setTempKeys(arrObj){ this.tempKeys = arrObj}
+
+  getTempKeys(){ return this.tempKeys}
   /****************************************************************************/
 }
 

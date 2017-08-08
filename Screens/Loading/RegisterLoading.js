@@ -16,7 +16,7 @@ import { StackNavigator } from 'react-navigation';
 import User from "../Stores/UserStore"
 import Server from "../Stores/TradeLifeStore"
 import Profile from "../Stores/ProfileStore"
-
+import loadStyle from "../Styles/LoadingStyle"
 
 export class RegisterLoadingScreen extends React.Component {
 
@@ -82,28 +82,28 @@ export class RegisterLoadingScreen extends React.Component {
 
   render() {
     return (
-        <View style={loading.bg, loading.wrapper}>
+        <View style={loadStyle.bg, loadStyle.wrapper}>
 
-            <View style={loading.bg, loading.topWrap}>
-                <Image style={loading.logo} source={require('../Images/TradeLife.png')} />
+            <View style={loadStyle.bg, loadStyle.topWrap}>
+                <Image style={loadStyle.logo} source={require('../Images/TradeLife.png')} />
             </View>
 
-            <View style={loading.bg, loading.midWrap}>
+            <View style={loadStyle.bg, loadStyle.midWrap}>
 
-            <View style={loading.bg, loading.activityWrap}>
+            <View style={loadStyle.bg, loadStyle.activityWrap}>
               <ActivityIndicator
                 color="#000000"
-                style={[loading.bg, {transform: [{scale: 5.5}]}]}
+                style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
               />
             </View>
 
-            <View style={loading.bg, loading.textWrap}>
-              <Text style={loading.loadingText}>{this.state.message}</Text>
+            <View style={loadStyle.bg, loadStyle.textWrap}>
+              <Text style={loadStyle.loadingText}>{this.state.message}</Text>
             </View>
 
             </View>
 
-            <View style={loading.bg, loading.bottomBuffer}>
+            <View style={loadStyle.bg, loadStyle.bottomBuffer}>
             </View>
         </View>
     );
