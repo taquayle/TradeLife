@@ -18,7 +18,7 @@ import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import { Slider, ListItem, Button, List, Icon, FormLabel, FormInput, Header } from 'react-native-elements';
 import tradeStyle from "./Styles/Default"
-import { BG_SCHEME, TEXT_SCHEME } from "./Styles/ColorScheme"
+import { COLOR_SCHEME, TEXT_SCHEME } from "./Styles/ColorScheme"
 import { VictoryBar, VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native'
 
 
@@ -131,7 +131,7 @@ export class StocksScreen extends React.Component {
             sector.map((company, i) => (
               <ListItem
                 key={i}
-                containerStyle={{backgroundColor:BG_SCHEME[i]}}
+                containerStyle={{backgroundColor:COLOR_SCHEME[i]}}
 
                 title={company['name']}
                 titleStyle={{color:TEXT_SCHEME[i]}}
@@ -155,7 +155,7 @@ export class StocksScreen extends React.Component {
               <VictoryLine
                 key={i}
                 style={{
-                  data: { stroke: BG_SCHEME[i]},
+                  data: { stroke: COLOR_SCHEME[i]},
                   parent: { border: "1px solid #ccc"}
                 }}
                 data={this.formatData(company['stock_data'])}

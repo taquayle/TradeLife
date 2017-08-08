@@ -1,16 +1,16 @@
 import { StyleSheet } from 'react-native';
-
+import { MAIN_BG_COLOR } from './ColorScheme'
 export default StyleSheet.create({
       wrapper:{
           flex: 1,
-          backgroundColor:"#FFFFFF"
+          backgroundColor:MAIN_BG_COLOR
       },
       listContainer: {
       width: 300,
       },
       topWrap:{
         flex:.35,
-        backgroundColor:"#FFFFFF",
+        backgroundColor:MAIN_BG_COLOR,
         justifyContent: 'center',
         alignItems: 'center'
       },
@@ -21,7 +21,7 @@ export default StyleSheet.create({
       },
       botWrap:{
         flex:.65,
-        backgroundColor:"#FFFFFF"
+        backgroundColor:MAIN_BG_COLOR
       },
       graphWrap:{
         flex: .75
