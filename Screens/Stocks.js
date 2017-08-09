@@ -4,29 +4,30 @@
 
 import React from 'react';
 import {
-  AppRegistry,
   View,
   ScrollView,
   Text,
   StyleSheet,
   Image,
   TextInput,
-  TouchableOpacity
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
-import { Slider, ListItem, Button, List, Icon, FormLabel, FormInput, Header } from 'react-native-elements';
+import { Card, Slider, ListItem, Button, List, Icon, Header } from 'react-native-elements';
 import tradeStyle from "./Styles/Default"
 import {observable} from "mobx"
 import {observer} from "mobx-react"
 import { COLOR_SCHEME, TEXT_SCHEME } from "./Styles/ColorScheme"
 import { VictoryBar, VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native'
+import Swiper from 'react-native-swiper'
+
 
 
 @observer
 export class StocksScreen extends React.Component {
   @observable currentInvestment = 100; /*Mobx Variable*/
+
   constructor(props)
   {
       super(props);
@@ -106,71 +107,60 @@ export class StocksScreen extends React.Component {
     this.currentInvestment = value
   }
   render() {
+    const { navigate } = this.props.navigation;
     var sectorTitle = Object.values(Profile.getTargetSectors())
     var stocksArray = Object.values(this.state.stocks)
     var sector = Object.values(stocksArray[User.getSectorPref()])
     return (
       <View style={tradeStyle.wrapper}>
-
-        <View style={tradeStyle.oneTop}>
-          <Text style={tradeStyle.title}>{sectorTitle[User.getSectorPref()]} STOCKS {this.state.order}</Text>
-          <Text>These are the stocks in the {sectorTitle[User.getSectorPref()]} sector that are suggesed to you, they are ordered {this.state.order}</Text>
-
-
+        <View style={tradeStyle.header}>
+          <Header
+            leftComponent={
+              <Icon
+              size={30}
+              name='menu'
+              onPress={()=>navigate('DrawerOpen')}/>
+            }
+            centerComponent={null}
+            rightComponent={<Icon
+            size={30}
+            name='home'
+            onPress={()=>navigate('Home')}/>}
+          />
+        </View>
+          <View style={tradeStyle.wrapper}>
           <Slider
             minimumValue={10}
             maximumValue={10000}
             value={this.state.invest}
-
             onSlidingComplete={(value) => this.foo(value)} />
-          <Text>Investing: ${this.currentInvestment.toFixed(2)} on {Profile.getInvestDate()}</Text>
-          {/*<Icon
-            reverse
-            name={this.state.icon}
-            onPress={() => this.switchOrder()}
-          />*/}
-        </View>
 
-        <View style={tradeStyle.oneBot}>
 
-          <List>
-          {
-            sector.map((company, i) => (
-              <ListItem
-                key={i}
-                containerStyle={{backgroundColor:COLOR_SCHEME[i]}}
+            <Swiper style={styles.wrapper}>
+            {
+              sector.map((company, i) => {
+                return (
+                  <View key={i} style={tradeStyle.pseudoCard, {backgroundColor: COLOR_SCHEME[i]}}>
 
-                title={company['name']}
-                titleStyle={{color:TEXT_SCHEME[i]}}
-                titleContainerStyle={tradeStyle.listContainer}
+                    <Text style={tradeStyle.title}>{company['name']}{i}</Text>
+                    <Text>Investing: ${this.currentInvestment.toFixed(2)} on {Profile.getInvestDate()}
+                     would give you ${this.simpleReturn(company['stock_data'])}</Text>
 
-                rightTitle={this.simpleReturn(company['stock_data'])}
-                rightTitleStyle={{color:TEXT_SCHEME[i], fontSize:18}}
+                    <VictoryChart theme={VictoryTheme.material}>
+                      <VictoryLine
+                        key={i}
+                        style={{ data: { stroke: TEXT_SCHEME[i]},
+                          parent: { border: "10px solid #000"}}}
+                        data={this.formatData(company['stock_data'])}
+                        />
+                    </VictoryChart>
 
-                subtitleNumberOfLines={2}
-                subtitleContainerStyle={tradeStyle.listContainer}
-                subtitleStyle={{color:TEXT_SCHEME[i]}}
-                subtitle={<Text>{'\t'} | {company['symbol']} {'\t'}| Cap: ${company['cap']}{'\t'}| Price: ${company['price']}</Text>}
-              />
-            ))
-          }
-          </List>
-
-          <View>
-            <VictoryChart theme={VictoryTheme.material}>
-              {sector.map((company, i) =>
-              <VictoryLine
-                key={i}
-                style={{
-                  data: { stroke: COLOR_SCHEME[i]},
-                  parent: { border: "1px solid #ccc"}
-                }}
-                data={this.formatData(company['stock_data'])}
-              />)}
-
-            </VictoryChart>
+                  </View>
+                )
+              })
+            }
+          </Swiper>
           </View>
-        </View>
       </View>
     );
   }

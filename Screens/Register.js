@@ -54,16 +54,16 @@ export class RegisterScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={regStyle.wrapper}>
+      <View style={tradeStyle.wrapper}>
 
-        <View style={regStyle.logTop}>
-          <Image source={require('./Images/TradeLife.png')} style={logStyle.logo}/>
+        <View style={tradeStyle.topWrap}>
+          <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>
         </View>
 
         {/* SHOW ERROR MESSAGE FROM SERVER */}
         <FormValidationMessage>{this.state.errMsg}</FormValidationMessage>
 
-        <View style={regStyle.logBot}>
+        <View style={tradeStyle.botWrap}>
           {/* Username Field */}
           <FormLabel fontFamily = 'monospace'>USERNAME</FormLabel>
           <FormInput
@@ -120,63 +120,3 @@ export class RegisterScreen extends React.Component {
     );
   }
 }
-
-regStyle = StyleSheet.create({
-    wrapper:{
-        flex: 1,
-        justifyContent: 'center'
-    },
-    logTop:{
-        flex: .25,
-        backgroundColor: '#FFFFFF', //Black
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    logBot:{
-        flex: .75,
-        backgroundColor: '#FFFFFF', //Black
-    },
-    defaultText:{
-        color: '#ffffff',
-        fontSize: 30
-    },
-    inputWrapper:{
-        flexDirection: "row",
-        marginVertical: 10,
-        height: 40,
-        backgroundColor: "transparent"
-    },
-    input: {
-        flex: 1,
-        paddingHorizontal: 10,
-        backgroundColor:"#fff"
-    },
-    formWrapper:{
-       paddingHorizontal: 20
-    },
-    loginButton:{
-        backgroundColor: "#16608B",
-        paddingVertical: 15,
-        marginVertical: 15,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    registerButton:{
-        backgroundColor: "#16608B",
-        paddingVertical: 10,
-        marginVertical: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    LoginText:{
-        color: '#FFFFFF', //White
-        fontSize: 18
-    },
-    forgotText:{
-        color: "#FFFFFF", //white
-        backgroundColor: "transparent",
-        textAlign: 'center'
-    }
-})
-
-AppRegistry.registerComponent('RegisterScreen', () => RegisterScreen);

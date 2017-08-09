@@ -18,8 +18,17 @@ import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Tab, Router, Drawer } from './Navigation/Router'
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
-import { Button, SideMenu, List, ListItem, Icon } from 'react-native-elements'
+import { Button, SideMenu, List, ListItem, Icon, Header } from 'react-native-elements'
 import tradeStyle from "./Styles/Default"
+
+class Logo extends React.Component {
+  render(){
+    return(
+      <View style={tradeStyle.temp}>
+        <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>
+      </View>
+    )}
+}
 
 export class HomeScreen extends React.Component {
 
@@ -57,13 +66,24 @@ export class HomeScreen extends React.Component {
 
     return (
       <View style={tradeStyle.wrapper}>
-        <Icon
-          reverse
-          name='add'
-          onPress={()=>navigate('DrawerOpen')}
-        />
+        <View style={tradeStyle.header}>
+          <Header
+            leftComponent={
+              <Icon
+              size={30}
+              name='menu'
+              onPress={()=>navigate('DrawerOpen')}/>
+            }
+            centerComponent={<Logo/>}
+            rightComponent={<Icon
+            size={30}
+            name='home'
+            onPress={()=>navigate('Home')}/>}
+          />
+        </View>
+
         <View style={tradeStyle.topWrap}>
-              <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>
+
         </View>
 
         <View style={tradeStyle.botWrap}>

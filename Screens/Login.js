@@ -14,8 +14,8 @@ import {
   Linking,
   Alert
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
+import { Icon } from 'react-native-elements'
 import User from "./Stores/UserStore"
 import Server from "./Stores/TradeLifeStore"
 import tradeStyle from "./Styles/Default"
@@ -30,7 +30,6 @@ import {
 // Login Loading Screen
 @observer
 export class LoginScreen extends React.Component {
-
     componentDidMount()
     {
       User.setError("")
