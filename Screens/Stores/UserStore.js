@@ -3,59 +3,61 @@ import {observable } from "mobx";
 class  UserStore{
 
   @observable userName = "sbMemtaquayle1"
-  @observable userPass = "Password"
+  @observable userPass = "sbMemtaquayle1#123"
+  @observable userMail = "example2@gmail.com"
   @observable tradeToken = ""
   @observable yodleeToken = ""
   @observable sectorPref = 0
   @observable error = ""
+  @observable tempKeys = []
 
-  getUserName(){
-    return this.userName;
-  }
+  /****************************************************************************/
+  getName(){ return this.userName;}
 
-  setUserName(name){
-    this.userName = name;
-  }
+  setName(name){ this.userName = name;}
+  /****************************************************************************/
 
-  setUserPass(pass){
-    this.userPass = pass
-  }
+  /****************************************************************************/
+  setPass(pass){ this.userPass = pass}
 
-  getUserPass(){
-    return this.userPass
-  }
-  getYodleeToken(){
-    return this.yodleeToken;
-  }
+  getPass(){ return this.userPass}
+  /****************************************************************************/
 
-  setYodleeToken(token){
-    this.yodleeToken = token;
-  }
+  /****************************************************************************/
+  getYodleeToken(){ return this.yodleeToken}
 
-  getTradeToken(){
-    return this.tradeToken;
-  }
+  setYodleeToken(token){ this.yodleeToken = token;}
+  /****************************************************************************/
 
-  setTradeToken(token){
-    this.tradeToken = token;
-  }
+  /****************************************************************************/
+  getTradeToken(){ return this.tradeToken;}
 
-  setSectorPref(sectorNum){
-    this.sectorPref = sectorNum
-  }
+  setTradeToken(token){ this.tradeToken = token;}
+  /****************************************************************************/
 
-  getSectorPref(){
-    return this.sectorPref
-  }
+  /****************************************************************************/
+  setSectorPref(sectorNum){ this.sectorPref = sectorNum}
 
-  setError(error){
-    this.error = error
-  }
+  getSectorPref(){  return this.sectorPref}
+  /****************************************************************************/
 
-  getError(error){
-    return this.error
-  }
+  /****************************************************************************/
+  setError(error){  this.error = error}
 
+  getError(error){  return this.error}
+  /****************************************************************************/
+
+  /****************************************************************************/
+  setMail(email){ this.userMail = email}
+
+  getMail(){ return this.userMail}
+  /****************************************************************************/
+
+  /****************************************************************************/
+  setTempKeys(arrObj){ this.tempKeys = arrObj}
+
+  getTempKeys(){ return this.tempKeys}
+  /****************************************************************************/
 }
 
 var User = new UserStore()

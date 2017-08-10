@@ -1,80 +1,20 @@
 // Author: Tyler Quayle
 // Date: June 23, 2017
-// Desc: Starting file for test app, contains the splash screen when the app is
-//        started. Also contains the routing table for rest of app
-
-//  TODO: - Seperate routingtable from this file, put into components
-//        - Seperate splash screen from file, put into components
 
 import React from 'react';
-import {AppRegistry, Text, View, Button, StyleSheet, Image} from 'react-native';
+import {AppRegistry} from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { LoginScreen } from './Screens/Login';
-import { RegisterScreen } from './Screens/Register';
-import { HomeScreen } from './Screens/Home';
-import { ForgotScreen } from './Screens/Forgot';
-import { FastLink } from './Screens/FastLink';
-import { TransactionScreen } from './Screens/Transactions'
-import { ProfileStocksScreen } from './Screens/Profile_Stocks';
-import { StocksScreen } from './Screens/Stocks';
-import { LoginLoadingScreen } from './Screens/Loading/LoginLoading'
-import { ProfileLoadingScreen } from './Screens/Loading/ProfileLoading'
-
+import { Icon } from 'react-native-elements'
+import { Router, Drawer, Hidden } from './Screens/Navigation/Router'
 
 /******************************************************************************/
 // Default class
-export default class SplashScreen extends React.Component {
-  static navigationOptions = {
-    title: "Hello", //Useless, a Placeholder
-  };
-  constructor(props) {
-    super(props);
-    const { navigate } = this.props.navigation;
-    setTimeout(() => { // Execute ONCE
-        this.setState(previousState => {navigate('Login')
-      });
-    }, 1000); //Milliseconds before switch
-  }
+export default class TradeLife extends React.Component {
+
   render() {
-    return (
-      <View style = {styles.splashScreen}>
-        <Image source={require('./Screens/Images/TechCliksLogo.png')}/>
-      </View>
-    );
+    return <Drawer />
   }
 }
-
-/******************************************************************************/
-// Routing table
-const TradeLife = StackNavigator(
-{
-  Splash: { screen: SplashScreen },
-  Login: { screen: LoginScreen },
-  Register:{screen: RegisterScreen},
-  Home: {screen: HomeScreen},
-  Forgot: {screen: ForgotScreen},
-  FastLink: {screen: FastLink},
-  Transact: {screen: TransactionScreen},
-  ProfileStocks: {screen: ProfileStocksScreen},
-  Stocks: { screen: StocksScreen },
-  LoginLoading: {screen: LoginLoadingScreen},
-  ProfileLoading: {screen: ProfileLoadingScreen},
-},
-navigationOptions =
-{
-  headerMode: 'none', //Get rid of headers
-});
-
-/******************************************************************************/
-// Style Sheet
-styles = StyleSheet.create({
-  splashScreen:{
-    flex: 1,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-})
 
 
 AppRegistry.registerComponent('TradeLife', () => TradeLife);

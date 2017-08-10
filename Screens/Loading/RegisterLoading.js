@@ -1,6 +1,6 @@
 // Author: Tyler Quayle
-// File: TransactionLoading.js
-// Date: July 28, 2017
+// File: RegisterLoading.js
+// Date: August 2, 2017
 
 import React from 'react';
 import {
@@ -18,19 +18,19 @@ import Server from "../Stores/TradeLifeStore"
 import Profile from "../Stores/ProfileStore"
 import loadStyle from "../Styles/LoadingStyle"
 
-export class TransactionLoadingScreen extends React.Component {
+export class RegisterLoadingScreen extends React.Component {
 
   constructor(props)
   {
       super(props);
-      this.state = {  message: "Generating Profile"};
+      this.state = {  message: "ATTEMPTING TO REGISTER"};
   }
   /**************************************************************************/
   componentDidMount() // Attempt to login.
   {
     const { navigate } = this.props.navigation;
-    console.log("---- ATTEMPTING TO GET PROFILE ----");
-    fetch(Server.getProfileURL(),
+    console.log("---- ATTEMPTING REGISTRATION ----");
+    fetch(Server.registerPutURL(),
     {
         method: 'post',
         headers:
@@ -40,10 +40,12 @@ export class TransactionLoadingScreen extends React.Component {
         },
         body:JSON.stringify(
         {
-            userName:User.getName(),
-            yodleeToken:User.getYodleeToken()
+            userName: User.getName(),
+            userPass: User.getPass(),
+            userEMail: User.getMail(),
         })
     })
+
     .then((response) => {
       // In this case, we check the content-type of the response
       if (response.headers.get('content-type').match(/application\/json/)) {
@@ -56,34 +58,21 @@ export class TransactionLoadingScreen extends React.Component {
          console.log(error);
          (response) => response.text();
      })
-
     .then((responseData) =>
     {
-        if (responseData.error == false) //Success move on
+        if (responseData.error == false) //Success, allow used in
         {
             const { navigate } = this.props.navigation;
-            console.log("---- PROFILE SUCCESSFUL ----");
-            this.setState({
-              message: "Profile Found.."})
-            Profile.setProfile(responseData.profile)
-            navigate('ProfileStocks')
+            console.log("---- REGISTRATION SUCCESSFUL ----");
+            navigate('Login');
         }
-        else if (responseData.error == true) // ERROR: display and remain
+        else if (responseData.error == true) //Success, allow used in
         {
-            if(responseData.error_code == 1){
-              console.log("---- NO TRANSACTION HISTORY  ----");
-              console.log(responseData);
-              navigate('Transact')
-            }
-            if(responseData.error_code == 2){
-              console.log("---- NO COMPANY DATABASE ----");
-              console.log(responseData);
-              navigate('Home')
-            }
-        }
-        else {
-          console.log("---- UNKNOWN ERROR ----");
-          console.log(responseData);
+            console.log("---- ERROR ON REGISTRATION ----");
+            console.log(responseData);
+            User.setError(responseData.message)
+            navigate('Register')
+
         }
     })
 
@@ -92,19 +81,18 @@ export class TransactionLoadingScreen extends React.Component {
 
 
   render() {
-      const { navigate } = this.props.navigation;
     return (
         <View style={loadStyle.bg, loadStyle.wrapper}>
 
             <View style={loadStyle.bg, loadStyle.topWrap}>
-                <Image source={require('../Images/TechCliksLogo.png')} />
+                <Image style={loadStyle.logo} source={require('../Images/TradeLife.png')} />
             </View>
 
             <View style={loadStyle.bg, loadStyle.midWrap}>
 
             <View style={loadStyle.bg, loadStyle.activityWrap}>
               <ActivityIndicator
-                color="#FFFFFF"
+                color="#000000"
                 style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
               />
             </View>

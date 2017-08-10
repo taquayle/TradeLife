@@ -1,19 +1,21 @@
 // Author: Tyler Quayle
-// File: Home.js
+// File: Transactions.js
 // Date: June 30, 2017
 
 import React from 'react';
 import {
-  AppRegistry, Text, View, Button,
+  AppRegistry, Text, View,
   StyleSheet, Image, TextInput, TouchableOpacity, Alert
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import store from "./Stores/UserStore"
+import tradeStyle from "./Styles/Default"
+import { Button } from 'react-native-elements';
 
 export class TransactionScreen extends React.Component {
   _onSubmit() // Attempt to login.
   {
-      let userNameInput = store.getUserName();
+      let userNameInput = store.getName();
       let yodToken = store.getYodleeToken();
 
       console.log("---- ATTEMPTING TO GET TRANSACTIONS ----");
@@ -68,21 +70,20 @@ export class TransactionScreen extends React.Component {
   }
   render() {
     return (
-      <View style={homeStyle.wrapper}>
-        <View style={homeStyle.homeTop}>
-            <Image source={require('./Images/TechCliksLogo.png')} />
+      <View style={tradeStyle.wrapper}>
+        <View style={tradeStyle.topWrap}>
+            <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>
         </View>
 
-        <View style={homeStyle.homeBot}>
-          {/* Login Button */}
-          <TouchableOpacity activeOpacity={.5}
-          onPress={this._onSubmit.bind(this)}>
-              <View style={logStyle.loginButton} >
-                  <Text style={logStyle.LoginText}>
-                      Update
-                  </Text>
-              </View>
-          </TouchableOpacity>
+        <View style={tradeStyle.botWrap}>
+        <Button
+          large
+          icon={{name: 'autorenew', size: 32}}
+          buttonStyle={{backgroundColor: 'red', borderRadius: 40, marginVertical: 10}}
+          textStyle={{textAlign: 'center'}}
+          title={`Update Transactions`}
+          onPress={this._onSubmit.bind(this)}
+        />
         </View>
       </View>
     )

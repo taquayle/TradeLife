@@ -6,6 +6,8 @@ class  ProfileStore{
   @observable profileExists = false;
   @observable desc_key = {}
   @observable cate_key = {}
+  @observable invest_date = {}
+  @observable user_key = {}
   @observable cap_stocks = {}
   @observable disruptive_stocks = {}
   @observable sector = {}
@@ -13,14 +15,38 @@ class  ProfileStore{
   setProfile(profile){
     this.setDescKeys(profile['Desc_Keywords']);
     this.setCateKeys(profile['Cate_Keywords']);
+    this.setUserKeys(profile['User_Keywords']);
     this.setCapStocks(profile['Target_Companies']['Cap']);
     this.setDisruptiveStocks(profile['Target_Companies']['Disruptive']);
     this.setTargetSectors(profile['Target_Sectors']['Sectors']);
+    this.setInvestDate(profile['Invest_Date'])
     this.profileExists = true;
   }
   exists(){
     return this.profileExists;
   }
+
+  /****************************************************************************/
+  getUserKeys(){
+    return this.user_key
+  }
+
+  setUserKeys(objArray){
+    this.user_key = objArray
+  }
+  /****************************************************************************/
+
+  /****************************************************************************/
+  setInvestDate(objArray){
+    this.invest_date = objArray;
+  }
+
+  getInvestDate(){
+    return this.invest_date
+  }
+  /****************************************************************************/
+
+  /****************************************************************************/
   getDescKeys(){
     return this.desc_key;
   }
@@ -28,7 +54,9 @@ class  ProfileStore{
   setDescKeys(objArray){
     this.desc_key = objArray
   }
+  /****************************************************************************/
 
+  /****************************************************************************/
   getCateKeys(){
     return this.cate_key;
   }
@@ -36,7 +64,9 @@ class  ProfileStore{
   setCateKeys(objArray){
     this.cate_key = objArray
   }
+  /****************************************************************************/
 
+  /****************************************************************************/
   getCapStocks(){
     return this.cap_stocks;
   }
@@ -44,7 +74,9 @@ class  ProfileStore{
   setCapStocks(objArray){
     this.cap_stocks = objArray
   }
+  /****************************************************************************/
 
+  /****************************************************************************/
   getDisruptiveStocks(){
     return this.disruptive_stocks
   }
@@ -52,7 +84,9 @@ class  ProfileStore{
   setDisruptiveStocks(objArray){
     this.disruptive_stocks = objArray
   }
+  /****************************************************************************/
 
+  /****************************************************************************/
   setTargetSectors(objArray){
     this.sector = objArray;
   }
@@ -60,7 +94,7 @@ class  ProfileStore{
   getTargetSectors(){
     return this.sector
   }
-
+  /****************************************************************************/
 }
 
 var Profile = new ProfileStore()

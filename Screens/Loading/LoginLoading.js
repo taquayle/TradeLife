@@ -1,6 +1,6 @@
 // Author: Tyler Quayle
-// File: Home.js
-// Date: June 23, 2017
+// File: LoginLoading.js
+// Date: July 28, 2017
 
 import React from 'react';
 import {
@@ -16,21 +16,21 @@ import { StackNavigator } from 'react-navigation';
 import User from "../Stores/UserStore"
 import Server from "../Stores/TradeLifeStore"
 import Profile from "../Stores/ProfileStore"
-
+import loadStyle from "../Styles/LoadingStyle"
 
 export class LoginLoadingScreen extends React.Component {
 
   constructor(props)
   {
       super(props);
-      this.state = {  message: "Attempting Login"};
+      this.state = {  message: "ATTEMPTING LOGIN...."};
   }
   /**************************************************************************/
   componentDidMount() // Attempt to login.
   {
       const { navigate } = this.props.navigation;
       console.log("---- ATTEMPTING LOGIN ----");
-      fetch(Server.getLoginURL(),
+      fetch(Server.loginURL(),
       {
           method: 'post',
           headers:
@@ -40,8 +40,8 @@ export class LoginLoadingScreen extends React.Component {
           },
           body:JSON.stringify(
           {
-              userName:User.getUserName(),
-              userPassword:User.getUserPass()
+              userName:User.getName(),
+              userPassword:User.getPass()
           })
       })
 
@@ -59,14 +59,19 @@ export class LoginLoadingScreen extends React.Component {
        })
       .then((responseData) =>
       {
-          if (responseData.error == false) //Success, allow used in
+
+          if(responseData == null){
+            console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
+              User.setError("Could not connect to server")
+              navigate('Login')
+          }
+          else if (responseData.error == false) //Success, allow used in
           {
               console.log("---- LOGIN SUCCESSFUL ----");
               User.setYodleeToken(responseData.yodleeToken);
               this.setState({
-                message: "Login Successful.. Getting profile"})
+                message: "LOGIN SUCCESSFUL"})
               this.getUserProfile()
-              navigate('Home');
           }
           else if (responseData.error == true) //Success, allow used in
           {
@@ -83,14 +88,15 @@ export class LoginLoadingScreen extends React.Component {
             navigate('Login');
           }
       })
-
-      .done();
   }
 
   getUserProfile()
   {
+    const { navigate } = this.props.navigation;
     console.log("---- ATTEMPTING TO GET PROFILE ----");
-    fetch(Server.getProfileURL(),
+    this.setState({
+      message: "GETTING PROFILE"})
+    fetch(Server.profileGetURL(),
     {
         method: 'post',
         headers:
@@ -100,7 +106,7 @@ export class LoginLoadingScreen extends React.Component {
         },
         body:JSON.stringify(
         {
-            userName:User.getUserName(),
+            userName:User.getName(),
             yodleeToken:User.getYodleeToken()
         })
     })
@@ -119,13 +125,14 @@ export class LoginLoadingScreen extends React.Component {
 
     .then((responseData) =>
     {
+
         if (responseData.error == false) //Success move on
         {
             const { navigate } = this.props.navigation;
             console.log("---- PROFILE SUCCESSFUL ----");
             console.log(responseData.profile)
             this.setState({
-              message: "Profile Found.."})
+              message: "PROFILE FOUND"})
             Profile.setProfile(responseData.profile)
         }
         else if (responseData.error == true) // ERROR: display and remain
@@ -137,36 +144,36 @@ export class LoginLoadingScreen extends React.Component {
           console.log("---- UNKNOWN ERROR ----");
           console.log(responseData);
         }
+        navigate('Home')
     })
 
-    .done();
   }
 
   render() {
       const { navigate } = this.props.navigation;
     return (
-        <View style={loading.bg, loading.wrapper}>
+        <View style={loadStyle.bg, loadStyle.wrapper}>
 
-            <View style={loading.bg, loading.topWrap}>
-                <Image source={require('../Images/TechCliksLogo.png')} />
+            <View style={loadStyle.bg, loadStyle.topWrap}>
+                <Image style={loadStyle.logo} source={require('../Images/TradeLife.png')} />
             </View>
 
-            <View style={loading.bg, loading.midWrap}>
+            <View style={loadStyle.bg, loadStyle.midWrap}>
 
-            <View style={loading.bg, loading.activityWrap}>
+            <View style={loadStyle.bg, loadStyle.activityWrap}>
               <ActivityIndicator
-                color="#FFFFFF"
-                style={[loading.bg, {transform: [{scale: 5.5}]}]}
+                color="#000000"
+                style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
               />
             </View>
 
-            <View style={loading.bg, loading.textWrap}>
-              <Text style={loading.loadingText}>{this.state.message}</Text>
+            <View style={loadStyle.bg, loadStyle.textWrap}>
+              <Text style={loadStyle.loadingText}>{this.state.message}</Text>
             </View>
 
             </View>
 
-            <View style={loading.bg, loading.bottomBuffer}>
+            <View style={loadStyle.bg, loadStyle.bottomBuffer}>
             </View>
         </View>
     );
@@ -174,18 +181,24 @@ export class LoginLoadingScreen extends React.Component {
 }
 
 loading = StyleSheet.create({
+    logo:{
+      resizeMode: 'contain',
+      height: 45,
+      backgroundColor: 'transparent'
+    },
     bg:{
-      backgroundColor: '#000000', //Black
+      backgroundColor: '#FFFFFF', //Black
     },
     centering: {
       flex: 2,
     },
     wrapper:{
         flex: 1,
-        backgroundColor: '#000000', //Black
+        backgroundColor: '#FFFFFF', //Black
     },
     topWrap:{
         flex: 1,
+        alignItems:'center'
     },
     midWrap:{
         flex: 2,
@@ -204,8 +217,9 @@ loading = StyleSheet.create({
         flex: 2,
     },
     loadingText:{
-        color: '#ffffff',
+        color: '#000000',
         fontSize: 20,
-        alignItems: 'center'
+        alignItems: 'center',
+        fontFamily:'monospace'
     },
 })

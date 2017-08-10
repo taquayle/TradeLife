@@ -2,33 +2,44 @@
 // File: Home.js
 // Date: June 23, 2017
 
+
 import React from 'react';
 import {
   AppRegistry,
   Text,
   View,
-  Button,
   StyleSheet,
   Image,
   TextInput,
   TouchableOpacity,
   Alert
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { Tab, Router, Drawer } from './Navigation/Router'
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
+import { Button, SideMenu, List, ListItem, Icon, Header } from 'react-native-elements'
+import tradeStyle from "./Styles/Default"
 
+class Logo extends React.Component {
+  render(){
+    return(
+      <View style={tradeStyle.temp}>
+        <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>
+      </View>
+    )}
+}
 
 export class HomeScreen extends React.Component {
-  constructor(props)
-  {
-      super(props);
+
+
+  constructor (props) {
+    super(props)
   }
 
   _onProfileStockClick(){
+    console.log("--- Going to Profile-STOCKS ---")
     const { navigate } = this.props.navigation;
-    console.log("DOES PROFILE EXIST?")
-    console.log(Profile.exists())
     if (Profile.exists()){
       navigate('ProfileStocks')
     }
@@ -39,100 +50,83 @@ export class HomeScreen extends React.Component {
   }
 
   _onProfileKeywordClick(){
+    console.log("--- Going to Profile-KEYWORDS ---")
     const { navigate } = this.props.navigation;
     if (Profile.exists()){
-      navigate('Profile')
+      navigate('ProfileKeywords')
     }
-    navigate('ProfileLoading')
+    else{
+      navigate('ProfileLoading')
+    }
   }
 
+
   render() {
-      const { navigate } = this.props.navigation;
+    const { navigate } = this.props.navigation;
+
     return (
-        <View style={homeStyle.wrapper}>
-
-            <View style={homeStyle.homeTop}>
-                <Image source={require('./Images/TechCliksLogo.png')} />
-            </View>
-
-            <View style={homeStyle.homeBot}>
-
-                <TouchableOpacity activeOpacity={.5}
-                onPress={this._onProfileStockClick.bind(this)}>
-                    <View style={homeStyle.button} >
-                        <Text style={homeStyle.LoginText}>
-                            Stocks
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity activeOpacity={.5}
-                onPress={this._onProfileKeywordClick.bind(this)}>
-                    <View style={homeStyle.button} >
-                        <Text style={homeStyle.LoginText}>
-                            Keywords
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                {/* Register Button */}
-                <TouchableOpacity activeOpacity={.5}
-                onPress={() => navigate('Transact')}>
-                    <View style={homeStyle.button} >
-                        <Text style={homeStyle.LoginText}>
-                            Update Transactions
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                {/* Register Button */}
-                <TouchableOpacity activeOpacity={.5}
-                onPress={() => navigate('FastLink')}>
-                    <View style={homeStyle.button} >
-                        <Text style={homeStyle.LoginText}>
-                            FastLink, not implemented
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+      <View style={tradeStyle.wrapper}>
+        <View style={tradeStyle.header}>
+          <Header
+            leftComponent={
+              <Icon
+              size={30}
+              name='menu'
+              onPress={()=>navigate('DrawerOpen')}/>
+            }
+            centerComponent={<Logo/>}
+            rightComponent={<Icon
+            size={30}
+            name='home'
+            onPress={()=>navigate('Home')}/>}
+          />
         </View>
+
+        <View style={tradeStyle.topWrap}>
+
+        </View>
+
+        <View style={tradeStyle.botWrap}>
+
+          <Button
+            large
+            icon={{name: 'trending-up', size: 32}}
+            buttonStyle={{backgroundColor: 'red', borderRadius: 40, marginVertical: 10}}
+            textStyle={{textAlign: 'center'}}
+            title={`Stocks`}
+            onPress={this._onProfileStockClick.bind(this)}
+          />
+
+
+          <Button
+            large
+            icon={{name: 'vpn-key', size: 32}}
+            buttonStyle={{backgroundColor: 'blue', borderRadius: 40, marginVertical: 10}}
+            textStyle={{textAlign: 'center'}}
+            title={`Keywords`}
+            onPress={this._onProfileKeywordClick.bind(this)}
+          />
+
+
+          <Button
+            large
+            icon={{name: 'receipt', size: 32}}
+            buttonStyle={{backgroundColor: 'green', borderRadius: 40, marginVertical: 10}}
+            textStyle={{textAlign: 'center'}}
+            title={`Transactions`}
+            onPress={() => navigate('Transact')}
+          />
+
+          <Button
+            large
+            icon={{name: 'link', size: 32}}
+            buttonStyle={{backgroundColor: 'orange', borderRadius: 40, marginVertical: 10}}
+            textStyle={{textAlign: 'center'}}
+            title={`FastLink`}
+            onPress={() => navigate('FastLink')}
+          />
+        </View>
+      </View>
     );
   }
 }
-
-homeStyle = StyleSheet.create({
-
-    wrapper:{
-        flex: 1,
-        backgroundColor: '#000000'
-    },
-    homeTop:{
-        flex: 1,
-        backgroundColor: '#000000', //Black
-    },
-    homeBot:{
-        flex: 2,
-        backgroundColor: '#000000', //Black
-        flexDirection: 'column'
-    },
-    homeText:{
-        color: '#ffffff',
-        fontSize: 30,
-    },
-    homeCont:{
-      flex: 1,
-    },
-    button:{
-        backgroundColor: "#16608B",
-        paddingVertical: 10,
-        marginVertical: 30,
-        paddingHorizontal: 20,
-        marginHorizontal: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    LoginText:{
-        color: '#FFFFFF', //White
-        fontSize: 18
-    },
-})

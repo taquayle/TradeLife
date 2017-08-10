@@ -1,6 +1,6 @@
 // Author: Tyler Quayle
-// File: Home.js
-// Date: July 26, 2017
+// File: Profile_Stocks.js
+// Date: August 2, 2017
 
 import React from 'react';
 import {
@@ -18,7 +18,8 @@ import {observer} from "mobx-react";
 import { toJS } from 'mobx';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
-//import { Button } from 'react-native-elements';
+import { Card, ListItem, Button, List } from 'react-native-elements';
+import tradeStyle from "./Styles/Default"
 
 @observer
 export class ProfileStocksScreen extends React.Component {
@@ -29,121 +30,41 @@ export class ProfileStocksScreen extends React.Component {
     navigate('Stocks');
   }
 
-  _refresh()
-  {
-    const { navigate } = this.props.navigation;
-    navigate('ProfileLoading');
-  }
-  showKeyWords(input)
-  {
-    console.log("--- Keywords ---")
-    console.log(input)
-
-    var arr = Object.values(input);
-
-    console.log(arr)
-
-    var arr0 = Object.values(arr[0]);
-    return arr.map(function(word){
-        return(<Text>{word['Name']}</Text>)
-    });
-  }
-  render() {
+  render(){
     const { navigate } = this.props.navigation;
     var sector = Object.values(Profile.getTargetSectors())
-    return (
+    return(
+      <View style={tradeStyle.wrapper}>
+        <View style={tradeStyle.topWrap}>
+          <Text style={tradeStyle.title}> SUGGESTED SECTORS
 
-      <View style ={profileStyle.profileWrapper}>
+          </Text>
 
-          <View style={profileStyle.profileContainer1}>
-            <Text style={profileStyle.profileText1}>Stocks for: {User.getUserName()}</Text>
-            {/* Login Button */}
-          </View>
+          <Text style={tradeStyle.text}>Based on your Transaction keywords, these are the sectors you spend the most money in.</Text>
 
-
-            <View style={profileStyle.profileContainer2}>
-              <TouchableHighlight
-              onPress={this._onClick.bind(this, 0)}>
-                  <Text style={profileStyle.profileText2}>{sector[0]}</Text>
-              </TouchableHighlight>
-            </View>
+          <Button
+            icon={{name: 'autorenew', size: 32}}
+            buttonStyle={{backgroundColor: "#16608B", borderRadius: 40, marginVertical: 10}}
+            textStyle={{textAlign: 'center'}}
+            title={'Refresh'}
+            onPress={() => navigate('ProfileLoading')}
+          />
+        </View>
 
 
-
-
-            <View style={profileStyle.profileContainer3}>
-              <TouchableHighlight style={profileStyle.bigButton}
-              onPress={this._onClick.bind(this,1)}>
-                  <Text style={profileStyle.profileText3}>{sector[1]}</Text>
-              </TouchableHighlight>
-            </View>
-
-            <View style={profileStyle.profileContainer4}>
-              <TouchableHighlight style={profileStyle.bigButton}
-              onPress={this._onClick.bind(this, 2)}>
-                  <Text style={profileStyle.profileText4}>{sector[2]}</Text>
-              </TouchableHighlight>
-            </View>
+          <List containerStyle={tradeStyle.botWrap}>
+          {
+            sector.map((l, i) => (
+              <ListItem
+                key={i}
+                title={l}
+                onPress={this._onClick.bind(this, i)}
+              />
+            ))
+          }
+          </List>
 
       </View>
-    )
+    );
   }
 }
-
-profileStyle = StyleSheet.create({
-    profileWrapper:{
-        flex: 1,
-        backgroundColor:"#000000"
-    },
-    profileContainer1:{
-      flex:1,
-      backgroundColor:"#000000",
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    profileContainer2:{
-      flex:1,
-      backgroundColor:"#011622"
-    },
-    refreshButton:{
-      height:70,
-      width:70,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'flex-end',
-      backgroundColor: "#16608B"
-    },
-    profileContainer3:{
-      flex:1,
-      backgroundColor:"#030525"
-    },
-    profileContainer4:{
-      flex:1,
-      backgroundColor:"#002613"
-    },
-    profileText1:{
-        color: '#ffffff',
-        fontSize: 30,
-    },
-    profileText2:{
-        color: '#05456B',
-        fontSize: 30,
-    },
-    profileText3:{
-        color: '#0C1475',
-        fontSize: 30,
-    },
-    profileText4:{
-        color: '#00763A',
-        fontSize: 30,
-    },
-    profileButton:{
-        backgroundColor: "#16608B",
-        paddingVertical: 10,
-        marginVertical: 30,
-        paddingHorizontal: 20,
-        marginHorizontal: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-})
