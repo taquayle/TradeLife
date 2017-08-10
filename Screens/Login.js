@@ -19,6 +19,7 @@ import { Icon } from 'react-native-elements'
 import User from "./Stores/UserStore"
 import Server from "./Stores/TradeLifeStore"
 import tradeStyle from "./Styles/Default"
+import {COLOR_SCHEME, TEXT_SCHEME, MAIN_BG_COLOR} from './Styles/ColorScheme'
 import {
     Button,
     FormInput,
@@ -32,6 +33,7 @@ import {
 export class LoginScreen extends React.Component {
     componentDidMount()
     {
+      //dispatch({type: 'Reset', index: 0, actions: [{ type: 'Navigate', routeName:'Login'}]})
       User.setError("")
     }
     constructor(props)
@@ -75,7 +77,7 @@ export class LoginScreen extends React.Component {
                         <FormInput onChangeText={(uName) => this.setState({uName})}/>
                         {/* Password Field */}
                         <FormLabel fontFamily = 'monospace'>PASSWORD</FormLabel>
-                        <FormInput onChangeText={(pWord) => this.setState({pWord})}/>
+                        <FormInput secureTextEntry onChangeText={(pWord) => this.setState({pWord})}/>
                     </View>
 
 
@@ -100,8 +102,8 @@ export class LoginScreen extends React.Component {
 
                         {/* Forgot Password*/}
                         <Button
-                          buttonStyle={{backgroundColor: 'white', borderRadius: 10}}
-                          textStyle={{color: '#000000', textAlign: 'center', fontFamily:'monospace'}}
+                          buttonStyle={{backgroundColor: MAIN_BG_COLOR, borderRadius: 10}}
+                          textStyle={{color: "#000000", textAlign: 'center', fontFamily:'monospace'}}
                           title={`FORGOT PASSWORD`}
                           onPress={() => navigate('Forgot')}
                         />

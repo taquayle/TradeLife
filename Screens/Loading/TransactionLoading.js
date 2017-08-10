@@ -23,14 +23,14 @@ export class TransactionLoadingScreen extends React.Component {
   constructor(props)
   {
       super(props);
-      this.state = {  message: "Generating Profile"};
+      this.state = {  message: "Getting Transactions..."};
   }
   /**************************************************************************/
   componentDidMount() // Attempt to login.
   {
-    const { navigate } = this.props.navigation;
-    console.log("---- ATTEMPTING TO GET PROFILE ----");
-    fetch(Server.getProfileURL(),
+
+    console.log("---- ATTEMPTING TO GET TRANSACTIONS ----");
+    fetch(Server.transactionPutURL(),
     {
         method: 'post',
         headers:
@@ -44,6 +44,7 @@ export class TransactionLoadingScreen extends React.Component {
             yodleeToken:User.getYodleeToken()
         })
     })
+
     .then((response) => {
       // In this case, we check the content-type of the response
       if (response.headers.get('content-type').match(/application\/json/)) {
@@ -56,34 +57,22 @@ export class TransactionLoadingScreen extends React.Component {
          console.log(error);
          (response) => response.text();
      })
-
     .then((responseData) =>
     {
-        if (responseData.error == false) //Success move on
+        console.log("---- SERVER RESPONSE ----");
+        console.log(responseData);
+
+        if (responseData.error == false) //Success, allow used in
         {
             const { navigate } = this.props.navigation;
-            console.log("---- PROFILE SUCCESSFUL ----");
-            this.setState({
-              message: "Profile Found.."})
-            Profile.setProfile(responseData.profile)
-            navigate('ProfileStocks')
+            console.log("---- TRANSACTIONS UPDATED ----");
+            navigate('Transact');
         }
-        else if (responseData.error == true) // ERROR: display and remain
+        else // ERROR: display and remain
         {
-            if(responseData.error_code == 1){
-              console.log("---- NO TRANSACTION HISTORY  ----");
-              console.log(responseData);
-              navigate('Transact')
-            }
-            if(responseData.error_code == 2){
-              console.log("---- NO COMPANY DATABASE ----");
-              console.log(responseData);
-              navigate('Home')
-            }
-        }
-        else {
-          console.log("---- UNKNOWN ERROR ----");
-          console.log(responseData);
+            console.log("---- COULD NOT GET TRANSACTIONS ----");
+            console.log(responseData);
+            navigate('Transact')
         }
     })
 
@@ -97,14 +86,14 @@ export class TransactionLoadingScreen extends React.Component {
         <View style={loadStyle.bg, loadStyle.wrapper}>
 
             <View style={loadStyle.bg, loadStyle.topWrap}>
-                <Image source={require('../Images/TechCliksLogo.png')} />
+                <Image style={loadStyle.logo} source={require('../Images/TradeLife.png')} />
             </View>
 
             <View style={loadStyle.bg, loadStyle.midWrap}>
 
             <View style={loadStyle.bg, loadStyle.activityWrap}>
               <ActivityIndicator
-                color="#FFFFFF"
+                color="#000000"
                 style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
               />
             </View>

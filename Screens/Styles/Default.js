@@ -2,41 +2,60 @@ import { StyleSheet } from 'react-native';
 import { MAIN_BG_COLOR } from './ColorScheme'
 
 export default StyleSheet.create({
-  header:{
-    flex: .10,
-    flexDirection:'row',
-    alignItems:'center'
-  },
-  temp:{
-    flex: 1,
-    alignItems:'center',
-    justifyContent: 'center',
-    backgroundColor:MAIN_BG_COLOR
-  },
+
   wrapper:{
       flex: 1,
       backgroundColor:MAIN_BG_COLOR
   },
-  wrap:{},
-  listContainer: {
-    width: 300,
+  header:{
+    flex: .1,
+    flexDirection:'row',
+    justifyContent: 'center'
   },
-
-
   topWrap:{
-    flex:.25,
+    flex:.2,
     backgroundColor:MAIN_BG_COLOR,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  botWrap:{
+    flex:.7,
+    backgroundColor:MAIN_BG_COLOR
+  },
+
+  title:{
+    color: "#000000",
+    textAlign: 'center',
+    fontFamily:'monospace',
+    fontSize: 30
+  },
+  h1:{
+    color: "#000000",
+    textAlign: 'center',
+    fontFamily:'monospace',
+    fontSize: 20
+  },
+  h2:{
+    color: "#000000",
+    textAlign: 'center',
+    fontFamily:'monospace',
+    fontSize: 16
+  },
+  body:{
+    color: "#000000",
+    fontFamily:'monospace',
+    fontSize: 12
+  },
+
+
+  wrap:{},
+  listContainer: {
+    width: 300,
   },
   titleWrap:{
     flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  botWrap:{
-    flex:.65,
-    backgroundColor:MAIN_BG_COLOR
   },
   graphWrap:{
     flex: .75
@@ -51,17 +70,15 @@ export default StyleSheet.create({
     flex:.5,
     flexDirection:'row'
   },
-  title:{
-      color: '#000000',
-      fontSize: 30,
-  },
+
   text:{
       color: '#000000',
       fontSize: 15,
   },
   logo:{
     resizeMode: 'contain',
-    height: 45,
+    height: 30,
+    width: 220,
     backgroundColor: 'transparent',
   },
   pseudoCard:{

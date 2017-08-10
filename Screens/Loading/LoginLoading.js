@@ -73,7 +73,7 @@ export class LoginLoadingScreen extends React.Component {
                 message: "LOGIN SUCCESSFUL"})
               this.getUserProfile()
           }
-          else if (responseData.error == true) //Success, allow used in
+          else if (responseData.error == true)
           {
               console.log("---- LOGIN FAILED ----");
               console.log(responseData);

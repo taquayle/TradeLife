@@ -11,6 +11,14 @@ class  UserStore{
   @observable error = ""
   @observable tempKeys = []
 
+  signOut(){
+    this.setName("")
+    this.setPass("")
+    this.setMail("")
+    this.setTradeToken("")
+    this.setYodleeToken("")
+    this.setTempKeys([])
+  }
   /****************************************************************************/
   getName(){ return this.userName;}
 

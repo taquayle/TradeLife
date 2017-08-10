@@ -50,7 +50,16 @@ export class KeywordsUserScreen extends React.Component {
 
     return(
       <View style={tradeStyle.wrapper}>
+        <View style={tradeStyle.header}>
+          <Header
+            leftComponent={   <Icon size={30} name='menu' onPress={()=>navigate('DrawerOpen')}/>}
+            centerComponent={ <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>}
+            rightComponent={  <Icon size={30} name='home' onPress={()=>navigate('Home')}/>}
+          />
+        </View>
         <View style={tradeStyle.topWrap}>
+
+
           <View style={tradeStyle.titleWrap}>
             <Icon reverse name='person'/>
             <Text style={tradeStyle.title}>USER KEYWORDS</Text>

@@ -115,34 +115,25 @@ export class StocksScreen extends React.Component {
       <View style={tradeStyle.wrapper}>
         <View style={tradeStyle.header}>
           <Header
-            leftComponent={
-              <Icon
-              size={30}
-              name='menu'
-              onPress={()=>navigate('DrawerOpen')}/>
-            }
-            centerComponent={null}
-            rightComponent={<Icon
-            size={30}
-            name='home'
-            onPress={()=>navigate('Home')}/>}
+            leftComponent={   <Icon size={30} name='menu' onPress={()=>navigate('DrawerOpen')}/>}
+            centerComponent={ <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>}
+            rightComponent={  <Icon size={30} name='home' onPress={()=>navigate('Home')}/>}
           />
         </View>
-          <View style={tradeStyle.wrapper}>
-          <Slider
-            minimumValue={10}
-            maximumValue={10000}
-            value={this.state.invest}
-            onSlidingComplete={(value) => this.foo(value)} />
 
-
-            <Swiper style={styles.wrapper}>
+        <View style={stockStyle.botWrap}>
+        <Slider
+          minimumValue={10}
+          maximumValue={10000}
+          value={this.state.invest}
+          onSlidingComplete={(value) => this.foo(value)} />
+            <Swiper>
             {
               sector.map((company, i) => {
                 return (
-                  <View key={i} style={tradeStyle.pseudoCard, {backgroundColor: COLOR_SCHEME[i]}}>
+                  <View key={i} style={tradeStyle.wrapper,{backgroundColor: COLOR_SCHEME[i]}}>
 
-                    <Text style={tradeStyle.title}>{company['name']}{i}</Text>
+                    <Text style={tradeStyle.h1}>{company['name']}</Text>
                     <Text>Investing: ${this.currentInvestment.toFixed(2)} on {Profile.getInvestDate()}
                      would give you ${this.simpleReturn(company['stock_data'])}</Text>
 
@@ -154,14 +145,32 @@ export class StocksScreen extends React.Component {
                         data={this.formatData(company['stock_data'])}
                         />
                     </VictoryChart>
-
+                    <Text> Just Temp stuff </Text>
+                    <Text> Just Temp stuff </Text>
+                    <Text> Just Temp stuff </Text>
+                    <Text> Just Temp stuff </Text>
+                    <Text> Just Temp stuff </Text>
+                    <Text> Just Temp stuff </Text>
                   </View>
                 )
               })
             }
           </Swiper>
-          </View>
+        </View>
       </View>
     );
   }
 }
+
+stockStyle = StyleSheet.create({
+    topWrap:{
+      flex:.15,
+      backgroundColor:"#FFFFFF",
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    botWrap:{
+      flex:1,
+      backgroundColor:"#FFFFFF",
+    },
+})

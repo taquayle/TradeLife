@@ -4,13 +4,13 @@ class  ProfileStore{
 
   @observable userName = ""
   @observable profileExists = false;
-  @observable desc_key = {}
-  @observable cate_key = {}
-  @observable invest_date = {}
-  @observable user_key = {}
-  @observable cap_stocks = {}
-  @observable disruptive_stocks = {}
-  @observable sector = {}
+  @observable desc_key = null
+  @observable cate_key = null
+  @observable invest_date = null
+  @observable user_key = null
+  @observable cap_stocks = null
+  @observable disruptive_stocks = null
+  @observable sector = null
 
   setProfile(profile){
     this.setDescKeys(profile['Desc_Keywords']);
@@ -22,6 +22,17 @@ class  ProfileStore{
     this.setInvestDate(profile['Invest_Date'])
     this.profileExists = true;
   }
+  signOut(){
+    this.setDescKeys({});
+    this.setCateKeys({});
+    this.setUserKeys({});
+    this.setCapStocks({});
+    this.setDisruptiveStocks({});
+    this.setTargetSectors({});
+    this.setInvestDate({})
+    this.profileExists = false;
+  }
+
   exists(){
     return this.profileExists;
   }

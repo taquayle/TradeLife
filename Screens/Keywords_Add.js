@@ -75,7 +75,15 @@ export class KeywordsAddScreen extends React.Component {
 
 
       <View style={tradeStyle.wrapper}>
-        <View style={tradeStyle.topWrap}>
+        <View style={tradeStyle.header}>
+          <Header
+            leftComponent={   <Icon size={30} name='menu' onPress={()=>navigate('DrawerOpen')}/>}
+            centerComponent={ <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>}
+            rightComponent={  <Icon size={30} name='home' onPress={()=>navigate('Home')}/>}
+          />
+        </View>
+        <View style={addStyle.topWrap}>
+
           <Text style={tradeStyle.title}> ADD KEYWORDS</Text>
 
           {/* SHOW ERROR MESSAGE FROM SERVER */}
@@ -99,7 +107,7 @@ export class KeywordsAddScreen extends React.Component {
           </View>
         </View>
 
-        <View style={tradeStyle.botWrap}>
+        <View style={addStyle.botWrap}>
           <ScrollView >
             <List>
             {
@@ -123,34 +131,14 @@ export class KeywordsAddScreen extends React.Component {
 }
 
 addStyle = StyleSheet.create({
-    wrapper:{
-        flex: 1,
-        backgroundColor:"#FFFFFF"
-    },
     topWrap:{
-      flex:.35,
+      flex:.55,
       backgroundColor:"#FFFFFF",
       justifyContent: 'center',
       alignItems: 'center'
     },
-    titleAndForm:{
-      flex:.5,
-    },
-    buttonWrap:{
-      flex:.5,
-      flexDirection:'row'
-    },
     botWrap:{
-      flex:.65,
+      flex:.35,
       backgroundColor:"#FFFFFF",
-    },
-    title:{
-        color: '#000000',
-        fontSize: 30,
-        textAlign: 'center'
-    },
-    text:{
-        color: '#000000',
-        fontSize: 15,
     },
 })
