@@ -6,11 +6,12 @@ import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
-import tradeStyle from "./Styles/Default"
+import tradeStyle from "./Styles/DefaultStyle"
 import { Button, Header, Icon } from 'react-native-elements';
 
 export class TransactionScreen extends React.Component {
-
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
   render() {
     console.log("At Trans");
     const { navigate } = this.props.navigation;

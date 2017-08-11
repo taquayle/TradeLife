@@ -23,13 +23,13 @@ class  ProfileStore{
     this.profileExists = true;
   }
   signOut(){
-    this.setDescKeys({});
-    this.setCateKeys({});
-    this.setUserKeys({});
-    this.setCapStocks({});
-    this.setDisruptiveStocks({});
-    this.setTargetSectors({});
-    this.setInvestDate({})
+    this.setDescKeys(null);
+    this.setCateKeys(null);
+    this.setUserKeys(null);
+    this.setCapStocks(null);
+    this.setDisruptiveStocks(null);
+    this.setTargetSectors(null);
+    this.setInvestDate(null)
     this.profileExists = false;
   }
 

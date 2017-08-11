@@ -1,8 +1,7 @@
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements'
 import React from 'react';
-import {COLOR_SCHEME, TEXT_SCHEME} from '../Styles/ColorScheme'
-
+import {COLOR_SCHEME } from '../Styles/Attributes'
 /******************************************************************************/
 // SCREENS
 import { SplashScreen } from '../Splash';
@@ -13,7 +12,7 @@ import { ForgotScreen } from '../Forgot';
 import { FastLink } from '../FastLink';
 import { TransactionScreen } from '../Transactions'
 import { ProfileStocksScreen } from '../Profile_Stocks';
-import { ProfileKeywordsScreen } from '../Keywords_Profile';
+import { KeywordsProfileScreen, KeywordsFromUser, KeywordsFromTransactions } from '../Keywords_Profile';
 import { KeywordsAddScreen } from '../Keywords_Add';
 import { KeywordsUserScreen } from '../Keywords_User';
 import { StocksScreen } from '../Stocks';
@@ -64,7 +63,8 @@ export const Drawer = DrawerNavigator({
           <Icon
           reverse
           color= {COLOR_SCHEME[0]}
-          name="home" />)
+          name="home" />),
+        drawerLockMode: 'locked-closed',
       }
   },
   ProfileStocks: {
@@ -75,7 +75,8 @@ export const Drawer = DrawerNavigator({
           <Icon
           reverse
           color= {COLOR_SCHEME[0]}
-          name="trending-up" />)
+          name="trending-up" />),
+        drawerLockMode: 'locked-closed',
       }
   },
   Stocks: {
@@ -86,21 +87,29 @@ export const Drawer = DrawerNavigator({
           <Icon
           reverse
           color= {COLOR_SCHEME[0]}
-          name="trending-up" />)
+          name="trending-up" />),
+        drawerLockMode: 'locked-closed',
       }
   },
 
-  ProfileKeywords: {
-    screen: ProfileKeywordsScreen,
+  KeywordsProfile: {
+    screen: KeywordsProfileScreen,
     navigationOptions:{
         drawerLabel: "Keywords",
         drawerIcon:({tintColor}) =>(
           <Icon
           reverse
           color = {COLOR_SCHEME[1]}
-          name = "vpn-key" />)
+          name = "vpn-key" />),
+        drawerLockMode: 'locked-closed',
       }
   },
+  _KeyWordsFromUser: {screen: KeywordsFromUser,
+          navigationOptions: {drawerLockMode: 'locked-closed', drawerLabel: <Hidden />}},
+
+  _KeyWordsFromTransactions: {screen: KeywordsFromTransactions,
+          navigationOptions: {drawerLockMode: 'locked-closed', drawerLabel: <Hidden />}},
+
   KeywordsAdd: {
     screen: KeywordsAddScreen,
     navigationOptions:{
@@ -109,7 +118,8 @@ export const Drawer = DrawerNavigator({
           <Icon
           reverse
           color = {COLOR_SCHEME[2]}
-          name = "add" />)
+          name = "add" />),
+        drawerLockMode: 'locked-closed',
       }
   },
   KeywordsUser: {
@@ -120,7 +130,8 @@ export const Drawer = DrawerNavigator({
           <Icon
           reverse
           color = {COLOR_SCHEME[3]}
-          name = "person" />)
+          name = "person" />),
+        drawerLockMode: 'locked-closed',
       }
   },
   Transact: {
@@ -131,7 +142,8 @@ export const Drawer = DrawerNavigator({
           <Icon
           reverse
           color= {COLOR_SCHEME[0]}
-          name="receipt" />)
+          name="receipt" />),
+        drawerLockMode: 'locked-closed',
       }
   },
   FastLink: {
@@ -142,7 +154,8 @@ export const Drawer = DrawerNavigator({
           <Icon
           reverse
           color= {COLOR_SCHEME[0]}
-          name="link" />)
+          name="link" />),
+        drawerLockMode: 'locked-closed',
       }
   },
 
@@ -155,7 +168,8 @@ export const Drawer = DrawerNavigator({
           reverse
           type = "foundation"
           color = {COLOR_SCHEME[4]}
-          name = "x" />)
+          name = "x" />),
+        drawerLockMode: 'locked-closed',
       }
   },
 

@@ -9,10 +9,13 @@ import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import { Card, ListItem, Button, List, Header, Icon } from 'react-native-elements';
-import tradeStyle from "./Styles/Default"
+import tradeStyle from "./Styles/DefaultStyle"
 
 @observer
 export class ProfileStocksScreen extends React.Component {
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
+
   _onClick(preference) // Attempt to login.
   {
     const { navigate } = this.props.navigation;
@@ -22,7 +25,14 @@ export class ProfileStocksScreen extends React.Component {
 
   render(){
     const { navigate } = this.props.navigation;
-    var sector = Object.values(Profile.getTargetSectors())
+    var sector = Profile.getTargetSectors();
+    if(sector != null){
+      sector = Object.values(sector)
+    }
+    else{
+      sector = []
+    }
+
     return(
       <View style={tradeStyle.wrapper}>
         <View style={tradeStyle.header}>
@@ -62,6 +72,7 @@ export class ProfileStocksScreen extends React.Component {
             ))
           }
           </List>
+
 
       </View>
     );

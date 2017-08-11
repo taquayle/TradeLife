@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { MAIN_BG_COLOR } from './ColorScheme'
+import { MAIN_BG_COLOR } from './Attributes'
 
 export default StyleSheet.create({
     logo:{

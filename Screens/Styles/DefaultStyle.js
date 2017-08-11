@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { MAIN_BG_COLOR, MAIN_TEXT_COLOR } from './ColorScheme'
+import { MAIN_BG_COLOR, MAIN_TEXT_COLOR, MAIN_FONT_FAMILY } from './Attributes'
 
 export default StyleSheet.create({
 
@@ -26,19 +26,19 @@ export default StyleSheet.create({
   title:{
     color: MAIN_TEXT_COLOR,
     textAlign: 'center',
-    fontFamily:'monospace',
+    fontFamily:MAIN_FONT_FAMILY,
     fontSize: 30
   },
   h1:{
     color: MAIN_TEXT_COLOR,
     textAlign: 'center',
-    fontFamily:'monospace',
+    fontFamily:MAIN_FONT_FAMILY,
     fontSize: 20
   },
   h2:{
     color: MAIN_TEXT_COLOR,
     textAlign: 'center',
-    fontFamily:'monospace',
+    fontFamily:MAIN_FONT_FAMILY,
     fontSize: 16
   },
   body:{
@@ -71,10 +71,6 @@ export default StyleSheet.create({
     flexDirection:'row'
   },
 
-  text:{
-      color: '#000000',
-      fontSize: 15,
-  },
   logo:{
     resizeMode: 'contain',
     height: 30,

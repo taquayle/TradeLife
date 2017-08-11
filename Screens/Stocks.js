@@ -8,10 +8,10 @@ import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import { Card, Slider, ListItem, Button, List, Icon, Header } from 'react-native-elements';
-import tradeStyle from "./Styles/Default"
+import tradeStyle from "./Styles/DefaultStyle"
 import {observable} from "mobx"
 import {observer} from "mobx-react"
-import { COLOR_SCHEME, TEXT_SCHEME } from "./Styles/ColorScheme"
+import { COLOR_SCHEME, TEXT_SCHEME } from "./Styles/Attributes"
 import { VictoryBar, VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native'
 import Swiper from 'react-native-swiper'
 
@@ -19,6 +19,9 @@ import Swiper from 'react-native-swiper'
 
 @observer
 export class StocksScreen extends React.Component {
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
+
   @observable currentInvestment = 100; /*Mobx Variable*/
 
   constructor(props)

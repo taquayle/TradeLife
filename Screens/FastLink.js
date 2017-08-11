@@ -7,6 +7,8 @@ import { Text, View, StyleSheet, Image,} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 export class FastLink extends React.Component {
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
   render() {
     return (
         <View>

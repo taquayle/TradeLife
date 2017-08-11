@@ -60,6 +60,7 @@ export class RegisterLoadingScreen extends React.Component {
      })
     .then((responseData) =>
     {
+
         if (responseData.error == false) //Success, allow used in
         {
             const { navigate } = this.props.navigation;
@@ -73,6 +74,12 @@ export class RegisterLoadingScreen extends React.Component {
             User.setError(responseData.message)
             navigate('Register')
 
+        }
+        else{
+          console.log("---- UNKNOWN ERROR ----")
+          console.log(responseData)
+          User.setError("Unknown Error, please try again")
+          navigate('Register')
         }
     })
 

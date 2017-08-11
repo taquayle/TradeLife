@@ -4,63 +4,158 @@
 
 import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
-import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
+import {StackNavigator} from 'react-navigation'
 import { Card, ListItem, Button, List, Icon, Header } from 'react-native-elements';
-import tradeStyle from "./Styles/Default"
-import {COLOR_SCHEME, TEXT_SCHEME, MAIN_BG_COLOR} from "./Styles/ColorScheme"
+import tradeStyle from "./Styles/DefaultStyle"
+import {COLOR_SCHEME, TEXT_SCHEME, MAIN_BG_COLOR} from "./Styles/Attributes"
 import Swiper from 'react-native-swiper'
 @observer
 
-class KeywordsFromTransactions extends React.Component{
-  render(){
-    var keys = null
-    var temp = false
-    if(Profile.getUserKeys() != null){
-      keys = Object.values(Profile.getDescKeys())
+export class KeywordsFromTransactions extends React.Component{
+  render(){return null}
 
-      return(
-        <View>
-            <List>
-            {
-              keys.map((word, i) => (
-                <ListItem
-                  key={i}
-                  title={word['Name']}
-                  subtitleNumberOfLines={2}
-                  subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
-                />
-              ))
-            }
-            </List>
-
-        </View>
-      )
-    }
-    else{
-      const { navigate } = this.props.navigation;
-      return(
-          <View>
-              <Text style={tradeStyle.h2}> No Transaction Keywords Found </Text>
-              <Button
-                large
-                icon={{name: 'add', size: 32}}
-                buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 10}}
-                textStyle={{textAlign: 'center'}}
-                title={`Update Transactions`}
-                onPress={() => navigate('Transact')}
-              />
-          </View>
-      );
-    }
-  }
+  // render(){
+  //   var keys = null
+  //   var temp = false
+  //   const { navigate } = this.props.navigation;
+  //   if(Profile.getUserKeys() != null){
+  //     keys = Object.values(Profile.getDescKeys())
+  //
+  //     return(
+  //       <View>
+  //           <List>
+  //           {
+  //             keys.map((word, i) => (
+  //               <ListItem
+  //                 key={i}
+  //                 title={word['Name']}
+  //                 subtitleNumberOfLines={2}
+  //                 subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
+  //               />
+  //             ))
+  //           }
+  //           </List>
+  //
+  //       </View>
+  //     )
+  //   }
+  //   else{
+  //
+  //     return(
+  //         <View>
+  //             <Text style={tradeStyle.h2}> No Transaction Keywords Found </Text>
+  //             <Button
+  //               large
+  //               icon={{name: 'add', size: 32}}
+  //               buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 10}}
+  //               textStyle={{textAlign: 'center'}}
+  //               title={`Update Transactions`}
+  //               onPress={() => navigate('Transact')}
+  //             />
+  //         </View>
+  //     );
+  //   }
+  // }
 }
 
-class KeywordsFromUser extends React.Component{
-  render(){
+export class KeywordsFromUser extends React.Component{
+  render(){return null}
+//   render(){
+//     var keys = null
+//     const { navigate } = this.props.navigation;
+//     if(Profile.getUserKeys() != null){
+//       keys = Object.values(Profile.getUserKeys())
+//
+//       return(
+//         <View>
+//           <List>
+//           {
+//             keys.map((word, i) => (
+//               <ListItem
+//                 key={i}
+//                 title={word['Name']}
+//                 subtitleNumberOfLines={2}
+//                 subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
+//               />
+//             ))
+//           }
+//           </List>
+//         </View>
+//       );
+//     }
+//
+//     else{
+//
+//       return(
+//           <View>
+//               <Text style={tradeStyle.h2}> No User Keys </Text>
+//               <Button
+//                 large
+//                 icon={{name: 'add', size: 32}}
+//                 buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 10}}
+//                 textStyle={{textAlign: 'center'}}
+//                 title={`Add Keywords`}
+//                 onPress={() => navigate('KeywordsAdd')}
+//               />
+//           </View>
+//       );
+//     }
+//   }
+}
+
+export class KeywordsProfileScreen extends React.Component {
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
+
+    view2(){
+      var keys = null
+      var temp = false
+      const { navigate } = this.props.navigation;
+      if(Profile.getUserKeys() != null){
+        keys = Object.values(Profile.getDescKeys())
+
+        return(
+          <View>
+              <List>
+              {
+                keys.map((word, i) => (
+                  <ListItem
+                    key={i}
+                    title={word['Name']}
+                    subtitleNumberOfLines={2}
+                    subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
+                  />
+                ))
+              }
+              </List>
+
+          </View>
+        )
+      }
+      else{
+
+        return(
+            <View>
+                <Text style={tradeStyle.h2}> No Transaction Keywords Found </Text>
+                <Button
+                  large
+                  icon={{name: 'add', size: 32}}
+                  buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 10}}
+                  textStyle={{textAlign: 'center'}}
+                  title={`Update Transactions`}
+                  onPress={() => navigate('Transact')}
+                />
+            </View>
+        );
+      }
+    }
+
+  view1(){
     var keys = null
+    const { navigate } = this.props.navigation;
     if(Profile.getUserKeys() != null){
       keys = Object.values(Profile.getUserKeys())
 
@@ -83,7 +178,7 @@ class KeywordsFromUser extends React.Component{
     }
 
     else{
-      const { navigate } = this.props.navigation;
+
       return(
           <View>
               <Text style={tradeStyle.h2}> No User Keys </Text>
@@ -99,9 +194,6 @@ class KeywordsFromUser extends React.Component{
       );
     }
   }
-}
-
-export class ProfileKeywordsScreen extends React.Component {
 
   render(){
     const { navigate } = this.props.navigation;
@@ -137,8 +229,8 @@ export class ProfileKeywordsScreen extends React.Component {
           <ScrollView>
           <Swiper>
 
-            <KeywordsFromTransactions/>
-            <KeywordsFromUser />
+            {this.view1()}
+            {this.view2()}
 
           </Swiper>
           </ScrollView>

@@ -10,12 +10,13 @@ import { Tab, Router, Drawer } from './Navigation/Router'
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import { Button, SideMenu, List, ListItem, Icon, Header } from 'react-native-elements'
-import tradeStyle from "./Styles/Default"
-import {COLOR_SCHEME, TEXT_SCHEME} from './Styles/ColorScheme'
+import tradeStyle from "./Styles/DefaultStyle"
+import {COLOR_SCHEME, TEXT_SCHEME} from './Styles/Attributes'
 
 
 export class HomeScreen extends React.Component {
-
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
 
   constructor (props) {
     super(props)
@@ -56,7 +57,7 @@ export class HomeScreen extends React.Component {
             buttonStyle={{backgroundColor: COLOR_SCHEME[1], borderRadius: 40, marginVertical: 10}}
             textStyle={{textAlign: 'center'}}
             title={`Keywords`}
-            onPress={() => navigate('ProfileKeywords')}
+            onPress={() => navigate('KeywordsProfile')}
           />
 
 

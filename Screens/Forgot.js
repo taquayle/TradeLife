@@ -5,9 +5,11 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import tradeStyle from "./Styles/Default"
+import tradeStyle from "./Styles/DefaultStyle"
 
 export class ForgotScreen extends React.Component {
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
   render() {
       const { navigate } = this.props.navigation;
     return (

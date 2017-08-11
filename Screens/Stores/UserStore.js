@@ -2,9 +2,9 @@ import {observable } from "mobx";
 
 class  UserStore{
 
-  @observable userName = "sbMemtaquayle1"
-  @observable userPass = "sbMemtaquayle1#123"
-  @observable userMail = "example2@gmail.com"
+  @observable userName = "sbMemtaquayle3"
+  @observable userPass = "sbMemtaquayle3#123"
+  @observable userMail = ""
   @observable tradeToken = ""
   @observable yodleeToken = ""
   @observable sectorPref = 0

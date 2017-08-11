@@ -10,11 +10,13 @@ import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import Server from "./Stores/TradeLifeStore"
 import { ListItem, Button, List, Icon, FormLabel, FormInput, FormValidationMessage, Header } from 'react-native-elements';
-import tradeStyle from "./Styles/Default"
+import tradeStyle from "./Styles/DefaultStyle"
 
 @observer
 export class KeywordsUserScreen extends React.Component {
-
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
+    
   showUserKeys(keys)
   {
     if(keys == null)
@@ -68,7 +70,7 @@ export class KeywordsUserScreen extends React.Component {
             <Icon
               reverse
               name='vpn-key'
-              onPress={() => navigate('ProfileKeywords')}
+              onPress={() => navigate('KeywordsProfile')}
             />
           </View>
         </View>

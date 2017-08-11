@@ -66,7 +66,7 @@ export class KeywordAddLoadingScreen extends React.Component {
         {
             console.log("---- ADDING KEYWORDS SUCCESSFUL ----");
             Profile.setUserKeys(responseData.keywords)
-            navigate('ProfileKeywords')
+            navigate('KeywordsProfile')
         }
         else if (responseData.error == true) //Success, allow used in
         {
