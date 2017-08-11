@@ -3,17 +3,7 @@
 // Date: June 23, 2017
 
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  Linking,
-  Alert
-} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import {observer} from "mobx-react";
 import { Icon } from 'react-native-elements'
 import User from "./Stores/UserStore"

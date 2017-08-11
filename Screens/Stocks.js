@@ -3,14 +3,7 @@
 // Date: July 27, 2017
 
 import React from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  StyleSheet,
-  Image,
-  TextInput,
-} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
@@ -134,7 +127,7 @@ export class StocksScreen extends React.Component {
                   <View key={i} style={tradeStyle.wrapper,{backgroundColor: COLOR_SCHEME[i]}}>
 
                     <Text style={tradeStyle.h1}>{company['name']}</Text>
-                    <Text>Investing: ${this.currentInvestment.toFixed(2)} on {Profile.getInvestDate()}
+                    <Text style={tradeStyle.body}>Investing: ${this.currentInvestment.toFixed(2)} on {Profile.getInvestDate()}
                      would give you ${this.simpleReturn(company['stock_data'])}</Text>
 
                     <VictoryChart theme={VictoryTheme.material}>
@@ -145,12 +138,12 @@ export class StocksScreen extends React.Component {
                         data={this.formatData(company['stock_data'])}
                         />
                     </VictoryChart>
-                    <Text> Just Temp stuff </Text>
-                    <Text> Just Temp stuff </Text>
-                    <Text> Just Temp stuff </Text>
-                    <Text> Just Temp stuff </Text>
-                    <Text> Just Temp stuff </Text>
-                    <Text> Just Temp stuff </Text>
+                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
+                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
+                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
+                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
+                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
+                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
                   </View>
                 )
               })

@@ -3,14 +3,7 @@
 // Date: July 26, 2017
 
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  ScrollView
-} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import {  ListItem,
           Button,
           List,

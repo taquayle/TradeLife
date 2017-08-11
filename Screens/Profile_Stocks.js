@@ -3,19 +3,9 @@
 // Date: August 2, 2017
 
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  TouchableHighlight
-} from 'react-native';
+import { Text, View, StyleSheet, Image,} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
-import { toJS } from 'mobx';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import { Card, ListItem, Button, List, Header, Icon } from 'react-native-elements';
@@ -47,7 +37,7 @@ export class ProfileStocksScreen extends React.Component {
 
           </Text>
 
-          <Text style={tradeStyle.text}>Based on your Transaction keywords, these are the sectors you spend the most money in.</Text>
+          <Text style={tradeStyle.body}>Based on your Transaction keywords, these are the sectors you spend the most money in.</Text>
 
 
         </View>

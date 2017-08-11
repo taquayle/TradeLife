@@ -3,14 +3,7 @@
 // Date: July 26, 2017
 
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  ScrollView
-} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
@@ -37,7 +30,7 @@ class KeywordsFromTransactions extends React.Component{
                   key={i}
                   title={word['Name']}
                   subtitleNumberOfLines={2}
-                  subtitle={<Text>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
+                  subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
                 />
               ))
             }
@@ -80,7 +73,7 @@ class KeywordsFromUser extends React.Component{
                 key={i}
                 title={word['Name']}
                 subtitleNumberOfLines={2}
-                subtitle={<Text>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
+                subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
               />
             ))
           }

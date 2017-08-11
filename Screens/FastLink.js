@@ -3,23 +3,14 @@
 // Date: June 23, 2017
 
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  Button,
-  StyleSheet,
-  Image,
-  TextInput,
-  TouchableOpacity
-} from 'react-native';
+import { Text, View, StyleSheet, Image,} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 export class FastLink extends React.Component {
   render() {
     return (
         <View>
-        <Text>EMPTY</Text>
+        <Text style={tradeStyle.body}>EMPTY</Text>
         </View>
     );
   }

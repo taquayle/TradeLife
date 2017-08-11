@@ -4,16 +4,7 @@
 
 
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  Alert
-} from 'react-native';
+import { Text, View, StyleSheet, Image,} from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Tab, Router, Drawer } from './Navigation/Router'
 import User from "./Stores/UserStore"

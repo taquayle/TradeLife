@@ -23,7 +23,7 @@ export class LogoutLoadingScreen extends React.Component {
   render() {
     return (
         <View>
-          <Text>GOODBYE</Text>
+          <Text style={tradeStyle.body}>GOODBYE</Text>
         </View>
     );
   }

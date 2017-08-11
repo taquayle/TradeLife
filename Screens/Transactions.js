@@ -3,10 +3,7 @@
 // Date: June 30, 2017
 
 import React from 'react';
-import {
-  AppRegistry, Text, View,
-  StyleSheet, Image, TextInput, TouchableOpacity, Alert
-} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import tradeStyle from "./Styles/Default"
