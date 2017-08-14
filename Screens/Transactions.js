@@ -3,7 +3,7 @@
 // Date: June 30, 2017
 
 import React from 'react';
-import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import tradeStyle from "./Styles/DefaultStyle"
@@ -12,6 +12,14 @@ import { Button, Header, Icon } from 'react-native-elements';
 export class TransactionScreen extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
+
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('Login');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
+  }
+
   render() {
     console.log("At Trans");
     const { navigate } = this.props.navigation;

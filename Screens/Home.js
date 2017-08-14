@@ -4,7 +4,7 @@
 
 
 import React from 'react';
-import { Text, View, StyleSheet, Image,} from 'react-native';
+import { Text, View, StyleSheet, Image, BackHandler} from 'react-native'
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Tab, Router, Drawer } from './Navigation/Router'
 import User from "./Stores/UserStore"
@@ -18,6 +18,12 @@ export class HomeScreen extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
 
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('Logout');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
+  }
   constructor (props) {
     super(props)
   }

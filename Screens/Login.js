@@ -3,7 +3,7 @@
 // Date: June 23, 2017
 
 import React from 'react';
-import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
+import { Text, View, StyleSheet, Image, BackHandler} from 'react-native'
 import {observer} from "mobx-react";
 import { Icon } from 'react-native-elements'
 import User from "./Stores/UserStore"
@@ -24,11 +24,7 @@ export class LoginScreen extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
 
-    componentDidMount()
-    {
-      //dispatch({type: 'Reset', index: 0, actions: [{ type: 'Navigate', routeName:'Login'}]})
-      User.setError("")
-    }
+
     constructor(props)
     {
         super(props);
@@ -83,7 +79,7 @@ export class LoginScreen extends React.Component {
                   {/* Login Button */}
                   <Button
                     large
-                    icon={{name: 'check', size: 32}}
+                    icon={{color: TEXT_SCHEME[0], name: 'check', size: 32}}
                     buttonStyle={{backgroundColor: COLOR_SCHEME[0], marginVertical: 10, borderRadius: 40}}
                     textStyle={tradeStyle.h2,{color: TEXT_SCHEME[0]}}
                     title={`LOGIN`}
@@ -92,7 +88,7 @@ export class LoginScreen extends React.Component {
 
                   {/* Register Button */}
                   <Button
-                    icon={{name: 'room', size: 32}}
+                    icon={{color: TEXT_SCHEME[1], name: 'room', size: 32}}
                     buttonStyle={{backgroundColor: COLOR_SCHEME[1], marginVertical: 10, borderRadius: 40}}
                     textStyle={tradeStyle.h2,{color: TEXT_SCHEME[1]}}
                     title={`REGISTER`}

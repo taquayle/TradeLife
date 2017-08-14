@@ -3,7 +3,7 @@
 // Date: July 27, 2017
 
 import React from 'react';
-import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
@@ -22,6 +22,12 @@ export class StocksScreen extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
 
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('ProfileStocks');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
+  }
   @observable currentInvestment = 100; /*Mobx Variable*/
 
   constructor(props)

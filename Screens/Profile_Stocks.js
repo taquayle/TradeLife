@@ -3,11 +3,12 @@
 // Date: August 2, 2017
 
 import React from 'react';
-import { Text, View, StyleSheet, Image,} from 'react-native';
+import { Text, View, StyleSheet, Image, BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
+import {COLOR_SCHEME, TEXT_SCHEME} from './Styles/Attributes'
 import { Card, ListItem, Button, List, Header, Icon } from 'react-native-elements';
 import tradeStyle from "./Styles/DefaultStyle"
 
@@ -16,6 +17,12 @@ export class ProfileStocksScreen extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
 
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('Home');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
+  }
   _onClick(preference) // Attempt to login.
   {
     const { navigate } = this.props.navigation;
@@ -56,9 +63,9 @@ export class ProfileStocksScreen extends React.Component {
           <List containerStyle={tradeStyle.botWrap}>
 
           <Button
-            icon={{name: 'autorenew', size: 32}}
-            buttonStyle={{backgroundColor: "#16608B", borderRadius: 40, marginVertical: 10}}
-            textStyle={{textAlign: 'center'}}
+            icon={{color: TEXT_SCHEME[0], name: 'autorenew', size: 32}}
+            buttonStyle={{backgroundColor: COLOR_SCHEME[0], borderRadius: 40, marginVertical: 10}}
+            textStyle={{textAlign: 'center', color:TEXT_SCHEME[0]}}
             title={'Refresh'}
             onPress={() => navigate('ProfileLoading')}
           />

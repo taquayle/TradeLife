@@ -10,13 +10,14 @@ import {
   StyleSheet,
   Image,
   Alert,
-  ActivityIndicator
-} from 'react-native';
+  ActivityIndicator,
+  BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import User from "../Stores/UserStore"
 import Server from "../Stores/TradeLifeStore"
 import Profile from "../Stores/ProfileStore"
 import loadStyle from "../Styles/LoadingStyle"
+import {MAIN_TEXT_COLOR} from "../Styles/LoadingStyle"
 
 export class TransactionLoadingScreen extends React.Component {
 
@@ -26,8 +27,11 @@ export class TransactionLoadingScreen extends React.Component {
       this.state = {  message: "Getting Transactions..."};
   }
   /**************************************************************************/
-  componentDidMount() // Attempt to login.
-  {
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('Transact');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
 
     console.log("---- ATTEMPTING TO GET TRANSACTIONS ----");
     fetch(Server.transactionPutURL(),
@@ -93,7 +97,7 @@ export class TransactionLoadingScreen extends React.Component {
 
             <View style={loadStyle.bg, loadStyle.activityWrap}>
               <ActivityIndicator
-                color="#000000"
+                color = { MAIN_TEXT_COLOR }
                 style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
               />
             </View>

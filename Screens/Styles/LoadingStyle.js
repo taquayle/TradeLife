@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { MAIN_BG_COLOR } from './Attributes'
+import { StyleSheet , BackHandler} from 'react-native'
+import { MAIN_BG_COLOR, MAIN_TEXT_COLOR } from './Attributes'
 
 export default StyleSheet.create({
     logo:{
@@ -8,14 +8,14 @@ export default StyleSheet.create({
       backgroundColor: 'transparent'
     },
     bg:{
-      backgroundColor: '#FFFFFF', //Black
+      backgroundColor:  MAIN_BG_COLOR,
     },
     centering: {
       flex: 2,
     },
     wrapper:{
         flex: 1,
-        backgroundColor: '#FFFFFF', //Black
+        backgroundColor: MAIN_BG_COLOR,
     },
     topWrap:{
         flex: 1,
@@ -38,7 +38,7 @@ export default StyleSheet.create({
         flex: 2,
     },
     loadingText:{
-        color: '#000000',
+        color: MAIN_TEXT_COLOR,
         fontSize: 20,
         alignItems: 'center',
         fontFamily:'monospace'

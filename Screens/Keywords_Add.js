@@ -3,7 +3,7 @@
 // Date: July 26, 2017
 
 import React from 'react';
-import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
 import {  ListItem,
           Button,
           List,
@@ -26,7 +26,13 @@ import tradeStyle from "./Styles/DefaultStyle"
 export class KeywordsAddScreen extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
-    
+
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('KeywordsProfile');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
+  }
   constructor(props)
   {
       super(props);

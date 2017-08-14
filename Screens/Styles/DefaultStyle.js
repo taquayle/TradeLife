@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet , BackHandler} from 'react-native'
 import { MAIN_BG_COLOR, MAIN_TEXT_COLOR, MAIN_FONT_FAMILY } from './Attributes'
 
 export default StyleSheet.create({

@@ -3,7 +3,7 @@
 // Date: July 26, 2017
 
 import React from 'react';
-import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
 import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
@@ -14,182 +14,90 @@ import {COLOR_SCHEME, TEXT_SCHEME, MAIN_BG_COLOR} from "./Styles/Attributes"
 import Swiper from 'react-native-swiper'
 @observer
 
-export class KeywordsFromTransactions extends React.Component{
-  render(){return null}
 
-  // render(){
-  //   var keys = null
-  //   var temp = false
-  //   const { navigate } = this.props.navigation;
-  //   if(Profile.getUserKeys() != null){
-  //     keys = Object.values(Profile.getDescKeys())
-  //
-  //     return(
-  //       <View>
-  //           <List>
-  //           {
-  //             keys.map((word, i) => (
-  //               <ListItem
-  //                 key={i}
-  //                 title={word['Name']}
-  //                 subtitleNumberOfLines={2}
-  //                 subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
-  //               />
-  //             ))
-  //           }
-  //           </List>
-  //
-  //       </View>
-  //     )
-  //   }
-  //   else{
-  //
-  //     return(
-  //         <View>
-  //             <Text style={tradeStyle.h2}> No Transaction Keywords Found </Text>
-  //             <Button
-  //               large
-  //               icon={{name: 'add', size: 32}}
-  //               buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 10}}
-  //               textStyle={{textAlign: 'center'}}
-  //               title={`Update Transactions`}
-  //               onPress={() => navigate('Transact')}
-  //             />
-  //         </View>
-  //     );
-  //   }
-  // }
-}
 
-export class KeywordsFromUser extends React.Component{
-  render(){return null}
-//   render(){
-//     var keys = null
-//     const { navigate } = this.props.navigation;
-//     if(Profile.getUserKeys() != null){
-//       keys = Object.values(Profile.getUserKeys())
-//
-//       return(
-//         <View>
-//           <List>
-//           {
-//             keys.map((word, i) => (
-//               <ListItem
-//                 key={i}
-//                 title={word['Name']}
-//                 subtitleNumberOfLines={2}
-//                 subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
-//               />
-//             ))
-//           }
-//           </List>
-//         </View>
-//       );
-//     }
-//
-//     else{
-//
-//       return(
-//           <View>
-//               <Text style={tradeStyle.h2}> No User Keys </Text>
-//               <Button
-//                 large
-//                 icon={{name: 'add', size: 32}}
-//                 buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 10}}
-//                 textStyle={{textAlign: 'center'}}
-//                 title={`Add Keywords`}
-//                 onPress={() => navigate('KeywordsAdd')}
-//               />
-//           </View>
-//       );
-//     }
-//   }
-}
 
 export class KeywordsProfileScreen extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
 
-    view2(){
-      var keys = null
-      var temp = false
-      const { navigate } = this.props.navigation;
-      if(Profile.getUserKeys() != null){
-        keys = Object.values(Profile.getDescKeys())
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('Home');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
+  }
 
-        return(
-          <View>
-              <List>
-              {
-                keys.map((word, i) => (
-                  <ListItem
-                    key={i}
-                    title={word['Name']}
-                    subtitleNumberOfLines={2}
-                    subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
-                  />
-                ))
-              }
-              </List>
-
-          </View>
-        )
+  displayKeys(keys){
+    return(
+      <List>
+      {
+        keys.map((word, i) => (
+          <ListItem
+            key={i}
+            title={word['Name']}
+            subtitleNumberOfLines={2}
+            subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
+          />
+        ))
       }
-      else{
-
-        return(
-            <View>
-                <Text style={tradeStyle.h2}> No Transaction Keywords Found </Text>
-                <Button
-                  large
-                  icon={{name: 'add', size: 32}}
-                  buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 10}}
-                  textStyle={{textAlign: 'center'}}
-                  title={`Update Transactions`}
-                  onPress={() => navigate('Transact')}
-                />
-            </View>
-        );
-      }
-    }
-
-  view1(){
-    var keys = null
-    const { navigate } = this.props.navigation;
+      </List>
+    )
+  }
+  userKeys(){
     if(Profile.getUserKeys() != null){
-      keys = Object.values(Profile.getUserKeys())
-
       return(
         <View>
-          <List>
-          {
-            keys.map((word, i) => (
-              <ListItem
-                key={i}
-                title={word['Name']}
-                subtitleNumberOfLines={2}
-                subtitle={<Text style={tradeStyle.body}>{'\t\t'}Value: ${word['Value']}{'\t\t'}Hits: {word['Hits']}</Text>}
-              />
-            ))
-          }
-          </List>
+          <Text style={tradeStyle.h2}>User Keywords</Text>
+          {this.displayKeys(Object.values(Profile.getUserKeys()))}
+        </View>
+      )
+    }
+    else{
+      const { navigate } = this.props.navigation;
+      return(
+
+        <View>
+          <Text style={tradeStyle.h2}> No User Keys </Text>
+          <Button
+            large
+            icon={{name: 'add', size: 32}}
+            buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 10}}
+            textStyle={{textAlign: 'center'}}
+            title={`Add Keywords`}
+            onPress={() => navigate('KeywordsAdd')}
+          />
+        </View>
+      );
+    }
+  }
+
+  transactionKeys(){
+
+    if(Profile.getDescKeys() != null){
+      return(
+        <View>
+          <Text style={tradeStyle.h2}>User Keywords</Text>
+          {this.displayKeys(Object.values(Profile.getDescKeys()))}
         </View>
       );
     }
 
     else{
-
+      const { navigate } = this.props.navigation;
       return(
           <View>
-              <Text style={tradeStyle.h2}> No User Keys </Text>
+              <Text style={tradeStyle.h2}> No Transaction Keywords Found </Text>
+
               <Button
                 large
                 icon={{name: 'add', size: 32}}
                 buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 10}}
                 textStyle={{textAlign: 'center'}}
-                title={`Add Keywords`}
-                onPress={() => navigate('KeywordsAdd')}
+                title={`Update Transactions`}
+                onPress={() => navigate('Transact')}
               />
+
           </View>
       );
     }
@@ -209,6 +117,7 @@ export class KeywordsProfileScreen extends React.Component {
       </View>
         <View style={tradeStyle.topWrap}>
           <Text style={tradeStyle.title}>KEYWORDS</Text>
+          <Text style={tradeStyle.h1}>Swipe to navigate between keywords</Text>
 
           <View style={tradeStyle.buttonWrap}>
             <Icon
@@ -217,20 +126,14 @@ export class KeywordsProfileScreen extends React.Component {
               size = {15}
               onPress={() => navigate('KeywordsAdd')}
             />
-            <Icon
-              reverse
-              size = {15}
-              name='person'
-              onPress={() => navigate('KeywordsUser')}
-            />
           </View>
         </View>
         <View style={tradeStyle.botWrap}>
           <ScrollView>
           <Swiper>
 
-            {this.view1()}
-            {this.view2()}
+            {this.userKeys()}
+            {this.transactionKeys()}
 
           </Swiper>
           </ScrollView>

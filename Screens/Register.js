@@ -3,7 +3,7 @@
 // Date: June 23, 2017
 
 import React from 'react';
-import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import {
     Button,
@@ -30,8 +30,11 @@ export class RegisterScreen extends React.Component {
   @observable usernameGood = false
   @observable usernameError = ''
 
-  componentDidMount()
-  {
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('Login');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
     User.setError("")
   }
 
