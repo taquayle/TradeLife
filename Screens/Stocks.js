@@ -82,19 +82,20 @@ export class StocksScreen extends React.Component {
       return [0,0,0]
     var closeValue = Object.values(company)
     var format = []
-    // DISPLAY SIMPLE RETURN
-    // for (i = 1; i < closeValue.length; i++){
-    //   if(closeValue[i] != null && closeValue[i]!= null){
-    //     format.push(Number((closeValue[i]- closeValue[i-1])/closeValue[i-1]))
-    //   }
-    // }
 
-    // DISPLAY DIFFERENCE
+    // DISPLAY SIMPLE RETURN
     for (i = 1; i < closeValue.length; i++){
       if(closeValue[i] != null && closeValue[i]!= null){
-        format.push(Number(closeValue[i]- closeValue[i-1]))
+        format.push(Number((closeValue[i]- closeValue[i-1])/closeValue[i-1]))
       }
     }
+
+    // DISPLAY DIFFERENCE
+    // for (i = 1; i < closeValue.length; i++){
+    //   if(closeValue[i] != null && closeValue[i]!= null){
+    //     format.push(Number(closeValue[i]- closeValue[i-1]))
+    //   }
+    // }
 
     // DISPLAY STOCK VALUE
     // for (i = 0; i < closeValue.length; i++){
@@ -102,7 +103,7 @@ export class StocksScreen extends React.Component {
     //     format.push(Number(closeValue[i]))
     //   }
     // }
-
+    format.splice(0,1)
     return format;
   }
 
@@ -135,7 +136,7 @@ export class StocksScreen extends React.Component {
           {
             sector.map((company, i) => {
               return (
-                <View key={i} style={ [ tradeStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
+                <View key={i} style={ [ stockStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
 
                   <View style={stockStyle.headerWrap}>
                     <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}> { company['name'] } </Text>
@@ -258,6 +259,9 @@ export class StocksScreen extends React.Component {
 }
 
 stockStyle = StyleSheet.create({
+    wrapper:{
+      flex: 1
+    },
     topWrap:{
       flex:.15,
       backgroundColor:"#FFFFFF",
@@ -271,13 +275,20 @@ stockStyle = StyleSheet.create({
 
     profitWrap:{
       height: 64,
-      flexDirection:'row'
+      borderColor: MAIN_BG_COLOR,
+      borderWidth: 2,
+      flexDirection:'row',
+      justifyContent: 'center'
     },
     profitLeft:{
-      flex:.5
+      flex:.5,
+      borderRightColor: MAIN_BG_COLOR,
+      borderRightWidth: 2,
     },
     profitRight:{
-      flex:.5
+      flex:.5,
+      borderLeftColor: MAIN_BG_COLOR,
+      borderLeftWidth: 2,
     },
 
     genericWrap:{
@@ -285,10 +296,14 @@ stockStyle = StyleSheet.create({
     },
     headerWrap:{
       height: 70,
+      borderColor: MAIN_BG_COLOR,
+      borderWidth: 2,
     },
-    
+
     graphWrap:{
       height: 240,
+      borderColor: MAIN_BG_COLOR,
+      borderWidth: 2,
       justifyContent: 'center'
     },
 })

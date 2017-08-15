@@ -33,13 +33,13 @@ export default StyleSheet.create({
     color: MAIN_TEXT_COLOR,
     textAlign: 'center',
     fontFamily:MAIN_FONT_FAMILY,
-    fontSize: 20
+    fontSize: 18
   },
   h2:{
     color: MAIN_TEXT_COLOR,
     textAlign: 'center',
     fontFamily:MAIN_FONT_FAMILY,
-    fontSize: 16
+    fontSize: 14
   },
   body:{
     color: MAIN_TEXT_COLOR,
