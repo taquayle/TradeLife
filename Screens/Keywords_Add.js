@@ -61,9 +61,12 @@ export class KeywordsAddScreen extends React.Component {
   }
 
   _postToServer(){
-    const { navigate } = this.props.navigation;
-    User.setTempKeys(this.state.tempKeys)
-    navigate('KeywordAddLoading')
+    if(!this.state.newScreen){
+      const { navigate } = this.props.navigation;
+      console.log(this.state.tempKeys)
+      User.setTempKeys(this.state.tempKeys)
+      navigate('KeywordAddLoading')
+    }
   }
 
   render(){

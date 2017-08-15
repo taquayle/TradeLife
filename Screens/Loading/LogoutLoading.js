@@ -3,7 +3,7 @@
 // Date: August 10, 2017
 
 import React from 'react';
-import {Text, View, BackHandler} from 'react-native'
+import {Text, View, BackHandler, Image} from 'react-native'
 import User from "../Stores/UserStore"
 import Profile from "../Stores/ProfileStore"
 import { StackNavigator } from 'react-navigation';

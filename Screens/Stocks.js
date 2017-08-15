@@ -13,16 +13,19 @@ import {observable} from "mobx"
 import {observer} from "mobx-react"
 import { COLOR_SCHEME, TEXT_SCHEME, MAIN_FONT_FAMILY, MAIN_BG_COLOR,
           STOCKS_COLOR_SCHEME, STOCKS_TEXT_SCHEME } from "./Styles/Attributes"
-import { VictoryBar, VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native'
+import { VictoryContainer, VictoryLine, VictoryAxis,
+            VictoryChart, VictoryTheme} from 'victory-native'
 import Swiper from 'react-native-swiper'
 
 
 
 @observer
 export class StocksScreen extends React.Component {
+  // For debug purposes, will output to the console the current screen.
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
 
+  // Override the standard back button and navigate properly
   componentDidMount(){
     BackHandler.addEventListener('hardwareBackPress', function() {
       this.props.navigation.navigate('ProfileStocks');
@@ -41,6 +44,14 @@ export class StocksScreen extends React.Component {
                     stocks: Profile.getCapStocks()}
   }
 
+  /*
+  * Calculate a simple return for the current investment, which is chosen by the
+  * user by the slider. To Calculate simple return, we add a running total of
+  * all the given data points using the formula:
+  *   Return += (TodayClose - YesterdayClose) / YesterdayClose
+  * @param company, an array of objects [closePrice, Date]
+  * @return float, calculated simple return
+  */
   simpleReturn(company){
     if(company == null) // If quandl data could not be found
       return "N/A"
@@ -56,11 +67,51 @@ export class StocksScreen extends React.Component {
     return ((this.currentInvestment * returnValue)).toFixed(2)
   }
 
+
   updateInvest(val){
     this.setState({invest: val})
   }
 
 
+  createGraph(stockData, index){
+    if(stockData == null){
+      return(
+        <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+        NO STOCK DATA AVAILABLE
+        </Text>
+      )
+    }
+    else{
+      return(
+        <VictoryChart>
+          <VictoryAxis
+            style={{
+              axis: {stroke: STOCKS_TEXT_SCHEME[(index%2)]},
+              tickLabels: {fill: "none"},
+            }}
+            tickCount={10}
+          />
+          <VictoryAxis
+            dependentAxis
+            tickFormat={(y) => (`$${y}`)}
+            style={{
+              axis: {stroke: STOCKS_TEXT_SCHEME[(index%2)]},
+              tickLabels: {fill: STOCKS_TEXT_SCHEME[(index%2)], fontSize: 12},
+            }}
+            crossAxis={false}
+          />
+          <VictoryLine
+            key={i}
+            data={this.formatData(stockData)}
+            interpolation="natural"
+            style={{
+              data: { stroke: STOCKS_TEXT_SCHEME[(index%2)]}
+            }}
+          />
+        </VictoryChart>
+      )
+    }
+  }
 
   switchOrder(){
     if(this.state.disOrCap){
@@ -77,33 +128,42 @@ export class StocksScreen extends React.Component {
     }
   }
 
-  formatData(company){
+  /**
+  * Format the data given in the company[stock_data] into a format
+  * Victory-native can use. Mainly this consists of getting rid of NULL values,
+  * and converting from string to int
+  *
+  */
+  formatData(company, formatType = 'value'){
     if(company == null) // If quandl data could not be found
       return [0,0,0]
     var closeValue = Object.values(company)
     var format = []
 
-    // DISPLAY SIMPLE RETURN
-    for (i = 1; i < closeValue.length; i++){
-      if(closeValue[i] != null && closeValue[i]!= null){
-        format.push(Number((closeValue[i]- closeValue[i-1])/closeValue[i-1]))
-      }
+    // DISPLAY RETURN
+    if(formatType == 'return'){
+      for (i = 1; i < closeValue.length; i++){
+        if(closeValue[i] != null && closeValue[i]!= null){
+          format.push(Number((closeValue[i]- closeValue[i-1])/closeValue[i-1]))}}
+      format.splice(0,1) //Get rid of first value,
     }
 
     // DISPLAY DIFFERENCE
-    // for (i = 1; i < closeValue.length; i++){
-    //   if(closeValue[i] != null && closeValue[i]!= null){
-    //     format.push(Number(closeValue[i]- closeValue[i-1]))
-    //   }
-    // }
+    else if(formatType == 'difference'){
+      for (i = 1; i < closeValue.length; i++){
+        if(closeValue[i] != null && closeValue[i]!= null){
+          format.push(Number(closeValue[i]- closeValue[i-1]))}}
+      format.splice(0,1) //Get rid of first value,
+    }
 
     // DISPLAY STOCK VALUE
-    // for (i = 0; i < closeValue.length; i++){
-    //   if(closeValue[i] != null){
-    //     format.push(Number(closeValue[i]))
-    //   }
-    // }
-    format.splice(0,1)
+    else{
+      for (i = 0; i < closeValue.length; i++){
+        if(closeValue[i] != null){
+          format.push(Number(closeValue[i]))}}
+    }
+
+
     return format;
   }
 
@@ -116,8 +176,9 @@ export class StocksScreen extends React.Component {
     var stocksArray = Object.values(this.state.stocks)
     var sector = Object.values(stocksArray[User.getSectorPref()])
     return (
-      <View style={tradeStyle.wrapper}>
-        <View style={tradeStyle.header}>
+      <View style={stockStyle.wrapper}>
+
+        <View style={stockStyle.profitWrap}>
           <Header
             leftComponent={   <Icon size={30} name='menu' onPress={()=>navigate('DrawerOpen')}/>}
             centerComponent={ <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>}
@@ -138,7 +199,7 @@ export class StocksScreen extends React.Component {
               return (
                 <View key={i} style={ [ stockStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
 
-                  <View style={stockStyle.headerWrap}>
+                  <View style={stockStyle.profitWrap}>
                     <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}> { company['name'] } </Text>
                   </View>
 
@@ -159,7 +220,7 @@ export class StocksScreen extends React.Component {
                     <View style={stockStyle.profitRight}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
-                        Profit
+                        Return
                       </Text>
 
                       <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
@@ -171,19 +232,7 @@ export class StocksScreen extends React.Component {
                   </View>
 
                   <View style={stockStyle.graphWrap}>
-                    <VictoryChart>
-
-                      <VictoryLine
-                        key={i}
-                        style={{
-                          data: { stroke: STOCKS_TEXT_SCHEME[(i%2)]},
-                          parent: { border: "10px solid #000"},
-                          labels: {color: STOCKS_TEXT_SCHEME[(i%2)]}
-                        }}
-                        data={this.formatData(company['stock_data'])}
-                        />
-                    </VictoryChart>
-
+                    {this.createGraph(company['stock_data'], i)}
                   </View>
 
                   <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
@@ -260,7 +309,8 @@ export class StocksScreen extends React.Component {
 
 stockStyle = StyleSheet.create({
     wrapper:{
-      flex: 1
+      flex: 1,
+      backgroundColor: MAIN_BG_COLOR,
     },
     topWrap:{
       flex:.15,
@@ -274,21 +324,24 @@ stockStyle = StyleSheet.create({
     },
 
     profitWrap:{
-      height: 64,
+      height: 62,
       borderColor: MAIN_BG_COLOR,
-      borderWidth: 2,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderLeftWidth: 2,
+      borderRightWidth: 2,
       flexDirection:'row',
       justifyContent: 'center'
     },
     profitLeft:{
       flex:.5,
-      borderRightColor: MAIN_BG_COLOR,
-      borderRightWidth: 2,
+      borderColor: MAIN_BG_COLOR,
+      borderRightWidth: 1,
     },
     profitRight:{
       flex:.5,
-      borderLeftColor: MAIN_BG_COLOR,
-      borderLeftWidth: 2,
+      borderColor: MAIN_BG_COLOR,
+      borderLeftWidth: 1,
     },
 
     genericWrap:{
@@ -297,11 +350,11 @@ stockStyle = StyleSheet.create({
     headerWrap:{
       height: 70,
       borderColor: MAIN_BG_COLOR,
-      borderWidth: 2,
+      borderBottomWidth: 2,
     },
 
     graphWrap:{
-      height: 240,
+      height: 250,
       borderColor: MAIN_BG_COLOR,
       borderWidth: 2,
       justifyContent: 'center'

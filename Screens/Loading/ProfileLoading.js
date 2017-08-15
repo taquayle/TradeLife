@@ -134,13 +134,14 @@ export class ProfileLoadingScreen extends React.Component {
 
     .then((responseData) =>
     {
-        console.log(responseData)
+
         if (responseData.error == false) //Success move on
         {
             const { navigate } = this.props.navigation;
             console.log("---- STOCKDATA RETRIEVED ----");
             this.setState({
               message: "Profile Found.."})
+            console.log(responseData)
             Profile.setProfile(responseData.profile)
             navigate('ProfileStocks')
         }
@@ -165,6 +166,7 @@ export class ProfileLoadingScreen extends React.Component {
         else {
           console.log("---- UNKNOWN ERROR ----");
           console.log(responseData);
+          navigate('ProfileStocks')
         }
     })
   }

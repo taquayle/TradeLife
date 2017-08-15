@@ -19,7 +19,7 @@ import Profile from "../Stores/ProfileStore"
 import loadStyle from "../Styles/LoadingStyle"
 import {MAIN_TEXT_COLOR} from "../Styles/Attributes"
 
-export class LoginLoadingScreen extends React.Component {
+export class TempLoadingScreen extends React.Component {
 
   constructor(props)
   {
@@ -32,6 +32,7 @@ export class LoginLoadingScreen extends React.Component {
       this.props.navigation.navigate('Login');
       return true //Tell react-navigation that back button is handled
     }.bind(this));
+
       console.log(Server.loginURL())
       const { navigate } = this.props.navigation;
       console.log("---- ATTEMPTING LOGIN ----");
