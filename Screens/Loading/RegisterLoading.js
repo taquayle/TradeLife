@@ -17,7 +17,7 @@ import User from "../Stores/UserStore"
 import Server from "../Stores/TradeLifeStore"
 import Profile from "../Stores/ProfileStore"
 import loadStyle from "../Styles/LoadingStyle"
-import {MAIN_TEXT_COLOR} from "../Styles/LoadingStyle"
+import {MAIN_TEXT_COLOR} from "../Styles/Attributes"
 
 export class RegisterLoadingScreen extends React.Component {
 

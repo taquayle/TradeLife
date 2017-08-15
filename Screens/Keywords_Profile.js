@@ -77,7 +77,7 @@ export class KeywordsProfileScreen extends React.Component {
     if(Profile.getDescKeys() != null){
       return(
         <View>
-          <Text style={tradeStyle.h2}>User Keywords</Text>
+          <Text style={tradeStyle.h2}>Transaction Keywords</Text>
           {this.displayKeys(Object.values(Profile.getDescKeys()))}
         </View>
       );

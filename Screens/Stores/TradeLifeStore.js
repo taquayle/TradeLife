@@ -1,30 +1,24 @@
 import {observable } from "mobx";
 
 class  TradeLifeStore{
-  // HOME
-  // @observable login_URL = "http://192.168.1.102:8080/login"
-  // @observable profile_Put_URL = "http://192.168.1.102:8080/profile/put"
-  // @observable profile_Get_URL = "http://192.168.1.102:8080/profile/get"
-  // @observable profile_Post_URL = "http://192.168.1.102:8080/profile/post"
-  // @observable register_Put_URL = "http://192.168.1.102:8080/register"
 
+
+
+  // HOUSE-SITTING
+  @observable ipAddr = "http://192.168.11.7:8080/"
   // LOCAL
-  // @observable login_URL = "http://192.168.33.10/login"
-  // @observable profile_Put_URL = "http://192.168.33.10/profile/put"
-  // @observable profile_Get_URL = "http://192.168.33.10/profile/get"
-  // @observable stocks_Get_URL = "http://192.168.33.10/stocks/get"
-  // @observable profile_Post_URL = "http://192.168.33.10/profile/post"
-  // @observable register_Put_URL = "http://192.168.33.10/register"
-  // @observable transaction_Put_URL = "http://192.168.33.10/transaction"
+  //@observable ipAddr = "http://192.168.33.10/"
+  //PUBLIC
+  //@observable ipAddr = "http://172.16.42.26:8080/"
 
-  // PUBLIC
-  @observable login_URL = "http://172.16.42.26:8080/login"
-  @observable profile_Put_URL = "http://172.16.42.26:8080/profile/put"
-  @observable profile_Get_URL = "http://172.16.42.26:8080/profile/get"
-  @observable stocks_Get_URL = "http://172.16.42.26:8080/stocks/get"
-  @observable profile_Post_URL = "http://172.16.42.26:8080/profile/post"
-  @observable register_Put_URL = "http://172.16.42.26:8080/register"
-  @observable transaction_Put_URL = "http://172.16.42.26:8080/transaction"
+  @observable login_URL =   this.ipAddr + "login"
+  @observable profile_Put_URL = this.ipAddr + "profile/put"
+  @observable profile_Get_URL = this.ipAddr + "profile/get"
+  @observable stocks_Get_URL =  this.ipAddr + "stocks/get"
+  @observable profile_Post_URL = this.ipAddr + "profile/post"
+  @observable register_Put_URL = this.ipAddr + "register"
+  @observable transaction_Put_URL = this.ipAddr + "transaction"
+
 
   loginURL(){ return this.login_URL}
   profileGetURL(){  return this.profile_Get_URL}

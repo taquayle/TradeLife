@@ -3,7 +3,7 @@
 // Date: July 27, 2017
 
 import React from 'react';
-import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
+import { Text, View, StyleSheet, Image, ScrollView, BackHandler, Dimensions} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
@@ -11,7 +11,8 @@ import { Card, Slider, ListItem, Button, List, Icon, Header } from 'react-native
 import tradeStyle from "./Styles/DefaultStyle"
 import {observable} from "mobx"
 import {observer} from "mobx-react"
-import { COLOR_SCHEME, TEXT_SCHEME } from "./Styles/Attributes"
+import { COLOR_SCHEME, TEXT_SCHEME, MAIN_FONT_FAMILY, MAIN_BG_COLOR,
+          STOCKS_COLOR_SCHEME, STOCKS_TEXT_SCHEME } from "./Styles/Attributes"
 import { VictoryBar, VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native'
 import Swiper from 'react-native-swiper'
 
@@ -124,39 +125,131 @@ export class StocksScreen extends React.Component {
         </View>
 
         <View style={stockStyle.botWrap}>
-        <Slider
-          minimumValue={10}
-          maximumValue={10000}
-          value={this.state.invest}
-          onSlidingComplete={(value) => this.foo(value)} />
-            <Swiper>
-            {
-              sector.map((company, i) => {
-                return (
-                  <View key={i} style={tradeStyle.wrapper,{backgroundColor: COLOR_SCHEME[i]}}>
+          <Slider
+            minimumValue={10}
+            maximumValue={10000}
+            value={this.state.invest}
+            onSlidingComplete={(value) => this.foo(value)}
+          />
+          <Swiper>
+          {
+            sector.map((company, i) => {
+              return (
+                <View key={i} style={ [ tradeStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
 
-                    <Text style={tradeStyle.h1}>{company['name']}</Text>
-                    <Text style={tradeStyle.body}>Investing: ${this.currentInvestment.toFixed(2)} on {Profile.getInvestDate()}
-                     would give you ${this.simpleReturn(company['stock_data'])}</Text>
+                  <View style={stockStyle.headerWrap}>
+                    <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}> { company['name'] } </Text>
+                  </View>
 
-                    <VictoryChart theme={VictoryTheme.material}>
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+
+                    <View style={stockStyle.profitLeft}>
+
+                      <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        Investing
+                      </Text>
+
+                      <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        ${this.currentInvestment.toFixed(2)}
+                      </Text>
+
+                    </View>
+
+                    <View style={stockStyle.profitRight}>
+
+                      <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        Profit
+                      </Text>
+
+                      <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        ${this.simpleReturn(company['stock_data'])}
+                      </Text>
+
+                    </View>
+
+                  </View>
+
+                  <View style={stockStyle.graphWrap}>
+                    <VictoryChart>
+
                       <VictoryLine
                         key={i}
-                        style={{ data: { stroke: TEXT_SCHEME[i]},
-                          parent: { border: "10px solid #000"}}}
+                        style={{
+                          data: { stroke: STOCKS_TEXT_SCHEME[(i%2)]},
+                          parent: { border: "10px solid #000"},
+                          labels: {color: STOCKS_TEXT_SCHEME[(i%2)]}
+                        }}
                         data={this.formatData(company['stock_data'])}
                         />
                     </VictoryChart>
-                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
-                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
-                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
-                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
-                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
-                    <Text style={tradeStyle.body}> Just Temp stuff </Text>
+
                   </View>
-                )
-              })
-            }
+
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+
+                    <View style={stockStyle.profitLeft}>
+
+                      <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        Cap
+                      </Text>
+
+                      <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        ${company['cap']}M
+                      </Text>
+
+                    </View>
+
+                    <View style={stockStyle.profitRight}>
+
+                      <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        Price
+                      </Text>
+
+                      <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        ${company['price']}
+                      </Text>
+
+                    </View>
+
+                  </View>
+
+
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+
+                    <View style={stockStyle.genericWrap}>
+
+                      <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        Industry
+                      </Text>
+
+                      <Text style={[tradeStyle.h1, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        {company['industry']}
+                      </Text>
+
+                    </View>
+
+                  </View>
+
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+
+                    <View style={stockStyle.genericWrap}>
+
+                      <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        Sector
+                      </Text>
+
+                      <Text style={[tradeStyle.h1, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+                        {company['sector']}
+                      </Text>
+
+                    </View>
+
+                  </View>
+
+                </View>
+              )
+            })
+          }
           </Swiper>
         </View>
       </View>
@@ -173,6 +266,29 @@ stockStyle = StyleSheet.create({
     },
     botWrap:{
       flex:1,
-      backgroundColor:"#FFFFFF",
+      backgroundColor: MAIN_BG_COLOR,
+    },
+
+    profitWrap:{
+      height: 64,
+      flexDirection:'row'
+    },
+    profitLeft:{
+      flex:.5
+    },
+    profitRight:{
+      flex:.5
+    },
+
+    genericWrap:{
+      flex: 1
+    },
+    headerWrap:{
+      height: 70,
+    },
+    
+    graphWrap:{
+      height: 240,
+      justifyContent: 'center'
     },
 })

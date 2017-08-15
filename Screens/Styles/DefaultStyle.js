@@ -27,7 +27,7 @@ export default StyleSheet.create({
     color: MAIN_TEXT_COLOR,
     textAlign: 'center',
     fontFamily:MAIN_FONT_FAMILY,
-    fontSize: 30
+    fontSize: 25
   },
   h1:{
     color: MAIN_TEXT_COLOR,

@@ -20,6 +20,9 @@ export const MAIN_TEXT_COLOR = "#2E294E"
 export const COLOR_SCHEME = ["#541388", "#D90368", '#2E294E', '#FFD400','#F1E9DA']
 export const TEXT_SCHEME = ['#F1E9DA', '#2E294E', '#FFD400', "#541388", "#D90368"]
 
+export const STOCKS_COLOR_SCHEME =  ["#541388", "#D90368", '#2E294E']
+export const STOCKS_TEXT_SCHEME =   ['#F1E9DA', '#FFD400']
+
 export const DRAWER_BG_COLOR = COLOR_SCHEME[2]
 export const DRAWER_BUTTON_COLOR = COLOR_SCHEME[1]
 export const DRAWER_ICON_COLOR = COLOR_SCHEME[2]

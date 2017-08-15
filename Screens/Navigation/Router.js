@@ -82,7 +82,7 @@ export const Drawer = DrawerNavigator({
     <View style={drawStyle.topWrap}>
       <Text style={drawStyle.title}>Hello {User.getName()}!</Text>
     </View>
-    <View style={drawStyle.botWrap}>
+    <View style={[drawStyle.botWrap, {justifyContent: 'center'}]}>
     <Button
       icon={{size: 30, color: DRAWER_ICON_COLOR, name: "home" }}
       buttonStyle={{backgroundColor: DRAWER_BUTTON_COLOR, marginVertical: 10, borderRadius: 10}}

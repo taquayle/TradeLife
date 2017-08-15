@@ -7,6 +7,7 @@ import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-nat
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import tradeStyle from "./Styles/DefaultStyle"
+import {COLOR_SCHEME} from './Styles/Attributes'
 import { Button, Header, Icon } from 'react-native-elements';
 
 export class TransactionScreen extends React.Component {
@@ -39,7 +40,7 @@ export class TransactionScreen extends React.Component {
         <Button
           large
           icon={{name: 'autorenew', size: 32}}
-          buttonStyle={{backgroundColor: 'red', borderRadius: 40, marginVertical: 10}}
+          buttonStyle={{backgroundColor: COLOR_SCHEME[0], borderRadius: 40, marginVertical: 10}}
           textStyle={{textAlign: 'center'}}
           title={`Update Transactions`}
           onPress={() => navigate('TransactLoading')}
