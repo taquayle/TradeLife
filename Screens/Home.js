@@ -53,7 +53,7 @@ export class HomeScreen extends React.Component {
             buttonStyle={{backgroundColor: COLOR_SCHEME[0], borderRadius: 40, marginVertical: 10}}
             textStyle={{textAlign: 'center'}}
             title={`Stocks`}
-            onPress={() => navigate('ProfileStocks')}
+            onPress={() => navigate('StocksProfile')}
           />
 
 

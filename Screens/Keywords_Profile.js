@@ -74,12 +74,13 @@ export class KeywordsProfileScreen extends React.Component {
 
   transactionKeys(){
 
-    if(Profile.getDescKeys() != null){
+    if(Profile.getKeywords() != null){
       return(
-        <View>
+        <ScrollView>
+
           <Text style={tradeStyle.h2}>Transaction Keywords</Text>
-          {this.displayKeys(Object.values(Profile.getDescKeys()))}
-        </View>
+          {this.displayKeys(Object.values(Profile.getKeywords()))}
+        </ScrollView>
       );
     }
 

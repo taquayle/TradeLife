@@ -65,27 +65,28 @@ export class RegisterLoadingScreen extends React.Component {
      })
     .then((responseData) =>
     {
-
-        if (responseData.error == false) //Success, allow used in
-        {
-            const { navigate } = this.props.navigation;
-            console.log("---- REGISTRATION SUCCESSFUL ----");
-            navigate('Login');
-        }
-        else if (responseData.error == true) //Success, allow used in
-        {
-            console.log("---- ERROR ON REGISTRATION ----");
-            console.log(responseData);
-            User.setError(responseData.message)
-            navigate('Register')
-
-        }
-        else{
-          console.log("---- UNKNOWN ERROR ----")
-          console.log(responseData)
-          User.setError("Unknown Error, please try again")
+      console.log("---- SERVER RESPONSE ----")
+      console.log(responseData)
+      if (responseData.error == false) //Success, allow used in
+      {
+          const { navigate } = this.props.navigation;
+          console.log("---- REGISTRATION SUCCESSFUL ----");
+          navigate('Login');
+      }
+      else if (responseData.error == true) //Success, allow used in
+      {
+          console.log("---- ERROR ON REGISTRATION ----");
+          console.log(responseData);
+          User.setError(responseData.message)
           navigate('Register')
-        }
+
+      }
+      else{
+        console.log("---- UNKNOWN ERROR ----")
+        console.log(responseData)
+        User.setError("Unknown Error, please try again")
+        navigate('Register')
+      }
     })
 
     .done();

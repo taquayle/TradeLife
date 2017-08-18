@@ -64,7 +64,8 @@ export class LoginLoadingScreen extends React.Component {
        })
       .then((responseData) =>
       {
-
+        console.log("---- SERVER RESPONSE ----")
+        console.log(responseData)
           if(responseData == null){
             console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
               User.setError("Could not connect to server")
@@ -130,27 +131,28 @@ export class LoginLoadingScreen extends React.Component {
 
     .then((responseData) =>
     {
-
-        if (responseData.error == false) //Success move on
-        {
-            const { navigate } = this.props.navigation;
-            console.log("---- PROFILE SUCCESSFUL ----");
-            console.log(responseData.profile)
-            console.log(Profile.getTargetSectors())
-            this.setState({
-              message: "PROFILE FOUND"})
+      console.log("---- SERVER RESPONSE ----")
+      console.log(responseData)
+      if (responseData.error == false) //Success move on
+      {
+          const { navigate } = this.props.navigation;
+          console.log("---- PROFILE SUCCESSFUL ----");
+          this.setState({
+            message: "PROFILE FOUND"})
+          if(responseData.profile['Target_Companies'] == null)
+            Profile.baseProfile(responseData.profile)
+          else //User has valid keywords
             Profile.setProfile(responseData.profile)
-        }
-        else if (responseData.error == true) // ERROR: display and remain
-        {
-            console.log("---- NO PROFILE  ----");
-            console.log(responseData);
-        }
-        else {
-          console.log("---- UNKNOWN ERROR ----");
-          console.log(responseData);
-        }
-        navigate('Home')
+      }
+      else if (responseData.error == true) // ERROR: display and remain
+      {
+          console.log("---- NO PROFILE  ----");
+
+      }
+      else {
+        console.log("---- UNKNOWN ERROR ----");
+      }
+      navigate('Home')
     })
 
   }

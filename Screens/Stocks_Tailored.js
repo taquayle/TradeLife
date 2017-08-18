@@ -20,7 +20,7 @@ import Swiper from 'react-native-swiper'
 
 
 @observer
-export class StocksScreen extends React.Component {
+export class StocksTailoredScreen extends React.Component {
   // For debug purposes, will output to the console the current screen.
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
@@ -28,7 +28,7 @@ export class StocksScreen extends React.Component {
   // Override the standard back button and navigate properly
   componentDidMount(){
     BackHandler.addEventListener('hardwareBackPress', function() {
-      this.props.navigation.navigate('ProfileStocks');
+      this.props.navigation.navigate('StocksProfile');
       return true //Tell react-navigation that back button is handled
     }.bind(this));
   }
@@ -41,7 +41,7 @@ export class StocksScreen extends React.Component {
                     disOrCap: false,
                     order: "BY MARKET CAP",
                     icon: 'memory',
-                    stocks: Profile.getCapStocks()}
+                    stocks: Profile.getTailoredCompanies()}
   }
 
   /*
@@ -76,7 +76,7 @@ export class StocksScreen extends React.Component {
   createGraph(stockData, index){
     if(stockData == null){
       return(
-        <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
+        <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(index%2)]}]}>
         NO STOCK DATA AVAILABLE
         </Text>
       )
@@ -101,7 +101,7 @@ export class StocksScreen extends React.Component {
             crossAxis={false}
           />
           <VictoryLine
-            key={i}
+            key={index}
             data={this.formatData(stockData)}
             interpolation="natural"
             style={{
@@ -167,18 +167,41 @@ export class StocksScreen extends React.Component {
     return format;
   }
 
+  showKeywords(keys, index){
+    var words = Object.keys(keys)
+    var values = Object.values(keys)
+
+    return(
+      <View style={tailorStyle.genericWrap}>
+
+        <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(index%2)]}]}>
+          Keywords Used
+        </Text>
+
+        {words.map((k, i) => {
+          if(values[i] > 0)
+          return(
+            <Text key={i} style={[tradeStyle.h1, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(index%2)]}]}>
+            {k}
+            </Text>
+          )
+        })}
+
+      </View>
+    )
+
+  }
+
   foo(value){
     this.currentInvestment = value
   }
   render() {
     const { navigate } = this.props.navigation;
-    var sectorTitle = Object.values(Profile.getTargetSectors())
-    var stocksArray = Object.values(this.state.stocks)
-    var sector = Object.values(stocksArray[User.getSectorPref()])
+    var sector = Object.values(this.state.stocks)
     return (
-      <View style={stockStyle.wrapper}>
+      <View style={tailorStyle.wrapper}>
 
-        <View style={stockStyle.profitWrap}>
+        <View style={tailorStyle.profitWrap}>
           <Header
             leftComponent={   <Icon size={30} name='menu' onPress={()=>navigate('DrawerOpen')}/>}
             centerComponent={ <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>}
@@ -186,26 +209,27 @@ export class StocksScreen extends React.Component {
           />
         </View>
 
-        <View style={stockStyle.botWrap}>
+        <View style={tailorStyle.botWrap}>
           <Slider
             minimumValue={10}
             maximumValue={10000}
             value={this.state.invest}
             onSlidingComplete={(value) => this.foo(value)}
           />
-          <Swiper>
+          <ScrollView>
+          <Swiper index={User.getSectorPref()}>
           {
             sector.map((company, i) => {
               return (
-                <View key={i} style={ [ stockStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
+                <View key={i} style={ [ tailorStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
 
-                  <View style={stockStyle.profitWrap}>
+                  <View style={tailorStyle.profitWrap}>
                     <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}> { company['name'] } </Text>
                   </View>
 
-                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[tailorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={stockStyle.profitLeft}>
+                    <View style={tailorStyle.profitLeft}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Investing
@@ -217,7 +241,7 @@ export class StocksScreen extends React.Component {
 
                     </View>
 
-                    <View style={stockStyle.profitRight}>
+                    <View style={tailorStyle.profitRight}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Return
@@ -231,13 +255,13 @@ export class StocksScreen extends React.Component {
 
                   </View>
 
-                  <View style={stockStyle.graphWrap}>
+                  <View style={tailorStyle.graphWrap}>
                     {this.createGraph(company['stock_data'], i)}
                   </View>
 
-                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[tailorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={stockStyle.profitLeft}>
+                    <View style={tailorStyle.profitLeft}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Cap
@@ -249,7 +273,7 @@ export class StocksScreen extends React.Component {
 
                     </View>
 
-                    <View style={stockStyle.profitRight}>
+                    <View style={tailorStyle.profitRight}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Price
@@ -264,9 +288,9 @@ export class StocksScreen extends React.Component {
                   </View>
 
 
-                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[tailorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={stockStyle.genericWrap}>
+                    <View style={tailorStyle.genericWrap}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Industry
@@ -280,9 +304,9 @@ export class StocksScreen extends React.Component {
 
                   </View>
 
-                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[tailorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={stockStyle.genericWrap}>
+                    <View style={tailorStyle.genericWrap}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Sector
@@ -295,19 +319,24 @@ export class StocksScreen extends React.Component {
                     </View>
 
                   </View>
+                  <View style={[tailorStyle.keywordWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
+                    {this.showKeywords(company['keys'], i)}
+
+                  </View>
                 </View>
               )
             })
           }
           </Swiper>
+          </ScrollView>
         </View>
       </View>
     );
   }
 }
 
-stockStyle = StyleSheet.create({
+tailorStyle = StyleSheet.create({
     wrapper:{
       flex: 1,
       backgroundColor: MAIN_BG_COLOR,
@@ -352,7 +381,14 @@ stockStyle = StyleSheet.create({
       borderColor: MAIN_BG_COLOR,
       borderBottomWidth: 2,
     },
-
+    keywordWrap:{
+      flex:1,
+      borderColor: MAIN_BG_COLOR,
+      borderTopWidth: 1,
+      borderBottomWidth: 2,
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+    },
     graphWrap:{
       height: 250,
       borderColor: MAIN_BG_COLOR,

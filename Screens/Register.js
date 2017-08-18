@@ -42,7 +42,7 @@ export class RegisterScreen extends React.Component {
   {
       super(props);
 
-      this.state = {  uName: User.getName(), //REMOVE THESE HARDCODED FIELDS
+      this.state = {  uName: User.getName(),
                       pWord: User.getPass(),
                       verify: User.getPass(),
                       eMail: User.getMail(),

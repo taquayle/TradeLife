@@ -64,29 +64,30 @@ export class KeywordAddLoadingScreen extends React.Component {
      })
     .then((responseData) =>
     {
-        console.log(responseData)
+      console.log("---- SERVER RESPONSE ----")
+      console.log(responseData)
 
-        if (responseData.error == false) //Success, allow used in
-        {
-            console.log("---- ADDING KEYWORDS SUCCESSFUL ----");
-            Profile.setUserKeys(responseData.keywords)
-            navigate('KeywordsProfile')
-        }
-        else if (responseData.error == true) //Success, allow used in
-        {
-            console.log("----  FAILED ----");
-            console.log(responseData);
-            this.setState({
-              errMsg: responseData.message})
-        }
-        else
-        {
-          console.log("---- UNKOWN ERROR ----");
+      if (responseData.error == false) //Success, allow used in
+      {
+          console.log("---- ADDING KEYWORDS SUCCESSFUL ----");
+          Profile.setUserKeys(responseData.keywords)
+          navigate('KeywordsProfile')
+      }
+      else if (responseData.error == true) //Success, allow used in
+      {
+          console.log("----  FAILED ----");
           console.log(responseData);
           this.setState({
-            errMsg: "Unknown Error Occured"})
-        }
-        navigate('KeywordsProfile')
+            errMsg: responseData.message})
+      }
+      else
+      {
+        console.log("---- UNKOWN ERROR ----");
+        console.log(responseData);
+        this.setState({
+          errMsg: "Unknown Error Occured"})
+      }
+      navigate('KeywordsProfile')
     })
   }
 

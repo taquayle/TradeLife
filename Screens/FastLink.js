@@ -3,7 +3,7 @@
 // Date: June 23, 2017
 
 import React from 'react';
-import { Text, View, StyleSheet, Image, BackHandler} from 'react-native'
+import { Text, View, StyleSheet, Image, BackHandler, Alert} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import { Header, Icon, Button } from 'react-native-elements'
 import tradeStyle from './Styles/DefaultStyle'
@@ -25,7 +25,7 @@ export class FastLink extends React.Component {
 
       console.log('CLIK')
       const { navigate } = this.props.navigation;
-      fetch(Server.exchangeGetURL(),
+      fetch(Server.profilePutURL(),
       {
           method: 'post',
           headers:
@@ -54,29 +54,48 @@ export class FastLink extends React.Component {
        })
       .then((responseData) =>
       {
-
-          if(responseData == null){
-            console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
-              User.setError("Could not connect to server")
-          }
-          else if (responseData.error == false) //Success, allow used in
-          {
-              console.log("---- LOGIN SUCCESSFUL ----");
-              User.setYodleeToken(responseData.yodleeToken);
-          }
-          else if (responseData.error == true)
-          {
-              console.log("---- LOGIN FAILED ----");
-              console.log(responseData);
-
-          }
-          else
-          {
-            console.log("---- UNKOWN ERROR ----");
-            console.log(responseData);
-          }
+        console.log(responseData)
+        console.log(responseData.messages)
       })
   }
+
+  _onClick2(){
+
+    console.log('CLIK')
+    const { navigate } = this.props.navigation;
+    fetch(Server.exchangeGetURL(),
+    {
+        method: 'post',
+        headers:
+        {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(
+        {
+            userName:User.getName(),
+            userPassword:User.getPass()
+        })
+    })
+
+    .then((response) => {
+      // In this case, we check the content-type of the response
+      if (response.headers.get('content-type').match(/application\/json/)) {
+        return response.json();
+      }
+      return response.text();
+      })
+     .catch((error) =>
+     {
+         console.log(error);
+         (response) => response.text();
+     })
+    .then((responseData) =>
+    {
+      console.log(responseData)
+      console.log(responseData.messages)
+    })
+}
   constructor (props) {
     super(props)
   }
@@ -104,8 +123,17 @@ export class FastLink extends React.Component {
           icon={{name: 'autorenew', size: 32}}
           buttonStyle={{backgroundColor: COLOR_SCHEME[0], borderRadius: 40, marginVertical: 10}}
           textStyle={{textAlign: 'center'}}
-          title={`Update Transactions`}
+          title={`Click`}
           onPress={()=> this._onClick()}
+        />
+
+        <Button
+          large
+          icon={{name: 'autorenew', size: 32}}
+          buttonStyle={{backgroundColor: COLOR_SCHEME[0], borderRadius: 40, marginVertical: 10}}
+          textStyle={{textAlign: 'center'}}
+          title={`Update Companies`}
+          onPress={()=> this._onClick2()}
         />
         <Text style={tradeStyle.title}>PLACEHOLDER</Text>
         </View>

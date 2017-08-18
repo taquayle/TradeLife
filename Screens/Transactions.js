@@ -22,7 +22,6 @@ export class TransactionScreen extends React.Component {
   }
 
   render() {
-    console.log("At Trans");
     const { navigate } = this.props.navigation;
     return (
       <View style={tradeStyle.wrapper}>

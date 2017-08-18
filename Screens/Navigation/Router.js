@@ -1,5 +1,5 @@
 import { StackNavigator, TabNavigator, DrawerNavigator, DrawerItems } from 'react-navigation';
-import { Icon, Button } from 'react-native-elements'
+import { Icon, Button, Header } from 'react-native-elements'
 import {View, Text, ScrollView } from 'react-native'
 import React from 'react';
 import {COLOR_SCHEME, TEXT_SCHEME,
@@ -8,6 +8,7 @@ import {COLOR_SCHEME, TEXT_SCHEME,
 import drawStyle from '../Styles/DrawerStyle'
 
 import User from '../Stores/UserStore'
+
 /******************************************************************************/
 // SCREENS
 import { SplashScreen } from '../Splash';
@@ -17,10 +18,12 @@ import { HomeScreen } from '../Home';
 import { ForgotScreen } from '../Forgot';
 import { FastLink } from '../FastLink';
 import { TransactionScreen } from '../Transactions'
-import { ProfileStocksScreen } from '../Profile_Stocks';
+import { StocksProfileScreen } from '../Stocks_Profile';
+import { StocksSectorScreen } from '../Stocks_Sector';
+import { StocksTailoredScreen } from '../Stocks_Tailored';
 import { KeywordsProfileScreen } from '../Keywords_Profile';
 import { KeywordsAddScreen } from '../Keywords_Add';
-import { StocksScreen } from '../Stocks';
+
 
 /******************************************************************************/
 // LOADING SCREENS
@@ -37,7 +40,15 @@ class Hidden extends React.Component {
   }
 }
 
-
+const ImageHeader = props => (
+  <View style={drawerStyle.header}>
+    <Header
+      leftComponent={   <Icon size={30} name='menu' onPress={()=>navigate('DrawerOpen')}/>}
+      centerComponent={ <Image source={require('../Images/TradeLife.png')} style={drawerStyle.logo}/>}
+      rightComponent={  <Icon size={30} name='home' onPress={()=>navigate('Home')}/>}
+    />
+  </View>
+);
 
 
 export const Drawer = DrawerNavigator({
@@ -62,9 +73,11 @@ export const Drawer = DrawerNavigator({
 
   Home: {screen: HomeScreen,
     navigationOptions: { drawerLockMode: 'locked-closed', drawerLabel: <Hidden/>,}},
-  ProfileStocks: {screen: ProfileStocksScreen,
+  StocksProfile: {screen: StocksProfileScreen,
     navigationOptions: { drawerLockMode: 'locked-closed', drawerLabel: <Hidden/>,}},
-  Stocks: {screen: StocksScreen,
+  StocksSector: {screen: StocksSectorScreen,
+    navigationOptions: { drawerLockMode: 'locked-closed', drawerLabel: <Hidden/>,}},
+  StocksTailored: {screen: StocksTailoredScreen,
     navigationOptions: { drawerLockMode: 'locked-closed', drawerLabel: <Hidden/>,}},
   KeywordsProfile: {screen: KeywordsProfileScreen,
     navigationOptions: { drawerLockMode: 'locked-closed', drawerLabel: <Hidden/>,}},
@@ -80,7 +93,14 @@ export const Drawer = DrawerNavigator({
 },{
   contentComponent: ({props, navigation}) =>{return (<View style={drawStyle.wrapper}>
     <View style={drawStyle.topWrap}>
-      <Text style={drawStyle.title}>Hello {User.getName()}!</Text>
+      <Text style={drawStyle.h1}>Hello, {User.getName()}!</Text>
+      <Button
+        icon={{color: TEXT_SCHEME[3], name: 'autorenew', size: 30}}
+        buttonStyle={{backgroundColor: COLOR_SCHEME[3], borderRadius: 40, marginVertical: 5}}
+        textStyle={{textAlign: 'center', color:TEXT_SCHEME[3]}}
+        title={'Refresh Profile'}
+        onPress={() => navigation.navigate('ProfileLoading')}
+      />
     </View>
     <View style={[drawStyle.botWrap, {justifyContent: 'center'}]}>
     <Button
@@ -95,7 +115,7 @@ export const Drawer = DrawerNavigator({
       buttonStyle={{backgroundColor: DRAWER_BUTTON_COLOR, marginVertical: 10, borderRadius: 10}}
       textStyle={{color: TEXT_SCHEME[0]}}
       title={`Stocks`}
-      onPress={() => navigation.navigate('ProfileStocks')}
+      onPress={() => navigation.navigate('StocksProfile')}
     />
     <Button
       icon={{size: 30, color: DRAWER_ICON_COLOR, name: "vpn-key" }}
@@ -139,15 +159,23 @@ export const Drawer = DrawerNavigator({
 navigationOptions =
 {
   drawerLockMode: 'locked-closed',
-  headerMode: 'none', //Get rid of headers
+
   backBehavior: 'none',
 
+
 });
+
+
+
 
 export const Router = StackNavigator({
   DrawNav: {screen: Drawer}
 },
 navigationOptions =
 {
-  headerMode: 'none', //Get rid of headers
+  drawerLockMode: 'locked-closed',
+
+  backBehavior: 'none',
+  headerMode:'none'
+
 });

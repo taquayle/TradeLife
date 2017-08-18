@@ -29,7 +29,7 @@ export class ProfileLoadingScreen extends React.Component {
   /**************************************************************************/
   componentDidMount(){
     BackHandler.addEventListener('hardwareBackPress', function() {
-      this.props.navigation.navigate('ProfileStocks');
+      this.props.navigation.navigate('StocksProfile');
       return true //Tell react-navigation that back button is handled
     }.bind(this));
 
@@ -64,6 +64,8 @@ export class ProfileLoadingScreen extends React.Component {
 
     .then((responseData) =>
     {
+      console.log("---- SERVER RESPONSE ----")
+      console.log(responseData)
         if (responseData.error == false) //Success move on
         {
             const { navigate } = this.props.navigation;
@@ -85,18 +87,18 @@ export class ProfileLoadingScreen extends React.Component {
             else if(responseData.error_code == 2){
               console.log("---- NO COMPANY DATABASE ----");
               console.log(responseData);
-              navigate('Home')
+              navigate('StocksProfile')
             }
             else{
               console.log("---- GENERIC ERROR CODE ----")
               console.log(responseData);
-              navigate('ProfileStocks')
+              navigate('StocksProfile')
             }
         }
         else {
           console.log("---- UNKNOWN ERROR ----");
           console.log(responseData);
-          navigate('ProfileStocks')
+          navigate('StocksProfile')
         }
     })
   }
@@ -134,40 +136,38 @@ export class ProfileLoadingScreen extends React.Component {
 
     .then((responseData) =>
     {
+      console.log("---- SERVER RESPONSE ----")
+      console.log(responseData)
+      if (responseData.error == false) //Success move on
+      {
+          const { navigate } = this.props.navigation;
+          console.log("---- STOCKDATA RETRIEVED ----");
+          this.setState({
+            message: "Profile Found.."})
+          Profile.setProfile(responseData.profile)
+      }
+      else if (responseData.error == true) // ERROR: display and remain
+      {
+          if(responseData.error_code == 1){
+            console.log("---- NO TRANSACTION HISTORY  ----");
+            console.log(responseData);
+          }
+          if(responseData.error_code == 2){
+            console.log("---- NO COMPANY DATABASE ----");
+            console.log(responseData);
 
-        if (responseData.error == false) //Success move on
-        {
-            const { navigate } = this.props.navigation;
-            console.log("---- STOCKDATA RETRIEVED ----");
-            this.setState({
-              message: "Profile Found.."})
-            console.log(responseData)
-            Profile.setProfile(responseData.profile)
-            navigate('ProfileStocks')
-        }
-        else if (responseData.error == true) // ERROR: display and remain
-        {
-            if(responseData.error_code == 1){
-              console.log("---- NO TRANSACTION HISTORY  ----");
-              console.log(responseData);
-              navigate('Transact')
-            }
-            if(responseData.error_code == 2){
-              console.log("---- NO COMPANY DATABASE ----");
-              console.log(responseData);
-              navigate('Home')
-            }
-            else{
-              console.log("---- GENERIC ERROR CODE ----")
-              console.log(responseData);
-              navigate('ProfileStocks')
-            }
-        }
-        else {
-          console.log("---- UNKNOWN ERROR ----");
-          console.log(responseData);
-          navigate('ProfileStocks')
-        }
+          }
+          else{
+            console.log("---- GENERIC ERROR CODE ----")
+            console.log(responseData);
+          }
+      }
+      else {
+        console.log("---- UNKNOWN ERROR ----");
+        console.log(responseData);
+
+      }
+      navigate('StocksProfile')
     })
   }
 

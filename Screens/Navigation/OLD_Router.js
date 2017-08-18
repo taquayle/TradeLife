@@ -15,7 +15,7 @@ import { HomeScreen } from '../Home';
 import { ForgotScreen } from '../Forgot';
 import { FastLink } from '../FastLink';
 import { TransactionScreen } from '../Transactions'
-import { ProfileStocksScreen } from '../Profile_Stocks';
+import { StocksProfileScreen } from '../Profile_Stocks';
 import { KeywordsProfileScreen } from '../Keywords_Profile';
 import { KeywordsAddScreen } from '../Keywords_Add';
 import { StocksScreen } from '../Stocks';
@@ -72,8 +72,8 @@ export const Drawer = DrawerNavigator({
         drawerLockMode: 'locked-closed',
       }
   },
-  ProfileStocks: {
-    screen: ProfileStocksScreen,
+  StocksProfile: {
+    screen: StocksProfileScreen,
     navigationOptions:{
         drawerLabel: "Stocks",
         drawerIcon:({tintColor}) =>(

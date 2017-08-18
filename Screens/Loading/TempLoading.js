@@ -65,34 +65,35 @@ export class TempLoadingScreen extends React.Component {
        })
       .then((responseData) =>
       {
-
-          if(responseData == null){
-            console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
-              User.setError("Could not connect to server")
-              navigate('Login')
-          }
-          else if (responseData.error == false) //Success, allow used in
-          {
-              console.log("---- LOGIN SUCCESSFUL ----");
-              User.setYodleeToken(responseData.yodleeToken);
-              this.setState({
-                message: "LOGIN SUCCESSFUL"})
-              this.getUserProfile()
-          }
-          else if (responseData.error == true)
-          {
-              console.log("---- LOGIN FAILED ----");
-              console.log(responseData);
-              User.setError(responseData.messages)
-              navigate('Login');
-          }
-          else
-          {
-            console.log("---- UNKOWN ERROR ----");
+        console.log("---- SERVER RESPONSE ----")
+        console.log(responseData)
+        if(responseData == null){
+          console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
+            User.setError("Could not connect to server")
+            navigate('Login')
+        }
+        else if (responseData.error == false) //Success, allow used in
+        {
+            console.log("---- LOGIN SUCCESSFUL ----");
+            User.setYodleeToken(responseData.yodleeToken);
+            this.setState({
+              message: "LOGIN SUCCESSFUL"})
+            this.getUserProfile()
+        }
+        else if (responseData.error == true)
+        {
+            console.log("---- LOGIN FAILED ----");
             console.log(responseData);
             User.setError(responseData.messages)
             navigate('Login');
-          }
+        }
+        else
+        {
+          console.log("---- UNKOWN ERROR ----");
+          console.log(responseData);
+          User.setError(responseData.messages)
+          navigate('Login');
+        }
       })
   }
 

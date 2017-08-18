@@ -34,6 +34,8 @@ export class TransactionLoadingScreen extends React.Component {
     }.bind(this));
 
     console.log("---- ATTEMPTING TO GET TRANSACTIONS ----");
+    const { navigate } = this.props.navigation;
+    console.log('Sending Token' + User.getYodleeToken())
     fetch(Server.transactionPutURL(),
     {
         method: 'post',
@@ -68,16 +70,20 @@ export class TransactionLoadingScreen extends React.Component {
 
         if (responseData.error == false) //Success, allow used in
         {
-            const { navigate } = this.props.navigation;
+
             console.log("---- TRANSACTIONS UPDATED ----");
-            navigate('Transact');
         }
-        else // ERROR: display and remain
+        else if (responseData.error == true)
         {
             console.log("---- COULD NOT GET TRANSACTIONS ----");
             console.log(responseData);
-            navigate('Transact')
         }
+        else{ // UKNOWN ERROR
+          console.log("---- UNKNOWN ERROR ----");
+          console.log(responseData);
+
+        }
+        navigate('Transact')
     })
 
     .done();
