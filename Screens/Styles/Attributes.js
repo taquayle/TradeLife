@@ -1,4 +1,9 @@
-
+/*
+Author: Tyler Quayle
+Date: August 2nd, 2017
+File: Tradelife/Screens/Styles/Attributes
+Dsec: Contains the gloabl attributes for the colors seen in the app.
+*/
 // ORIGINAL: SHADES OF BLUE
 // export const MAIN_BG_COLOR = "#FFFFFF"
 //
@@ -7,9 +12,12 @@
 // export const COLOR_SCHEME = ["#16608B", "#031A6B", '#05B2DC', '#778DA9', '#E0E1DD']
 // export const TEXT_SCHEME = ['#E0E1DD', '#778DA9', "#031A6B", '#05B2DC', "#16608B"]
 //
-// export const DRAWER_BG_COLOR = COLOR_SCHEME[4]
-// export const DRAWER_BUTTON_COLOR = COLOR_SCHEME[0]
-// export const DRAWER_ICON_COLOR = COLOR_SCHEME[4]
+// export const STOCKS_COLOR_SCHEME =  [COLOR_SCHEME[0], COLOR_SCHEME[1], COLOR_SCHEME[2]]
+// export const STOCKS_TEXT_SCHEME =   [COLOR_SCHEME[3], COLOR_SCHEME[4]]
+//
+// export const DRAWER_BG_COLOR = COLOR_SCHEME[2]
+// export const DRAWER_BUTTON_COLOR = COLOR_SCHEME[1]
+// export const DRAWER_ICON_COLOR = COLOR_SCHEME[2]
 
 // INDIGO
 export const MAIN_BG_COLOR = "#F1E9DA"
@@ -36,6 +44,9 @@ export const DRAWER_ICON_COLOR = COLOR_SCHEME[2]
 // export const COLOR_SCHEME = ["#20BF55", "#0B4F6C", '#01BAEF', '#757575', '#FBFBFF']
 // export const TEXT_SCHEME = ['#757575', '#FBFBFF', "#0B4F6C", '#01BAEF', "#20BF55"]
 //
-// export const DRAWER_BG_COLOR = COLOR_SCHEME[1]
-// export const DRAWER_BUTTON_COLOR = COLOR_SCHEME[0]
-// export const DRAWER_ICON_COLOR = COLOR_SCHEME[4]
+// export const STOCKS_COLOR_SCHEME =  [COLOR_SCHEME[0], COLOR_SCHEME[1], COLOR_SCHEME[2]]
+// export const STOCKS_TEXT_SCHEME =   [COLOR_SCHEME[3], COLOR_SCHEME[4]]
+//
+// export const DRAWER_BG_COLOR = COLOR_SCHEME[2]
+// export const DRAWER_BUTTON_COLOR = COLOR_SCHEME[1]
+// export const DRAWER_ICON_COLOR = COLOR_SCHEME[2]

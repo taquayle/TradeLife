@@ -1,3 +1,9 @@
+/*
+Author: Tyler Quayle
+Date: July 30th, 2017
+File: Tradelife/Screens/Stores/ProfileStore
+Dsec: Handles all the profile attributes gotten from the TradeLife server
+*/
 import {observable } from "mobx";
 
 class  ProfileStore{

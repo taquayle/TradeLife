@@ -1,3 +1,9 @@
+/*
+Author: Tyler Quayle
+Date: August 2nd, 2017
+File: Tradelife/Screens/Styles/
+Dsec:
+*/
 import { StyleSheet , BackHandler} from 'react-native'
 import {  MAIN_BG_COLOR, DRAWER_BG_COLOR, MAIN_TEXT_COLOR,
           TEXT_SCHEME, MAIN_FONT_FAMILY, COLOR_SCHEME } from './Attributes'

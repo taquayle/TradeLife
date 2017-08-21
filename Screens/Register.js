@@ -23,11 +23,13 @@ export class RegisterScreen extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
 
-  @observable passwordGood = false
-  @observable emailGood = false
+  @observable passwordValid = false
+  @observable passwordMatch = false
+  @observable emailValid = false
   @observable passwordError = ''
+  @observable passwordMatchError = ''
   @observable emailError = ''
-  @observable usernameGood = false
+  @observable usernameValid = false
   @observable usernameError = ''
 
   componentDidMount(){
@@ -49,11 +51,14 @@ export class RegisterScreen extends React.Component {
                       errMsg: User.getError()};
   }
 
-  /**************************************************************************/
-  // Login logic
+  /**
+  * Attempt to register, only submit after everything has been proven valid
+  *
+  */
   _onSubmit() // Attempt to login.
   {
-    if(this.passwordGood && this.emailGood && this.usernameGood){
+    if(this.passwordValid && this.emailValid &&
+      this.usernameValid && this.passwordMatch){
       const { navigate } = this.props.navigation;
       User.setName(this.state.uName)
       User.setPass(this.state.pWord)
@@ -64,42 +69,62 @@ export class RegisterScreen extends React.Component {
   validateName(){
     var re = /^(?=.{4,}$)([a-zA-Z0-9_])*$/;
     if (!re.test(this.state.uName)){
-      this.usernameGood = false
+      this.usernameValid = false
       this.usernameError = "Username: 4+ characters, A-Z, 0-9, _"
       console.log( "Invalid Username")
     }
     else{
-      this.usernameGood = true
+      this.usernameValid = true
       this.usernameError = ""
       console.log( "Valid Username")
     }
-    this.forceUpdate()
+    this.forceUpdate() // Refresh screen to show errors
   }
 
+  // Check email, using regex to validate it's a 'good' email
   validateEmail(){
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
      if (!re.test(this.state.eMail)){
-       this.emailGood = false
+       this.emailValid = false
        this.emailError = "Invalid Email"
        console.log( "Invalid Email")
      }
      else{
-       this.emailGood = true
+       this.emailValid = true
        this.emailError = ""
        console.log( "Valid Email")
      }
-     this.forceUpdate()
+     this.forceUpdate() // Refresh screen to show errors
   };
-  passwordCheck(){
-    if(this.state.verify == this.state.pWord){
-      this.passwordGood = true;
+
+  // Yodlee needs: 8+, 1 [A-Z], 1 [0-9], 1 [!@#$%^&*()]. So we may as well
+  validatePassword(){
+    var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
+    if (!re.test(this.state.pWord)){
+      this.passwordValid = false;
+      this.passwordError = 'Password: 8+ char, 1 upper, 1 number, 1 special';
+      console.log( "Invalid Email")
+    }
+    else{
+      this.passwordValid = true;
       this.passwordError = '';
+      console.log( "Password is good")
+    }
+    this.forceUpdate() // Refresh screen to show errors
+  }
+
+  // Check if both passwords are equal
+  passwordEqualCheck(){
+
+    if(this.state.verify == this.state.pWord){
+      this.passwordMatch = true;
+      this.passwordMatchError = '';
     }
     else {
-      this.passwordGood = false;
-      this.passwordError = 'Passwords do not match';
+      this.passwordMatch = false;
+      this.passwordMatchError = 'Passwords do not match';
     }
-    this.forceUpdate()
+    this.forceUpdate() // Refresh screen to show errors
   }
 
   render() {
@@ -111,6 +136,7 @@ export class RegisterScreen extends React.Component {
         </View>
 
         <View style={tradeStyle.wrapper}>
+          {/******************************************************************/}
           {/* Username Field */}
           <FormLabel fontFamily = 'monospace'>USERNAME</FormLabel>
           <FormValidationMessage>{this.usernameError}</FormValidationMessage>
@@ -119,7 +145,9 @@ export class RegisterScreen extends React.Component {
             onChangeText={(uName) => this.setState({uName})}
             onEndEditing={() => this.validateName()}
           />
+          {/******************************************************************/}
 
+          {/******************************************************************/}
           {/* Email Field */}
           <FormLabel fontFamily = 'monospace'>E-MAIL</FormLabel>
           <FormValidationMessage>{this.emailError}</FormValidationMessage>
@@ -128,27 +156,36 @@ export class RegisterScreen extends React.Component {
             onChangeText={(eMail) => this.setState({eMail})}
             onEndEditing={() => this.validateEmail()}
           />
+          {/******************************************************************/}
 
-
+          {/******************************************************************/}
           {/* Password Field */}
-          {/* SHOW ERROR MESSAGE FROM SERVER */}
-
           <FormLabel fontFamily = 'monospace'>PASSWORD</FormLabel>
+          {/* Show password error */}
           <FormValidationMessage>{this.passwordError}</FormValidationMessage>
           <FormInput
             secureTextEntry
             defaultValue = {this.state.pWord}
             onChangeText={(pWord) => this.setState({pWord})}
+            onEndEditing={() => this.validatePassword()}
           />
+          {/******************************************************************/}
 
+          {/******************************************************************/}
+          {/* Verify password */}
           <FormLabel fontFamily = 'monospace'>VERIFY PASSWORD</FormLabel>
+          {/* Password Match Error */}
+          <FormValidationMessage>{this.passwordMatchError}</FormValidationMessage>
           <FormInput
             secureTextEntry
-            defaultValue = {this.state.pWord}
+            defaultValue = {this.state.verify}
             onChangeText={(verify) => this.setState({verify})}
-            onEndEditing={()=> this.passwordCheck(this)}
+            onEndEditing={()=> this.passwordEqualCheck(this)}
           />
+          {/******************************************************************/}
 
+          {/******************************************************************/}
+          {/* Submit and back buttons */}
           {/* SHOW ERROR MESSAGE FROM SERVER */}
           <FormValidationMessage>{this.state.errMsg}</FormValidationMessage>
           {/* Submit Button */}
@@ -170,6 +207,7 @@ export class RegisterScreen extends React.Component {
             title={`RETURN`}
             onPress={() => navigate('Login')}
           />
+          {/******************************************************************/}
         </View>
       </View>
     );

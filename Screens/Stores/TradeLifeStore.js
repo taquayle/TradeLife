@@ -1,3 +1,9 @@
+/*
+Author: Tyler Quayle
+Date: July 29th, 2017
+File: Tradelife/Screens/Stores/TradeLifeStore
+Dsec: Contains all routes for the different functions on the tradelife server
+*/
 import {observable } from "mobx";
 
 class  TradeLifeStore{

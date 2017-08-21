@@ -32,70 +32,81 @@ export class LoginLoadingScreen extends React.Component {
       this.props.navigation.navigate('Login');
       return true //Tell react-navigation that back button is handled
     }.bind(this));
-      console.log(Server.loginURL())
-      const { navigate } = this.props.navigation;
-      console.log("---- ATTEMPTING LOGIN ----");
-      fetch(Server.loginURL(),
-      {
-          method: 'post',
-          headers:
-          {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          body:JSON.stringify(
-          {
-              userName:User.getName(),
-              userPassword:User.getPass()
-          })
-      })
 
-      .then((response) => {
-        // In this case, we check the content-type of the response
-        if (response.headers.get('content-type').match(/application\/json/)) {
-          return response.json();
-        }
-        return response.text();
+    this.loginToServer()
+
+  }
+
+  /**
+  * Login to the tradelife Server
+  *
+  *
+  * @return navigation, to the login screen if failed, to home if successful
+  */
+  loginToServer(){
+    console.log(Server.loginURL())
+    const { navigate } = this.props.navigation;
+    console.log("---- ATTEMPTING LOGIN ----");
+    fetch(Server.loginURL(),
+    {
+        method: 'post',
+        headers:
+        {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(
+        {
+            userName:User.getName(),
+            userPassword:User.getPass()
         })
-       .catch((error) =>
-       {
-           console.log(error);
-           (response) => response.text();
-       })
-      .then((responseData) =>
-      {
-        console.log("---- SERVER RESPONSE ----")
-        console.log(responseData)
-          if(responseData == null){
-            console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
-              User.setError("Could not connect to server")
-              navigate('Login')
-          }
-          else if (responseData.error == false) //Success, allow used in
-          {
-              console.log("---- LOGIN SUCCESSFUL ----");
-              User.setYodleeToken(responseData.yodleeToken);
-              this.setState({
-                message: "LOGIN SUCCESSFUL"})
-              this.getUserProfile()
-          }
-          else if (responseData.error == true)
-          {
-              console.log("---- LOGIN FAILED ----");
-              console.log(responseData);
-              User.setError(responseData.messages)
-              navigate('Login');
-          }
-          else
-          {
-            console.log("---- UNKOWN ERROR ----");
+    })
+
+    .then((response) => {
+      // In this case, we check the content-type of the response
+      if (response.headers.get('content-type').match(/application\/json/)) {
+        return response.json();
+      }
+      return response.text();
+      })
+     .catch((error) =>
+     {
+         console.log(error);
+         (response) => response.text();
+     })
+    .then((responseData) =>
+    {
+      console.log("---- SERVER RESPONSE ----")
+      console.log(responseData)
+        if(responseData == null){
+          console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
+            User.setError("Could not connect to server")
+            navigate('Login')
+        }
+        else if (responseData.error == false) //Success, allow used in
+        {
+            console.log("---- LOGIN SUCCESSFUL ----");
+            User.setYodleeToken(responseData.yodleeToken);
+            this.setState({
+              message: "LOGIN SUCCESSFUL"})
+            this.getUserProfile()
+        }
+        else if (responseData.error == true)
+        {
+            console.log("---- LOGIN FAILED ----");
             console.log(responseData);
             User.setError(responseData.messages)
             navigate('Login');
-          }
-      })
+        }
+        else
+        {
+          console.log("---- UNKOWN ERROR ----");
+          console.log(responseData);
+          User.setError(responseData.messages)
+          navigate('Login');
+        }
+    })
   }
-
   getUserProfile()
   {
     const { navigate } = this.props.navigation;

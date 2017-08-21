@@ -1,3 +1,10 @@
+/*
+Author: Tyler Quayle
+Date: August 2nd, 2017
+File: Tradelife/Screens/Styles/LoadingStyle
+Dsec: Contains the stylesheet for the 'loading' screens, which contain the
+      logic for contacting the server
+*/
 import { StyleSheet , BackHandler} from 'react-native'
 import { MAIN_BG_COLOR, MAIN_TEXT_COLOR } from './Attributes'
 

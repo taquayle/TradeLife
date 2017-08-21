@@ -1,17 +1,24 @@
+/*
+Author: Tyler Quayle
+Date: July 25th, 2017
+File: Tradelife/Screens/Stores/UserStore
+Dsec: Handles all the user settings
+*/
 import {observable } from "mobx";
 
 class  UserStore{
 
-  @observable userName = "sbMemtaquayle1"
-  @observable userPass = "sbMemtaquayle1#123"
+  @observable userName = "" //
+  @observable userPass = "" //
   @observable userMail = ""
   @observable tradeToken = ""
-  @observable yodleeToken = ""
-  @observable sectorPref = 0
-  @observable error = ""
-  @observable tempKeys = []
+  @observable yodleeToken = ""  //Obtained through the Yodelee Servers
+  @observable sectorPref = 0  //Used to select which sector too look at
+  @observable error = ""    // Used to display different errors
+  @observable tempKeys = [] // Used for displaying keywords before submitted
+                            // to Tradelife server
 
-  signOut(){
+  signOut(){  //Signout of the application
     this.setName("")
     this.setPass("")
     this.setMail("")
