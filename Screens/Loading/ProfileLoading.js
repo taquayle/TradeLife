@@ -10,13 +10,14 @@ import {
   StyleSheet,
   Image,
   Alert,
-  ActivityIndicator
-} from 'react-native';
+  ActivityIndicator,
+  BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import User from "../Stores/UserStore"
 import Server from "../Stores/TradeLifeStore"
 import Profile from "../Stores/ProfileStore"
 import loadStyle from "../Styles/LoadingStyle"
+import {MAIN_TEXT_COLOR} from "../Styles/Attributes"
 
 export class ProfileLoadingScreen extends React.Component {
 
@@ -26,8 +27,12 @@ export class ProfileLoadingScreen extends React.Component {
       this.state = {  message: "GENERATING PROFILE"};
   }
   /**************************************************************************/
-  componentDidMount() // Attempt to login.
-  {
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('StocksProfile');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
+
     const { navigate } = this.props.navigation;
     console.log("---- ATTEMPTING TO GET PROFILE ----");
     fetch(Server.profilePutURL(),
@@ -59,6 +64,8 @@ export class ProfileLoadingScreen extends React.Component {
 
     .then((responseData) =>
     {
+      console.log("---- SERVER RESPONSE ----")
+      console.log(responseData)
         if (responseData.error == false) //Success move on
         {
             const { navigate } = this.props.navigation;
@@ -69,26 +76,29 @@ export class ProfileLoadingScreen extends React.Component {
         }
         else if (responseData.error == true) // ERROR: display and remain
         {
+            // Re-did logic to allow the use of only userkeywords.
             if(responseData.error_code == 1){
               console.log("---- NO TRANSACTION HISTORY  ----");
               console.log(responseData);
-              navigate('Transact')
+              this.setState({
+                message: "GETTING STOCK DATA"})
+              this.retrieveStockData()
             }
-            if(responseData.error_code == 2){
+            else if(responseData.error_code == 2){
               console.log("---- NO COMPANY DATABASE ----");
               console.log(responseData);
-              navigate('Home')
+              navigate('StocksProfile')
             }
             else{
               console.log("---- GENERIC ERROR CODE ----")
               console.log(responseData);
-              navigate('ProfileStocks')
+              navigate('StocksProfile')
             }
         }
         else {
           console.log("---- UNKNOWN ERROR ----");
           console.log(responseData);
-          navigate('ProfileStocks')
+          navigate('StocksProfile')
         }
     })
   }
@@ -126,38 +136,38 @@ export class ProfileLoadingScreen extends React.Component {
 
     .then((responseData) =>
     {
-        if (responseData.error == false) //Success move on
-        {
-            const { navigate } = this.props.navigation;
-            console.log("---- STOCKDATA RETRIEVED ----");
-            console.log(responseData.profile);
-            this.setState({
-              message: "Profile Found.."})
-            Profile.setProfile(responseData.profile)
-            navigate('ProfileStocks')
-        }
-        else if (responseData.error == true) // ERROR: display and remain
-        {
-            if(responseData.error_code == 1){
-              console.log("---- NO TRANSACTION HISTORY  ----");
-              console.log(responseData);
-              navigate('Transact')
-            }
-            if(responseData.error_code == 2){
-              console.log("---- NO COMPANY DATABASE ----");
-              console.log(responseData);
-              navigate('Home')
-            }
-            else{
-              console.log("---- GENERIC ERROR CODE ----")
-              console.log(responseData);
-              navigate('ProfileStocks')
-            }
-        }
-        else {
-          console.log("---- UNKNOWN ERROR ----");
-          console.log(responseData);
-        }
+      console.log("---- SERVER RESPONSE ----")
+      console.log(responseData)
+      if (responseData.error == false) //Success move on
+      {
+          const { navigate } = this.props.navigation;
+          console.log("---- STOCKDATA RETRIEVED ----");
+          this.setState({
+            message: "Profile Found.."})
+          Profile.setProfile(responseData.profile)
+      }
+      else if (responseData.error == true) // ERROR: display and remain
+      {
+          if(responseData.error_code == 1){
+            console.log("---- NO TRANSACTION HISTORY  ----");
+            console.log(responseData);
+          }
+          if(responseData.error_code == 2){
+            console.log("---- NO COMPANY DATABASE ----");
+            console.log(responseData);
+
+          }
+          else{
+            console.log("---- GENERIC ERROR CODE ----")
+            console.log(responseData);
+          }
+      }
+      else {
+        console.log("---- UNKNOWN ERROR ----");
+        console.log(responseData);
+
+      }
+      navigate('StocksProfile')
     })
   }
 
@@ -174,7 +184,7 @@ export class ProfileLoadingScreen extends React.Component {
 
             <View style={loadStyle.bg, loadStyle.activityWrap}>
               <ActivityIndicator
-                color="#000000"
+                color = { MAIN_TEXT_COLOR }
                 style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
               />
             </View>

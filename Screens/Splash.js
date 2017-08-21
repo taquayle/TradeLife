@@ -5,9 +5,11 @@
 import React from 'react';
 import { View, StyleSheet, Image} from 'react-native'
 import { StackNavigator } from 'react-navigation'
-import { MAIN_BG_COLOR } from './Styles/ColorScheme'
+import { MAIN_BG_COLOR } from './Styles/Attributes'
 export class SplashScreen extends React.Component {
-
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
+    
   constructor(props) {
     super(props);
 

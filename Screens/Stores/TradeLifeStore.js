@@ -1,28 +1,30 @@
+/*
+Author: Tyler Quayle
+Date: July 29th, 2017
+File: Tradelife/Screens/Stores/TradeLifeStore
+Dsec: Contains all routes for the different functions on the tradelife server
+*/
 import {observable } from "mobx";
 
 class  TradeLifeStore{
-  // HOME
-  // @observable login_URL = "http://192.168.1.102:8080/login"
-  // @observable profile_Put_URL = "http://192.168.1.102:8080/profile/put"
-  // @observable profile_Get_URL = "http://192.168.1.102:8080/profile/get"
-  // @observable profile_Post_URL = "http://192.168.1.102:8080/profile/post"
-  // @observable register_Put_URL = "http://192.168.1.102:8080/register"
 
+
+
+  // HOUSE-SITTING
+  //@observable ipAddr = "http://192.168.11.7:8080/"
   // LOCAL
-  @observable login_URL = "http://192.168.33.10/login"
-  @observable profile_Put_URL = "http://192.168.33.10/profile/put"
-  @observable profile_Get_URL = "http://192.168.33.10/profile/get"
-  @observable stocks_Get_URL = "http://192.168.33.10/stocks/get"
-  @observable profile_Post_URL = "http://192.168.33.10/profile/post"
-  @observable register_Put_URL = "http://192.168.33.10/register"
+  @observable ipAddr = "http://192.168.33.10/"
+  //PUBLIC
+  //@observable ipAddr = "http://172.16.42.26:8080/"
 
-  // PUBLIC
-  // @observable login_URL = "http://172.16.42.26:8080/login"
-  // @observable profile_Put_URL = "http://172.16.42.26:8080/profile/put"
-  // @observable profile_Get_URL = "http://172.16.42.26:8080/profile/get"
-  // @observable stocks_Get_URL = "http://172.16.42.26:8080/stocks/get"
-  // @observable profile_Post_URL = "http://172.16.42.26:8080/profile/post"
-  // @observable register_Put_URL = "http://172.16.42.26:8080/register"
+  @observable login_URL =           this.ipAddr + "login"
+  @observable profile_Put_URL =     this.ipAddr + "profile/put"
+  @observable profile_Get_URL =     this.ipAddr + "profile/get"
+  @observable stocks_Get_URL =      this.ipAddr + "stocks/get"
+  @observable profile_Post_URL =    this.ipAddr + "profile/post"
+  @observable register_Put_URL =    this.ipAddr + "register"
+  @observable transaction_Put_URL = this.ipAddr + "transaction"
+  @observable exchange_Get_URL = this.ipAddr + "exchange/generate"
 
   loginURL(){ return this.login_URL}
   profileGetURL(){  return this.profile_Get_URL}
@@ -30,6 +32,8 @@ class  TradeLifeStore{
   profilePostURL(){ return this.profile_Post_URL}
   stocksGetURL(){   return this.stocks_Get_URL }
   registerPutURL(){ return this.register_Put_URL }
+  transactionPutURL() { return this.transaction_Put_URL }
+  exchangeGetURL() { return this.exchange_Get_URL}
 }
 
 var TradeLife = new TradeLifeStore()

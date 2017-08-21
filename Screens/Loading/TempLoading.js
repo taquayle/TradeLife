@@ -19,7 +19,7 @@ import Profile from "../Stores/ProfileStore"
 import loadStyle from "../Styles/LoadingStyle"
 import {MAIN_TEXT_COLOR} from "../Styles/Attributes"
 
-export class LoginLoadingScreen extends React.Component {
+export class TempLoadingScreen extends React.Component {
 
   constructor(props)
   {
@@ -33,51 +33,40 @@ export class LoginLoadingScreen extends React.Component {
       return true //Tell react-navigation that back button is handled
     }.bind(this));
 
-    this.loginToServer()
-
-  }
-
-  /**
-  * Login to the tradelife Server
-  *
-  *
-  * @return navigation, to the login screen if failed, to home if successful
-  */
-  loginToServer(){
-    console.log(Server.loginURL())
-    const { navigate } = this.props.navigation;
-    console.log("---- ATTEMPTING LOGIN ----");
-    fetch(Server.loginURL(),
-    {
-        method: 'post',
-        headers:
-        {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(
-        {
-            userName:User.getName(),
-            userPassword:User.getPass()
-        })
-    })
-
-    .then((response) => {
-      // In this case, we check the content-type of the response
-      if (response.headers.get('content-type').match(/application\/json/)) {
-        return response.json();
-      }
-      return response.text();
+      console.log(Server.loginURL())
+      const { navigate } = this.props.navigation;
+      console.log("---- ATTEMPTING LOGIN ----");
+      fetch(Server.loginURL(),
+      {
+          method: 'post',
+          headers:
+          {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(
+          {
+              userName:User.getName(),
+              userPassword:User.getPass()
+          })
       })
-     .catch((error) =>
-     {
-         console.log(error);
-         (response) => response.text();
-     })
-    .then((responseData) =>
-    {
-      console.log("---- SERVER RESPONSE ----")
-      console.log(responseData)
+
+      .then((response) => {
+        // In this case, we check the content-type of the response
+        if (response.headers.get('content-type').match(/application\/json/)) {
+          return response.json();
+        }
+        return response.text();
+        })
+       .catch((error) =>
+       {
+           console.log(error);
+           (response) => response.text();
+       })
+      .then((responseData) =>
+      {
+        console.log("---- SERVER RESPONSE ----")
+        console.log(responseData)
         if(responseData == null){
           console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
             User.setError("Could not connect to server")
@@ -105,8 +94,9 @@ export class LoginLoadingScreen extends React.Component {
           User.setError(responseData.messages)
           navigate('Login');
         }
-    })
+      })
   }
+
   getUserProfile()
   {
     const { navigate } = this.props.navigation;
@@ -142,28 +132,27 @@ export class LoginLoadingScreen extends React.Component {
 
     .then((responseData) =>
     {
-      console.log("---- SERVER RESPONSE ----")
-      console.log(responseData)
-      if (responseData.error == false) //Success move on
-      {
-          const { navigate } = this.props.navigation;
-          console.log("---- PROFILE SUCCESSFUL ----");
-          this.setState({
-            message: "PROFILE FOUND"})
-          if(responseData.profile['Target_Companies'] == null)
-            Profile.baseProfile(responseData.profile)
-          else //User has valid keywords
-            Profile.setProfile(responseData.profile)
-      }
-      else if (responseData.error == true) // ERROR: display and remain
-      {
-          console.log("---- NO PROFILE  ----");
 
-      }
-      else {
-        console.log("---- UNKNOWN ERROR ----");
-      }
-      navigate('Home')
+        if (responseData.error == false) //Success move on
+        {
+            const { navigate } = this.props.navigation;
+            console.log("---- PROFILE SUCCESSFUL ----");
+            console.log(responseData.profile)
+            console.log(Profile.getTargetSectors())
+            this.setState({
+              message: "PROFILE FOUND"})
+            Profile.setProfile(responseData.profile)
+        }
+        else if (responseData.error == true) // ERROR: display and remain
+        {
+            console.log("---- NO PROFILE  ----");
+            console.log(responseData);
+        }
+        else {
+          console.log("---- UNKNOWN ERROR ----");
+          console.log(responseData);
+        }
+        navigate('Home')
     })
 
   }

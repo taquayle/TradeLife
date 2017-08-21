@@ -3,14 +3,7 @@
 // Date: July 26, 2017
 
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  ScrollView
-} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
 import {  ListItem,
           Button,
           List,
@@ -25,12 +18,21 @@ import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import Server from "./Stores/TradeLifeStore"
-import tradeStyle from "./Styles/Default"
+import tradeStyle from "./Styles/DefaultStyle"
 
 
 
 @observer
 export class KeywordsAddScreen extends React.Component {
+  componentWillMount(){
+    console.log("Current Screen: " + this.props.navigation.state.key)}
+
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      this.props.navigation.navigate('KeywordsProfile');
+      return true //Tell react-navigation that back button is handled
+    }.bind(this));
+  }
   constructor(props)
   {
       super(props);
@@ -59,9 +61,12 @@ export class KeywordsAddScreen extends React.Component {
   }
 
   _postToServer(){
-    const { navigate } = this.props.navigation;
-    User.setTempKeys(this.state.tempKeys)
-    navigate('KeywordAddLoading')
+    if(!this.state.newScreen){
+      const { navigate } = this.props.navigation;
+      console.log(this.state.tempKeys)
+      User.setTempKeys(this.state.tempKeys)
+      navigate('KeywordAddLoading')
+    }
   }
 
   render(){
@@ -75,7 +80,15 @@ export class KeywordsAddScreen extends React.Component {
 
 
       <View style={tradeStyle.wrapper}>
-        <View style={tradeStyle.topWrap}>
+        <View style={tradeStyle.header}>
+          <Header
+            leftComponent={   <Icon size={30} name='menu' onPress={()=>navigate('DrawerOpen')}/>}
+            centerComponent={ <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>}
+            rightComponent={  <Icon size={30} name='home' onPress={()=>navigate('Home')}/>}
+          />
+        </View>
+        <View style={addStyle.topWrap}>
+
           <Text style={tradeStyle.title}> ADD KEYWORDS</Text>
 
           {/* SHOW ERROR MESSAGE FROM SERVER */}
@@ -99,7 +112,7 @@ export class KeywordsAddScreen extends React.Component {
           </View>
         </View>
 
-        <View style={tradeStyle.botWrap}>
+        <View style={addStyle.botWrap}>
           <ScrollView >
             <List>
             {
@@ -123,34 +136,14 @@ export class KeywordsAddScreen extends React.Component {
 }
 
 addStyle = StyleSheet.create({
-    wrapper:{
-        flex: 1,
-        backgroundColor:"#FFFFFF"
-    },
     topWrap:{
-      flex:.35,
+      flex:.55,
       backgroundColor:"#FFFFFF",
       justifyContent: 'center',
       alignItems: 'center'
     },
-    titleAndForm:{
-      flex:.5,
-    },
-    buttonWrap:{
-      flex:.5,
-      flexDirection:'row'
-    },
     botWrap:{
-      flex:.65,
+      flex:.35,
       backgroundColor:"#FFFFFF",
-    },
-    title:{
-        color: '#000000',
-        fontSize: 30,
-        textAlign: 'center'
-    },
-    text:{
-        color: '#000000',
-        fontSize: 15,
     },
 })

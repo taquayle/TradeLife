@@ -5,14 +5,14 @@ import React from 'react';
 import {AppRegistry} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements'
-import { Router, Drawer, Hidden } from './Screens/Navigation/Router'
+import { Router, Drawer} from './Screens/Navigation/Router'
 
 /******************************************************************************/
 // Default class
 export default class TradeLife extends React.Component {
 
   render() {
-    return <Drawer />
+    return <Router />
   }
 }
 
