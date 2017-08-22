@@ -19,6 +19,8 @@ class  ProfileStore{
   @observable tailored_companies = null
   @observable disruptive_stocks = null
   @observable sector = null
+  @observable transactions = 0
+  @observable history = null
 
   setProfile(profile){
     this.baseProfile(profile)
@@ -35,6 +37,7 @@ class  ProfileStore{
     this.setCateKeys(profile['Cate_Keywords'])
     this.setUserKeys(profile['User_Keywords'])
     this.setInvestDate(profile['Invest_Date'])
+    this.setTransactions(profile['Transactions'])
   }
 
   signOut(){
@@ -47,6 +50,8 @@ class  ProfileStore{
     this.setTargetSectors(null)
     this.setInvestDate(null)
     this.setTailoredCompanies(null)
+    this.setTransactions(0)
+    this.setHistory(null)
     this.profileExists = false;
   }
 
@@ -55,94 +60,69 @@ class  ProfileStore{
   }
 
   /****************************************************************************/
-  getKeywords(){
-    return this.keywords
-  }
+  getKeywords(){  return this.keywords  }
 
-  setKeywords(objArray){
-    this.keywords = objArray
-  }
+  setKeywords(objArray){ this.keywords = objArray }
   /****************************************************************************/
 
   /****************************************************************************/
-  getTailoredCompanies(){
-    return this.tailored_companies
-  }
+  getTailoredCompanies(){ return this.tailored_companies  }
 
-  setTailoredCompanies(objArray){
-    this.tailored_companies = objArray
-  }
-  /****************************************************************************/
-
-
-  /****************************************************************************/
-  getUserKeys(){
-    return this.user_key
-  }
-
-  setUserKeys(objArray){
-    this.user_key = objArray
-  }
+  setTailoredCompanies(objArray){ this.tailored_companies = objArray }
   /****************************************************************************/
 
   /****************************************************************************/
-  setInvestDate(objArray){
-    this.invest_date = objArray;
-  }
+  getUserKeys(){  return this.user_key  }
 
-  getInvestDate(){
-    return this.invest_date
-  }
+  setUserKeys(objArray){  this.user_key = objArray  }
   /****************************************************************************/
 
   /****************************************************************************/
-  getDescKeys(){
-    return this.desc_key;
-  }
+  getInvestDate(){  return this.invest_date }
 
-  setDescKeys(objArray){
-    this.desc_key = objArray
-  }
+  setInvestDate(objArray){  this.invest_date = objArray  }
   /****************************************************************************/
 
   /****************************************************************************/
-  getCateKeys(){
-    return this.cate_key;
-  }
+  getDescKeys(){  return this.desc_key; }
 
-  setCateKeys(objArray){
-    this.cate_key = objArray
-  }
+  setDescKeys(objArray){  this.desc_key = objArray  }
   /****************************************************************************/
 
   /****************************************************************************/
-  getCapStocks(){
-    return this.cap_stocks;
-  }
+  getCateKeys(){  return this.cate_key  }
 
-  setCapStocks(objArray){
-    this.cap_stocks = objArray
-  }
+  setCateKeys(objArray){  this.cate_key = objArray  }
   /****************************************************************************/
 
   /****************************************************************************/
-  getDisruptiveStocks(){
-    return this.disruptive_stocks
-  }
+  getCapStocks(){ return this.cap_stocks; }
 
-  setDisruptiveStocks(objArray){
-    this.disruptive_stocks = objArray
-  }
+  setCapStocks(objArray){ this.cap_stocks = objArray  }
   /****************************************************************************/
 
   /****************************************************************************/
-  setTargetSectors(objArray){
-    this.sector = objArray;
-  }
+  getDisruptiveStocks(){  return this.disruptive_stocks }
 
-  getTargetSectors(){
-    return this.sector
-  }
+  setDisruptiveStocks(objArray){  this.disruptive_stocks = objArray }
+  /****************************************************************************/
+
+  /****************************************************************************/
+  getTransactions(){ return this.transactions; }
+
+  setTransactions(objArray){ this.transactions = objArray  }
+  /****************************************************************************/
+
+  /****************************************************************************/
+  getHistory(){ return this.history; }
+
+  setHistory(objArray){ this.history = objArray  }
+  /****************************************************************************/
+
+  /****************************************************************************/
+  getTargetSectors(){ return this.sector  }
+
+  setTargetSectors(objArray){ this.sector = objArray; }
   /****************************************************************************/
 }
 

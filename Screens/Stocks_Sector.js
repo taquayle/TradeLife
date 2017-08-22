@@ -6,6 +6,7 @@ import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView, BackHandler, Dimensions} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
+import Nav from './Stores/NavigationStore'
 import Profile from "./Stores/ProfileStore"
 import { Card, Slider, ListItem, Button, List, Icon, Header } from 'react-native-elements';
 import tradeStyle from "./Styles/DefaultStyle"
@@ -174,7 +175,7 @@ export class StocksSectorScreen extends React.Component {
     const { navigate } = this.props.navigation;
     var sectorTitle = Object.values(Profile.getTargetSectors())
     var stocksArray = Object.values(this.state.stocks)
-    var sector = Object.values(stocksArray[User.getSectorPref()])
+    var sector = Object.values(stocksArray[Nav.getSectorPref()])
     return (
       <View style={sectorStyle.wrapper}>
 

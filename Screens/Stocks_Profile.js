@@ -8,6 +8,7 @@ import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
+import Nav from './Stores/NavigationStore'
 import {COLOR_SCHEME, TEXT_SCHEME} from './Styles/Attributes'
 import { Card, ListItem, Button, List, Header, Icon } from 'react-native-elements';
 import tradeStyle from "./Styles/DefaultStyle"
@@ -28,14 +29,14 @@ export class StocksProfileScreen extends React.Component {
   _sectorClick(preference) // Attempt to login.
   {
     const { navigate } = this.props.navigation;
-    User.setSectorPref(preference)
+    Nav.setSectorPref(preference)
     navigate('StocksSector');
   }
 
   _tailorClick(preference) // Attempt to login.
   {
     const { navigate } = this.props.navigation;
-    User.setSectorPref(preference)
+    Nav.setTailorPref(preference)
     navigate('StocksTailored');
   }
 

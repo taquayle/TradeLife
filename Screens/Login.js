@@ -65,14 +65,20 @@ export class LoginScreen extends React.Component {
                   <FormLabel fontFamily = 'monospace'>USERNAME</FormLabel>
                   <FormInput
                     defaultValue = {this.state.uName}
-                    onChangeText={(uName) => this.setState({uName})}/>
+                    onChangeText={(uName) => this.setState({uName})}
+                    onSubmitEditing={(event) => { this.refs.forminput.refs.PasswordInput.focus() }}
+                    />
 
                   {/* Password Field */}
                   <FormLabel fontFamily = 'monospace'>PASSWORD</FormLabel>
                   <FormInput
                     secureTextEntry
+                    ref='forminput'
+                    textInputRef='PasswordInput'
                     defaultValue = {this.state.pWord}
-                    onChangeText={(pWord) => this.setState({pWord})}/>
+                    onChangeText={(pWord) => this.setState({pWord})}
+                    onSubmitEditing={this._onSubmit.bind(this)}
+                    />
                 </View>
 
 

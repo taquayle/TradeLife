@@ -44,6 +44,7 @@ export class KeywordsProfileScreen extends React.Component {
       </List>
     )
   }
+
   userKeys(){
     if(Profile.getUserKeys() != null){
       return(

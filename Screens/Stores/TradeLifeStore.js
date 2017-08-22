@@ -23,7 +23,8 @@ class  TradeLifeStore{
   @observable stocks_Get_URL =      this.ipAddr + "stocks/get"
   @observable profile_Post_URL =    this.ipAddr + "profile/post"
   @observable register_Put_URL =    this.ipAddr + "register"
-  @observable transaction_Put_URL = this.ipAddr + "transaction"
+  @observable transaction_Put_URL = this.ipAddr + "transaction/put"
+  @observable transaction_Get_URL = this.ipAddr + "transaction/get"
   @observable exchange_Get_URL = this.ipAddr + "exchange/generate"
 
   loginURL(){ return this.login_URL}
@@ -33,6 +34,7 @@ class  TradeLifeStore{
   stocksGetURL(){   return this.stocks_Get_URL }
   registerPutURL(){ return this.register_Put_URL }
   transactionPutURL() { return this.transaction_Put_URL }
+  transactionGetURL() { return this.transaction_Get_URL }
   exchangeGetURL() { return this.exchange_Get_URL}
 }
 

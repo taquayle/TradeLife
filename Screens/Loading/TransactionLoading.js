@@ -14,6 +14,7 @@ import {
   BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import User from "../Stores/UserStore"
+import Nav from "../Stores/NavigationStore"
 import Server from "../Stores/TradeLifeStore"
 import Profile from "../Stores/ProfileStore"
 import loadStyle from "../Styles/LoadingStyle"
@@ -24,7 +25,7 @@ export class TransactionLoadingScreen extends React.Component {
   constructor(props)
   {
       super(props);
-      this.state = {  message: "Getting Transactions..."};
+      this.state = {  message: ""};
   }
   /**************************************************************************/
   componentDidMount(){
@@ -33,9 +34,28 @@ export class TransactionLoadingScreen extends React.Component {
       return true //Tell react-navigation that back button is handled
     }.bind(this));
 
-    console.log("---- ATTEMPTING TO GET TRANSACTIONS ----");
-    const { navigate } = this.props.navigation;
-    console.log('Sending Token' + User.getYodleeToken())
+    if(Nav.getTransPut()){
+      this.transactionsPut()
+    }
+
+    else if(Nav.getTransGet()){
+      this.transactionsGet()
+    }
+
+    else{
+      console.log('Nav store error')
+      Nav.reset();
+      this.props.navigation.navigate('Transact')
+    }
+
+
+  }
+
+  transactionsPut(){
+    console.log("---- ATTEMPTING TO UPDATE TRANSACTIONS ----");
+    this.setState({
+      message: "UPDATING TRANSACTIONS...."})
+
     fetch(Server.transactionPutURL(),
     {
         method: 'post',
@@ -70,8 +90,8 @@ export class TransactionLoadingScreen extends React.Component {
 
         if (responseData.error == false) //Success, allow used in
         {
-
             console.log("---- TRANSACTIONS UPDATED ----");
+            Profile.setTransactions(responseData.count)
         }
         else if (responseData.error == true)
         {
@@ -83,12 +103,70 @@ export class TransactionLoadingScreen extends React.Component {
           console.log(responseData);
 
         }
-        navigate('Transact')
+
+        Nav.reset();
+        this.props.navigation.navigate('Transact')
     })
 
     .done();
   }
 
+  transactionsGet(){
+    this.setState({
+      message: "GETTING TRANSACTIONS...."})
+    console.log("---- ATTEMPTING TO GET TRANSACTIONS ----");
+
+    fetch(Server.transactionGetURL(),
+    {
+        method: 'post',
+        headers:
+        {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(
+        {
+            userName:User.getName(),
+            yodleeToken:User.getYodleeToken()
+        })
+    })
+
+    .then((response) => {
+      // In this case, we check the content-type of the response
+      if (response.headers.get('content-type').match(/application\/json/)) {
+        return response.json();
+      }
+      return response.text();
+      })
+     .catch((error) =>
+     {
+         console.log(error);
+         (response) => response.text();
+     })
+    .then((responseData) =>
+    {
+        console.log("---- SERVER RESPONSE ----");
+        console.log(responseData);
+
+        if (responseData.error == false) //Success, allow used in
+        {
+            console.log("---- TRANSACTIONS HISTORY OBTAINED ----");
+            Profile.setHistory(responseData.history)
+        }
+        else if (responseData.error == true)
+        {
+            console.log("---- COULD NOT GET TRANSACTIONS ----");
+        }
+        else{ // UKNOWN ERROR
+          console.log("---- UNKNOWN ERROR ----");
+        }
+
+        Nav.reset();
+        this.props.navigation.navigate('Transact')
+    })
+
+    .done();
+  }
 
   render() {
       const { navigate } = this.props.navigation;
