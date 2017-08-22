@@ -7,6 +7,7 @@ import { Text, View, StyleSheet, Image, ScrollView, BackHandler, Dimensions} fro
 import { StackNavigator } from 'react-navigation';
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
+import Nav from './Stores/NavigationStore'
 import { Card, Slider, ListItem, Button, List, Icon, Header } from 'react-native-elements';
 import tradeStyle from "./Styles/DefaultStyle"
 import {observable} from "mobx"
@@ -217,7 +218,7 @@ export class StocksTailoredScreen extends React.Component {
             onSlidingComplete={(value) => this.foo(value)}
           />
           <ScrollView>
-          <Swiper index={User.getSectorPref()}>
+          <Swiper index={Nav.getTailorPref()}>
           {
             sector.map((company, i) => {
               return (

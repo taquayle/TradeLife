@@ -103,7 +103,7 @@ export class TempLoadingScreen extends React.Component {
     console.log("---- ATTEMPTING TO GET PROFILE ----");
     this.setState({
       message: "GETTING PROFILE"})
-    fetch(Server.profileGetURL(),
+    fetch(Server.profileRetrieveURL(),
     {
         method: 'post',
         headers:

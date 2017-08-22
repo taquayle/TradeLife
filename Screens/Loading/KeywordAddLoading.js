@@ -35,7 +35,7 @@ export class KeywordAddLoadingScreen extends React.Component {
 
     const { navigate } = this.props.navigation;
     console.log("---- ATTEMPTING TO SUBMIT NEW KEYWORDS TO SERVER ----");
-    fetch(Server.profilePostURL(),
+    fetch(Server.profileAddURL(),
     {
         method: 'post',
         headers:

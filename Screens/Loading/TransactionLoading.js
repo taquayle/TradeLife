@@ -88,7 +88,7 @@ export class TransactionLoadingScreen extends React.Component {
         console.log("---- SERVER RESPONSE ----");
         console.log(responseData);
 
-        if (responseData.error == false) //Success, allow used in
+        if (responseData.error == false)
         {
             console.log("---- TRANSACTIONS UPDATED ----");
             Profile.setTransactions(responseData.count)
@@ -148,7 +148,7 @@ export class TransactionLoadingScreen extends React.Component {
         console.log("---- SERVER RESPONSE ----");
         console.log(responseData);
 
-        if (responseData.error == false) //Success, allow used in
+        if (responseData.error == false)
         {
             console.log("---- TRANSACTIONS HISTORY OBTAINED ----");
             Profile.setHistory(responseData.history)

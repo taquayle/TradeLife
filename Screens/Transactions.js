@@ -49,34 +49,29 @@ export class TransactionScreen extends React.Component {
       )
     }
     else{
-      var hist = Profile.getHistory();
+      var hist = Profile.getHistory().slice();
       hist = Object.values(hist);
       console.log(Profile.getHistory())
       console.log(hist)
       return(
-
+        <View>
         <ScrollView>
-        <Button
-          icon={{name: 'autorenew', size: 32}}
-          buttonStyle={{backgroundColor: COLOR_SCHEME[0], borderRadius: 40, marginVertical: 10}}
-          textStyle={{textAlign: 'center'}}
-          title={`Show Transactions`}
-          onPress={() => this._showHistory(this)}
-        />
+
         <List>
         {
           hist.map((trans, i) => (
             <ListItem
               key={i}
-              title={trans['trans_date']}
+              title={trans['base_type']}
               rightTitle={trans['amount']}
               subtitleNumberOfLines={2}
-              subtitle={<Text style={tradeStyle.body}>{'Placeholder'}</Text>}
+              subtitle={<Text style={tradeStyle.body}>{trans['simple_desc']}{'\t'}{trans['trans_date']}</Text>}
             />
           ))
         }
         </List>
         </ScrollView>
+        </View>
       )
     }
   }
@@ -84,6 +79,7 @@ export class TransactionScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     var transCount = Profile.getTransactions();
+
     if(transCount == null)
       transCount = 0
     return (

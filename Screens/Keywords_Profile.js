@@ -77,11 +77,11 @@ export class KeywordsProfileScreen extends React.Component {
 
     if(Profile.getKeywords() != null){
       return(
-        <ScrollView>
+        <View>
 
           <Text style={tradeStyle.h2}>Transaction Keywords</Text>
           {this.displayKeys(Object.values(Profile.getKeywords()))}
-        </ScrollView>
+        </View>
       );
     }
 
@@ -131,14 +131,15 @@ export class KeywordsProfileScreen extends React.Component {
           </View>
         </View>
         <View style={tradeStyle.botWrap}>
-          <ScrollView>
+
           <Swiper>
-
-            {this.userKeys()}
-            {this.transactionKeys()}
-
+            <ScrollView>
+              {this.userKeys()}
+            </ScrollView>
+            <ScrollView>
+              {this.transactionKeys()}
+            </ScrollView>
           </Swiper>
-          </ScrollView>
         </View>
       </View>
     );

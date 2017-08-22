@@ -19,51 +19,15 @@ export class FastLink extends React.Component {
     BackHandler.addEventListener('hardwareBackPress', function() {
       this.props.navigation.navigate('Home');
       return true //Tell react-navigation that back button is handled
-    }.bind(this));}
+    }.bind(this));
 
-    _onClick(){
-
-      console.log('CLIK')
-      const { navigate } = this.props.navigation;
-      fetch(Server.profilePutURL(),
-      {
-          method: 'post',
-          headers:
-          {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          body:JSON.stringify(
-          {
-              userName:User.getName(),
-              userPassword:User.getPass()
-          })
-      })
-
-      .then((response) => {
-        // In this case, we check the content-type of the response
-        if (response.headers.get('content-type').match(/application\/json/)) {
-          return response.json();
-        }
-        return response.text();
-        })
-       .catch((error) =>
-       {
-           console.log(error);
-           (response) => response.text();
-       })
-      .then((responseData) =>
-      {
-        console.log(responseData)
-        console.log(responseData.messages)
-      })
+    this.getFastLinkTokens();
   }
 
-  _onClick2(){
+  getFastLinkTokens(){
 
-    console.log('CLIK')
-    const { navigate } = this.props.navigation;
-    fetch(Server.exchangeGetURL(),
+    console.log("---- ATTEMPTING TO GET FASTLINK TOKEN ----");
+    fetch(Server.fastLinkURL(),
     {
         method: 'post',
         headers:
@@ -74,10 +38,9 @@ export class FastLink extends React.Component {
         body:JSON.stringify(
         {
             userName:User.getName(),
-            userPassword:User.getPass()
+            yodleeToken:User.getYodleeToken()
         })
     })
-
     .then((response) => {
       // In this case, we check the content-type of the response
       if (response.headers.get('content-type').match(/application\/json/)) {
@@ -90,12 +53,58 @@ export class FastLink extends React.Component {
          console.log(error);
          (response) => response.text();
      })
+
     .then((responseData) =>
     {
+      console.log("---- SERVER RESPONSE ----")
       console.log(responseData)
-      console.log(responseData.messages)
+
+      if(!responseData.error){
+        this.postFastLink(responseData.url, responseData.fastlinktokens)
+      }
     })
-}
+  }
+
+  postFastLink(url, linkTokens){
+    console.log("---- ATTEMPTING TO LAUNCH FASTLINK ----");
+    console.log("url: " + url)
+    console.log("rSession: " + linkTokens['rsession'])
+    fetch(url,
+    {
+        method: 'post',
+        headers:
+        {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(
+        {
+            rsession:linkTokens['rsession'],
+            app:linkTokens['app'],
+            token:linkTokens['token'],
+            redirectReq:true
+        })
+    })
+    .then((response) => {
+      // In this case, we check the content-type of the response
+      if (response.headers.get('content-type').match(/application\/json/)) {
+        return response.json();
+      }
+      return response.text();
+      })
+     .catch((error) =>
+     {
+         console.log(error);
+         (response) => response.text();
+     })
+
+    .then((responseData) =>
+    {
+      console.log("---- SERVER RESPONSE ----")
+      console.log(responseData)
+    })
+  }
+
   constructor (props) {
     super(props)
   }
@@ -118,24 +127,8 @@ export class FastLink extends React.Component {
         </View>
 
         <View style={tradeStyle.botWrap}>
-        <Button
-          large
-          icon={{name: 'autorenew', size: 32}}
-          buttonStyle={{backgroundColor: COLOR_SCHEME[0], borderRadius: 40, marginVertical: 10}}
-          textStyle={{textAlign: 'center'}}
-          title={`Click`}
-          onPress={()=> this._onClick()}
-        />
 
-        <Button
-          large
-          icon={{name: 'autorenew', size: 32}}
-          buttonStyle={{backgroundColor: COLOR_SCHEME[0], borderRadius: 40, marginVertical: 10}}
-          textStyle={{textAlign: 'center'}}
-          title={`Update Companies`}
-          onPress={()=> this._onClick2()}
-        />
-        <Text style={tradeStyle.title}>PLACEHOLDER</Text>
+          <Text style={tradeStyle.title}>PLACEHOLDER</Text>
         </View>
       </View>
     );
