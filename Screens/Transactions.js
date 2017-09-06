@@ -2,6 +2,12 @@
 // File: Transactions.js
 // Date: June 30, 2017
 
+/******************************************************************************/
+// RN and Addons
+/******************************************************************************/
+// STYLE
+/******************************************************************************/
+// STORE
 import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';

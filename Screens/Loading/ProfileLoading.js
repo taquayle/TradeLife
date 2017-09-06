@@ -1,23 +1,25 @@
 // Author: Tyler Quayle
 // File: ProfileLoading.js
 // Date: July 28, 2017
+// Desc: Update the user profile from server. Server destroys old profile and
+//        rebuilds.
 
+/******************************************************************************/
+// React native & installed addons
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  Alert,
-  ActivityIndicator,
-  BackHandler} from 'react-native'
+import { Text, View, StyleSheet, Image, ActivityIndicator, BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
+
+/******************************************************************************/
+// Styles
+import loadStyle from "../Styles/LoadingStyle"
+import {MAIN_TEXT_COLOR} from "../Styles/Attributes"
+
+/******************************************************************************/
+// Stores
 import User from "../Stores/UserStore"
 import Server from "../Stores/TradeLifeStore"
 import Profile from "../Stores/ProfileStore"
-import loadStyle from "../Styles/LoadingStyle"
-import {MAIN_TEXT_COLOR} from "../Styles/Attributes"
 
 export class ProfileLoadingScreen extends React.Component {
 
@@ -103,6 +105,7 @@ export class ProfileLoadingScreen extends React.Component {
     })
   }
 
+  // Connect to QUANDL Servers to get stock data for company
   retrieveStockData()
   {
     const { navigate } = this.props.navigation;
@@ -146,7 +149,7 @@ export class ProfileLoadingScreen extends React.Component {
             message: "Profile Found.."})
           Profile.setProfile(responseData.profile)
       }
-      else if (responseData.error == true) // ERROR: display and remain
+      else if (responseData.error == true)
       {
           if(responseData.error_code == 1){
             console.log("---- NO TRANSACTION HISTORY  ----");
@@ -174,30 +177,35 @@ export class ProfileLoadingScreen extends React.Component {
   render() {
       const { navigate } = this.props.navigation;
     return (
+        // Main Flex Wrapper
         <View style={loadStyle.bg, loadStyle.wrapper}>
-
+            {/* Top graphic */}
             <View style={loadStyle.bg, loadStyle.topWrap}>
                 <Image style={loadStyle.logo} source={require('../Images/TradeLife.png')} />
             </View>
 
+            {/* Mid Flex */}
             <View style={loadStyle.bg, loadStyle.midWrap}>
 
-            <View style={loadStyle.bg, loadStyle.activityWrap}>
-              <ActivityIndicator
-                color = { MAIN_TEXT_COLOR }
-                style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
-              />
-            </View>
+              {/* Loading Icon */}
+              <View style={loadStyle.bg, loadStyle.activityWrap}>
+                <ActivityIndicator
+                  color = { MAIN_TEXT_COLOR }
+                  style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
+                />
+              </View>
 
-            <View style={loadStyle.bg, loadStyle.textWrap}>
-              <Text style={loadStyle.loadingText}>{this.state.message}</Text>
-            </View>
+              {/* Loading Text */}
+              <View style={loadStyle.bg, loadStyle.textWrap}>
+                <Text style={loadStyle.loadingText}>{this.state.message}</Text>
+              </View>
 
-            </View>
+            </View>{/* End Mid Flex */}
 
+            {/* Bot Flex, empty, needed for centering */}
             <View style={loadStyle.bg, loadStyle.bottomBuffer}>
             </View>
-        </View>
+        </View>// End Main Flex Wrapper
     );
   }
 }

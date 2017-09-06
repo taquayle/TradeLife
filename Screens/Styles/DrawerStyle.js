@@ -1,8 +1,8 @@
 /*
 Author: Tyler Quayle
 Date: August 2nd, 2017
-File: Tradelife/Screens/Styles/
-Dsec:
+File: Tradelife/Screens/Styles/DrawerStyle
+Dsec: The style sheet for the drawer navigator
 */
 import { StyleSheet , BackHandler} from 'react-native'
 import {  MAIN_BG_COLOR, DRAWER_BG_COLOR, MAIN_TEXT_COLOR,

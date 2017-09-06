@@ -1,17 +1,26 @@
 // Author: Tyler Quayle
 // File: Home.js
 // Date: June 23, 2017
+// Desc: Home page. center of the 'hub' design. contains essential buttons
 
-
+/******************************************************************************/
+// RN and Addons
 import React from 'react';
 import { Text, View, StyleSheet, Image, BackHandler} from 'react-native'
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Tab, Router, Drawer } from './Navigation/Router'
-import User from "./Stores/UserStore"
-import Profile from "./Stores/ProfileStore"
+
+/******************************************************************************/
+// STYLE
 import { Button, SideMenu, List, ListItem, Icon, Header } from 'react-native-elements'
 import tradeStyle from "./Styles/DefaultStyle"
 import {COLOR_SCHEME, TEXT_SCHEME} from './Styles/Attributes'
+
+/******************************************************************************/
+// STORE
+import User from "./Stores/UserStore"
+import Profile from "./Stores/ProfileStore"
+
 
 
 export class HomeScreen extends React.Component {

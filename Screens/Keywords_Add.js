@@ -1,24 +1,29 @@
 // Author: Tyler Quayle
-// File: Home.js
-// Date: July 26, 2017
+// File: Keywords_Add.js
+// Date: July 30, 2017
+// Desc: Allow users to add custom keywords into the app. User can enter as many
+//      keywords as they want, will not update the profile until user hits the
+//      checkmark button and submits to server
 
+/******************************************************************************/
+// RN and Addons
 import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
-import {  ListItem,
-          Button,
-          List,
-          Icon,
-          FormLabel,
-          FormInput,
-          FormValidationMessage,
-          Header
-} from 'react-native-elements';
+import {  ListItem, Button, List, Icon, FormLabel, FormInput,
+          FormValidationMessage, Header} from 'react-native-elements';
 import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
+
+/******************************************************************************/
+// STYLE
+import tradeStyle from "./Styles/DefaultStyle"
+
+/******************************************************************************/
+// STORE
 import User from "./Stores/UserStore"
 import Profile from "./Stores/ProfileStore"
 import Server from "./Stores/TradeLifeStore"
-import tradeStyle from "./Styles/DefaultStyle"
+
 
 
 
@@ -36,11 +41,18 @@ export class KeywordsAddScreen extends React.Component {
   constructor(props)
   {
       super(props);
+      // Default attributes show instructions. will be destroyed upon entering
+      // in a new keyword. Cannot post to server until !newScreen
       this.state = {  keyword: "",
                       newScreen: true,
                       tempKeys: ['Use + to add words', 'Press [Check] to submit to server']};
   }
 
+  /**
+  * Attempt to add the keywords to the current list. if a keyword is entered.
+  * show in the current queue-list. If no keyword is entered. do nothing
+  *
+  */
   addKey(){
 
     if(this.state.keyword == "")
@@ -51,7 +63,7 @@ export class KeywordsAddScreen extends React.Component {
       temp = [this.state.keyword]
     }
     else{
-      temp.push(this.state.keyword)
+      temp.push(this.state.keyword) //Add to the current keyword array
     }
     this.setState({
       keyword: "",
@@ -60,6 +72,11 @@ export class KeywordsAddScreen extends React.Component {
       errMsg: ""})
   }
 
+  /**
+  * Navigate to keyword loading screen only if !newScreen, meaning user has
+  * entered at least 1 keyword.
+  *
+  */
   _postToServer(){
     if(!this.state.newScreen){
       const { navigate } = this.props.navigation;
@@ -76,9 +93,6 @@ export class KeywordsAddScreen extends React.Component {
       keys = Object.values(Profile.getUserKeys())
 
     return(
-
-
-
       <View style={tradeStyle.wrapper}>
         <View style={tradeStyle.header}>
           <Header
@@ -125,9 +139,6 @@ export class KeywordsAddScreen extends React.Component {
               ))
             }
             </List>
-
-
-            {/*{this.showUserKeys(keys)}*/}
           </ScrollView>
         </View>
       </View>
@@ -135,6 +146,7 @@ export class KeywordsAddScreen extends React.Component {
   }
 }
 
+// Custom keyword style
 addStyle = StyleSheet.create({
     topWrap:{
       flex:.55,

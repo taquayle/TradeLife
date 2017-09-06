@@ -2,17 +2,27 @@
 // File: Profile_Stocks.js
 // Date: August 2, 2017
 
+/******************************************************************************/
+// RN and Addons
 import React from 'react';
 import { Text, View, StyleSheet, Image, BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import {observer} from "mobx-react";
-import User from "./Stores/UserStore"
-import Profile from "./Stores/ProfileStore"
-import Nav from './Stores/NavigationStore'
+import Swiper from 'react-native-swiper'
+
+/******************************************************************************/
+// STYLE
 import {COLOR_SCHEME, TEXT_SCHEME} from './Styles/Attributes'
 import { Card, ListItem, Button, List, Header, Icon } from 'react-native-elements';
 import tradeStyle from "./Styles/DefaultStyle"
-import Swiper from 'react-native-swiper'
+
+/******************************************************************************/
+// STORE
+import User from "./Stores/UserStore"
+import Profile from "./Stores/ProfileStore"
+import Nav from './Stores/NavigationStore'
+
+
 
 @observer
 export class StocksProfileScreen extends React.Component {
@@ -26,6 +36,10 @@ export class StocksProfileScreen extends React.Component {
     }.bind(this));
   }
 
+  /**
+  * Navigate to the Stocks_Sector screen and set the users selected nav to the
+  * store.
+  */
   _sectorClick(preference) // Attempt to login.
   {
     const { navigate } = this.props.navigation;
@@ -33,6 +47,10 @@ export class StocksProfileScreen extends React.Component {
     navigate('StocksSector');
   }
 
+  /**
+  * Navigate to the Stocks_Tailored screen and set the users selected nav to the
+  * store.
+  */
   _tailorClick(preference) // Attempt to login.
   {
     const { navigate } = this.props.navigation;
@@ -40,10 +58,15 @@ export class StocksProfileScreen extends React.Component {
     navigate('StocksTailored');
   }
 
+  /**
+  * Show the tailored stocks, if there is none in the store show a message
+  * pointing the user to the pages used to update keywords
+  */
   byTailored(){
     var tailor = Profile.getTailoredCompanies()
     if(tailor != null){
       tailor = Object.values(tailor)
+      // Tailored found.
       return(
         <View style={tradeStyle.wrapper}>
           <View style={tradeStyle.topWrap}>
@@ -69,6 +92,7 @@ export class StocksProfileScreen extends React.Component {
         </View>
       )}
     else{
+      // Nothing was found, print the 'error msg'
       return(
         <View style={tradeStyle.wrapper}>
 
@@ -84,11 +108,16 @@ export class StocksProfileScreen extends React.Component {
     }
   }
 
+  /**
+  * Show the sector by stocks, if there is none in the store show a message
+  * pointing the user to the pages used to update keywords
+  */
   bySector(){
     var sector = Profile.getTargetSectors();
     if(sector != null){
       sector = Object.values(sector)
       return(
+        // Sector Stocks found.
         <View style={tradeStyle.wrapper}>
           <View style={tradeStyle.topWrap}>
             <Text style={tradeStyle.title}> SUGGESTED SECTORS </Text>
@@ -116,6 +145,7 @@ export class StocksProfileScreen extends React.Component {
       )
     }
     else{
+      // No sectors stocks found, display error message
       return(
         <View style={tradeStyle.wrapper}>
 
@@ -147,10 +177,10 @@ export class StocksProfileScreen extends React.Component {
           />
         </View>
         <View style={tradeStyle.wrapper}>
-        <Swiper>
-        {this.bySector()}
-        {this.byTailored()}
-        </Swiper>
+          <Swiper>
+            {this.bySector()}
+            {this.byTailored()}
+            </Swiper>
         </View>
 
       </View>

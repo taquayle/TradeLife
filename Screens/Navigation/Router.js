@@ -1,12 +1,24 @@
+// Author: Tyler Quayle
+// File: Router.js
+// Date: July 20, 2017
+// Desc: Main drawer navigator and custom drawer component
+
+/******************************************************************************/
+// RN and Addons
 import { StackNavigator, TabNavigator, DrawerNavigator, DrawerItems } from 'react-navigation';
 import { Icon, Button, Header } from 'react-native-elements'
 import {View, Text, ScrollView } from 'react-native'
 import React from 'react';
+
+/******************************************************************************/
+// STYLES
 import {COLOR_SCHEME, TEXT_SCHEME,
         MAIN_BG_COLOR, DRAWER_BUTTON_COLOR,
         DRAWER_ICON_COLOR } from '../Styles/Attributes'
 import drawStyle from '../Styles/DrawerStyle'
 
+/******************************************************************************/
+// STORES
 import User from '../Stores/UserStore'
 
 /******************************************************************************/
@@ -50,6 +62,15 @@ const ImageHeader = props => (
   </View>
 );
 
+/******************************************************************************/
+// Drawer navigator.
+//  drawerLockMode: 'locked-closed'
+//    Stops the drawer swipe open action. since users could open the drawer when
+//    they shouldn't
+//  drawerLabel: <Hidden />
+//    Doesn't display this particular item in the drawer. Although this is a
+//    relic from before creating a custom drawer navigator. Kept it in case
+//    someone wanted to use it again
 
 export const Drawer = DrawerNavigator({
   Splash: {screen: SplashScreen,
@@ -91,6 +112,8 @@ export const Drawer = DrawerNavigator({
     navigationOptions: { drawerLockMode: 'locked-closed', drawerLabel: <Hidden/>,}},
 
 },{
+  /****************************************************************************/
+  // The custom drawer view.
   contentComponent: ({props, navigation}) =>{return (<View style={drawStyle.wrapper}>
     <View style={drawStyle.topWrap}>
       <Text style={drawStyle.h1}>Hello, {User.getName()}!</Text>

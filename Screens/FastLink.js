@@ -1,19 +1,37 @@
 // Author: Tyler Quayle
-// File: Home.js
-// Date: June 23, 2017
+// File: FastLink.js
+// Date: August 13, 2017
+// Desc: Attempt to launch fastlink 2.0 app.
 
+/******************************************************************************/
+// RN and Addons
 import React from 'react';
-import { Text, View, StyleSheet, Image, BackHandler, Alert} from 'react-native'
+import { Text, View, StyleSheet, ActivityIndicator, Image, BackHandler, Alert} from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import { Header, Icon, Button } from 'react-native-elements'
+
+/******************************************************************************/
+// STYLE
 import tradeStyle from './Styles/DefaultStyle'
-import {COLOR_SCHEME } from './Styles/Attributes'
+import loadStyle from './Styles/LoadingStyle'
+import {COLOR_SCHEME, MAIN_TEXT_COLOR } from './Styles/Attributes'
+
+/******************************************************************************/
+// STORE
 import Server from './Stores/TradeLifeStore'
 import User from './Stores/UserStore'
+
+
 
 export class FastLink extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
+
+  constructor(props){
+      super(props);
+      this.state = { doneLoading: false,
+                     message: 'GATHERING FASTLINK TOKENS'}
+  }
 
   componentDidMount(){
     BackHandler.addEventListener('hardwareBackPress', function() {
@@ -21,6 +39,7 @@ export class FastLink extends React.Component {
       return true //Tell react-navigation that back button is handled
     }.bind(this));
 
+    // Attempt to launch the fastlink app.
     this.getFastLinkTokens();
   }
 
@@ -60,6 +79,8 @@ export class FastLink extends React.Component {
       console.log(responseData)
 
       if(!responseData.error){
+        this.setState({
+          message: "GOT FASTLINK TOKENS"})
         this.postFastLink(responseData.url, responseData.fastlinktokens)
       }
     })
@@ -102,13 +123,49 @@ export class FastLink extends React.Component {
     {
       console.log("---- SERVER RESPONSE ----")
       console.log(responseData)
+      this.setState({
+        message: responseData,
+        doneLoading: true})
     })
   }
 
-  constructor (props) {
-    super(props)
-  }
 
+
+  launchFastLink(){
+
+    if(this.state.doneLoading){
+      return(
+        <View>
+        <Text style={tradeStyle.title}>
+          {this.state.message}
+        </Text>
+        </View>
+      )
+    }
+    else{
+      return(
+        <View style={loadStyle.bg, loadStyle.wrapper}>
+            <View style={loadStyle.bg, loadStyle.midWrap}>
+
+            <View style={loadStyle.bg, loadStyle.activityWrap}>
+              <ActivityIndicator
+                color = { MAIN_TEXT_COLOR }
+                style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
+              />
+            </View>
+
+            <View style={loadStyle.bg, loadStyle.textWrap}>
+              <Text style={loadStyle.loadingText}>{this.state.message}</Text>
+            </View>
+
+            </View>
+
+            <View style={loadStyle.bg, loadStyle.bottomBuffer}>
+            </View>
+        </View>
+      )
+    }
+  }
   render() {
     const { navigate } = this.props.navigation;
 
@@ -128,7 +185,7 @@ export class FastLink extends React.Component {
 
         <View style={tradeStyle.botWrap}>
 
-          <Text style={tradeStyle.title}>PLACEHOLDER</Text>
+          {this.launchFastLink()}
         </View>
       </View>
     );

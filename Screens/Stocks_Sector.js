@@ -1,24 +1,31 @@
 // Author: Tyler Quayle
 // File: Stocks.js
-// Date: July 27, 2017
+// Date: July 29, 2017
+// Desc: Show the mathcing stocks to the sector selected by the user.
 
+/******************************************************************************/
+// RN and Addons
 import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView, BackHandler, Dimensions} from 'react-native'
 import { StackNavigator } from 'react-navigation';
-import User from "./Stores/UserStore"
-import Nav from './Stores/NavigationStore'
-import Profile from "./Stores/ProfileStore"
 import { Card, Slider, ListItem, Button, List, Icon, Header } from 'react-native-elements';
-import tradeStyle from "./Styles/DefaultStyle"
-import {observable} from "mobx"
-import {observer} from "mobx-react"
-import { COLOR_SCHEME, TEXT_SCHEME, MAIN_FONT_FAMILY, MAIN_BG_COLOR,
-          STOCKS_COLOR_SCHEME, STOCKS_TEXT_SCHEME } from "./Styles/Attributes"
 import { VictoryContainer, VictoryLine, VictoryAxis,
             VictoryChart, VictoryTheme} from 'victory-native'
 import Swiper from 'react-native-swiper'
+import {observable} from "mobx"
+import {observer} from "mobx-react"
+/******************************************************************************/
+// STYLE
+import tradeStyle from "./Styles/DefaultStyle"
+import stockStyle from "./Styles/StockStyle"
+import { COLOR_SCHEME, TEXT_SCHEME, MAIN_FONT_FAMILY, MAIN_BG_COLOR,
+          STOCKS_COLOR_SCHEME, STOCKS_TEXT_SCHEME } from "./Styles/Attributes"
 
-
+/******************************************************************************/
+// STORE
+import User from "./Stores/UserStore"
+import Nav from './Stores/NavigationStore'
+import Profile from "./Stores/ProfileStore"
 
 @observer
 export class StocksSectorScreen extends React.Component {
@@ -39,9 +46,6 @@ export class StocksSectorScreen extends React.Component {
   {
       super(props);
       this.state = { invest: 100,
-                    disOrCap: false,
-                    order: "BY MARKET CAP",
-                    icon: 'memory',
                     stocks: Profile.getCapStocks()}
   }
 
@@ -69,11 +73,22 @@ export class StocksSectorScreen extends React.Component {
   }
 
 
+  /**
+  * Keeps the page from refreshing when playing around with the slider
+  */
   updateInvest(val){
     this.setState({invest: val})
   }
 
 
+  /*
+  * Creates the graph with the given stock prices, if nothing is available print
+  * that message
+  *
+  * @param array of stocks prices @stockData
+  * @param current index the user is looking at @index
+  *
+  */
   createGraph(stockData, index){
     if(stockData == null){
       return(
@@ -114,20 +129,7 @@ export class StocksSectorScreen extends React.Component {
     }
   }
 
-  switchOrder(){
-    if(this.state.disOrCap){
-      this.setState({ disOrCap: !this.state.disOrCap,
-                      order: "BY MARKET CAP",
-                      icon:"memory",
-                      stocks: Profile.getCapStocks()})
-    }
-    else{
-      this.setState({ disOrCap: !this.state.disOrCap,
-                      order: "BY DISRUPTION",
-                      icon:"attach-money",
-                      stocks: Profile.getDisruptiveStocks()})
-    }
-  }
+
 
   /**
   * Format the data given in the company[stock_data] into a format
@@ -176,10 +178,12 @@ export class StocksSectorScreen extends React.Component {
     var sectorTitle = Object.values(Profile.getTargetSectors())
     var stocksArray = Object.values(this.state.stocks)
     var sector = Object.values(stocksArray[Nav.getSectorPref()])
+    // This 'custom' layout i made is super touchy. but it works for everything
+    // I tested it on.
     return (
-      <View style={sectorStyle.wrapper}>
+      <View style={stockStyle.wrapper}>
 
-        <View style={sectorStyle.profitWrap}>
+        <View style={stockStyle.profitWrap}>
           <Header
             leftComponent={   <Icon size={30} name='menu' onPress={()=>navigate('DrawerOpen')}/>}
             centerComponent={ <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>}
@@ -187,7 +191,7 @@ export class StocksSectorScreen extends React.Component {
           />
         </View>
 
-        <View style={sectorStyle.botWrap}>
+        <View style={stockStyle.botWrap}>
           <Slider
             minimumValue={10}
             maximumValue={10000}
@@ -198,15 +202,15 @@ export class StocksSectorScreen extends React.Component {
           {
             sector.map((company, i) => {
               return (
-                <View key={i} style={ [ sectorStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
+                <View key={i} style={ [ stockStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
 
-                  <View style={sectorStyle.profitWrap}>
+                  <View style={stockStyle.profitWrap}>
                     <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}> { company['name'] } </Text>
                   </View>
 
-                  <View style={[sectorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={sectorStyle.profitLeft}>
+                    <View style={stockStyle.profitLeft}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Investing
@@ -218,7 +222,7 @@ export class StocksSectorScreen extends React.Component {
 
                     </View>
 
-                    <View style={sectorStyle.profitRight}>
+                    <View style={stockStyle.profitRight}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Return
@@ -232,13 +236,13 @@ export class StocksSectorScreen extends React.Component {
 
                   </View>
 
-                  <View style={sectorStyle.graphWrap}>
+                  <View style={stockStyle.graphWrap}>
                     {this.createGraph(company['stock_data'], i)}
                   </View>
 
-                  <View style={[sectorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={sectorStyle.profitLeft}>
+                    <View style={stockStyle.profitLeft}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Cap
@@ -250,7 +254,7 @@ export class StocksSectorScreen extends React.Component {
 
                     </View>
 
-                    <View style={sectorStyle.profitRight}>
+                    <View style={stockStyle.profitRight}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Price
@@ -265,9 +269,9 @@ export class StocksSectorScreen extends React.Component {
                   </View>
 
 
-                  <View style={[sectorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={sectorStyle.genericWrap}>
+                    <View style={stockStyle.genericWrap}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Industry
@@ -281,9 +285,9 @@ export class StocksSectorScreen extends React.Component {
 
                   </View>
 
-                  <View style={[sectorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={sectorStyle.genericWrap}>
+                    <View style={stockStyle.genericWrap}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Sector
@@ -307,57 +311,3 @@ export class StocksSectorScreen extends React.Component {
     );
   }
 }
-
-sectorStyle = StyleSheet.create({
-    wrapper:{
-      flex: 1,
-      backgroundColor: MAIN_BG_COLOR,
-    },
-    topWrap:{
-      flex:.15,
-      backgroundColor:"#FFFFFF",
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    botWrap:{
-      flex:1,
-      backgroundColor: MAIN_BG_COLOR,
-    },
-
-    profitWrap:{
-      height: 62,
-      borderColor: MAIN_BG_COLOR,
-      borderTopWidth: 1,
-      borderBottomWidth: 1,
-      borderLeftWidth: 2,
-      borderRightWidth: 2,
-      flexDirection:'row',
-      justifyContent: 'center'
-    },
-    profitLeft:{
-      flex:.5,
-      borderColor: MAIN_BG_COLOR,
-      borderRightWidth: 1,
-    },
-    profitRight:{
-      flex:.5,
-      borderColor: MAIN_BG_COLOR,
-      borderLeftWidth: 1,
-    },
-
-    genericWrap:{
-      flex: 1
-    },
-    headerWrap:{
-      height: 70,
-      borderColor: MAIN_BG_COLOR,
-      borderBottomWidth: 2,
-    },
-
-    graphWrap:{
-      height: 250,
-      borderColor: MAIN_BG_COLOR,
-      borderWidth: 2,
-      justifyContent: 'center'
-    },
-})

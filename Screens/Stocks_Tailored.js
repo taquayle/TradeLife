@@ -1,22 +1,32 @@
 // Author: Tyler Quayle
 // File: Stocks.js
-// Date: July 27, 2017
+// Date: August 4, 2017
+// Desc: Show the currently seleected tailored stock, including finding current
+//        reuturn and creeating a graph.
 
+/******************************************************************************/
+// RN and Addons
 import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView, BackHandler, Dimensions} from 'react-native'
 import { StackNavigator } from 'react-navigation';
-import User from "./Stores/UserStore"
-import Profile from "./Stores/ProfileStore"
-import Nav from './Stores/NavigationStore'
 import { Card, Slider, ListItem, Button, List, Icon, Header } from 'react-native-elements';
-import tradeStyle from "./Styles/DefaultStyle"
-import {observable} from "mobx"
-import {observer} from "mobx-react"
-import { COLOR_SCHEME, TEXT_SCHEME, MAIN_FONT_FAMILY, MAIN_BG_COLOR,
-          STOCKS_COLOR_SCHEME, STOCKS_TEXT_SCHEME } from "./Styles/Attributes"
 import { VictoryContainer, VictoryLine, VictoryAxis,
             VictoryChart, VictoryTheme} from 'victory-native'
 import Swiper from 'react-native-swiper'
+import {observable} from "mobx"
+import {observer} from "mobx-react"
+/******************************************************************************/
+// STYLE
+import tradeStyle from "./Styles/DefaultStyle"
+import stockStyle from "./Styles/StockStyle"
+import { COLOR_SCHEME, TEXT_SCHEME, MAIN_FONT_FAMILY, MAIN_BG_COLOR,
+          STOCKS_COLOR_SCHEME, STOCKS_TEXT_SCHEME } from "./Styles/Attributes"
+
+/******************************************************************************/
+// STORE
+import User from "./Stores/UserStore"
+import Nav from './Stores/NavigationStore'
+import Profile from "./Stores/ProfileStore"
 
 
 
@@ -173,7 +183,7 @@ export class StocksTailoredScreen extends React.Component {
     var values = Object.values(keys)
 
     return(
-      <View style={tailorStyle.genericWrap}>
+      <View style={stockStyle.genericWrap}>
 
         <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(index%2)]}]}>
           Keywords Used
@@ -200,9 +210,9 @@ export class StocksTailoredScreen extends React.Component {
     const { navigate } = this.props.navigation;
     var sector = Object.values(this.state.stocks)
     return (
-      <View style={tailorStyle.wrapper}>
+      <View style={stockStyle.wrapper}>
 
-        <View style={tailorStyle.profitWrap}>
+        <View style={stockStyle.profitWrap}>
           <Header
             leftComponent={   <Icon size={30} name='menu' onPress={()=>navigate('DrawerOpen')}/>}
             centerComponent={ <Image source={require('./Images/TradeLife.png')} style={tradeStyle.logo}/>}
@@ -210,7 +220,7 @@ export class StocksTailoredScreen extends React.Component {
           />
         </View>
 
-        <View style={tailorStyle.botWrap}>
+        <View style={stockStyle.botWrap}>
           <Slider
             minimumValue={10}
             maximumValue={10000}
@@ -222,15 +232,15 @@ export class StocksTailoredScreen extends React.Component {
           {
             sector.map((company, i) => {
               return (
-                <View key={i} style={ [ tailorStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
+                <View key={i} style={ [ stockStyle.wrapper, { backgroundColor:  STOCKS_COLOR_SCHEME[(i%3)] } ] }>
 
-                  <View style={tailorStyle.profitWrap}>
+                  <View style={stockStyle.profitWrap}>
                     <Text style={[tradeStyle.title, {color:  STOCKS_TEXT_SCHEME[(i%2)]}]}> { company['name'] } </Text>
                   </View>
 
-                  <View style={[tailorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={tailorStyle.profitLeft}>
+                    <View style={stockStyle.profitLeft}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Investing
@@ -242,7 +252,7 @@ export class StocksTailoredScreen extends React.Component {
 
                     </View>
 
-                    <View style={tailorStyle.profitRight}>
+                    <View style={stockStyle.profitRight}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Return
@@ -256,13 +266,13 @@ export class StocksTailoredScreen extends React.Component {
 
                   </View>
 
-                  <View style={tailorStyle.graphWrap}>
+                  <View style={stockStyle.graphWrap}>
                     {this.createGraph(company['stock_data'], i)}
                   </View>
 
-                  <View style={[tailorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={tailorStyle.profitLeft}>
+                    <View style={stockStyle.profitLeft}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Cap
@@ -274,7 +284,7 @@ export class StocksTailoredScreen extends React.Component {
 
                     </View>
 
-                    <View style={tailorStyle.profitRight}>
+                    <View style={stockStyle.profitRight}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Price
@@ -289,9 +299,9 @@ export class StocksTailoredScreen extends React.Component {
                   </View>
 
 
-                  <View style={[tailorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={tailorStyle.genericWrap}>
+                    <View style={stockStyle.genericWrap}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Industry
@@ -305,9 +315,9 @@ export class StocksTailoredScreen extends React.Component {
 
                   </View>
 
-                  <View style={[tailorStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[stockStyle.profitWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
-                    <View style={tailorStyle.genericWrap}>
+                    <View style={stockStyle.genericWrap}>
 
                       <Text style={[tradeStyle.body, {textAlign: 'center', color:  STOCKS_TEXT_SCHEME[(i%2)]}]}>
                         Sector
@@ -320,7 +330,7 @@ export class StocksTailoredScreen extends React.Component {
                     </View>
 
                   </View>
-                  <View style={[tailorStyle.keywordWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
+                  <View style={[stockStyle.keywordWrap, {backgroundColor: STOCKS_COLOR_SCHEME[ ((i+1)%3) ]}]}>
 
                     {this.showKeywords(company['keys'], i)}
 
@@ -336,64 +346,3 @@ export class StocksTailoredScreen extends React.Component {
     );
   }
 }
-
-tailorStyle = StyleSheet.create({
-    wrapper:{
-      flex: 1,
-      backgroundColor: MAIN_BG_COLOR,
-    },
-    topWrap:{
-      flex:.15,
-      backgroundColor:"#FFFFFF",
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    botWrap:{
-      flex:1,
-      backgroundColor: MAIN_BG_COLOR,
-    },
-
-    profitWrap:{
-      height: 62,
-      borderColor: MAIN_BG_COLOR,
-      borderTopWidth: 1,
-      borderBottomWidth: 1,
-      borderLeftWidth: 2,
-      borderRightWidth: 2,
-      flexDirection:'row',
-      justifyContent: 'center'
-    },
-    profitLeft:{
-      flex:.5,
-      borderColor: MAIN_BG_COLOR,
-      borderRightWidth: 1,
-    },
-    profitRight:{
-      flex:.5,
-      borderColor: MAIN_BG_COLOR,
-      borderLeftWidth: 1,
-    },
-
-    genericWrap:{
-      flex: 1
-    },
-    headerWrap:{
-      height: 70,
-      borderColor: MAIN_BG_COLOR,
-      borderBottomWidth: 2,
-    },
-    keywordWrap:{
-      flex:1,
-      borderColor: MAIN_BG_COLOR,
-      borderTopWidth: 1,
-      borderBottomWidth: 2,
-      borderLeftWidth: 1,
-      borderRightWidth: 1,
-    },
-    graphWrap:{
-      height: 250,
-      borderColor: MAIN_BG_COLOR,
-      borderWidth: 2,
-      justifyContent: 'center'
-    },
-})
