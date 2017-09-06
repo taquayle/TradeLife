@@ -1,23 +1,24 @@
 // Author: Tyler Quayle
 // File: LoginLoading.js
 // Date: July 28, 2017
+// Desc: Attempt to login to yodleeConnect server
 
+/******************************************************************************/
+// React native & installed addons
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  Alert,
-  ActivityIndicator,
-  BackHandler} from 'react-native'
+import { Text, View, StyleSheet, Image, ActivityIndicator, BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
+
+/******************************************************************************/
+// Styles
+import loadStyle from "../Styles/LoadingStyle"
+import {MAIN_TEXT_COLOR} from "../Styles/Attributes"
+
+/******************************************************************************/
+// Stores
 import User from "../Stores/UserStore"
 import Server from "../Stores/TradeLifeStore"
 import Profile from "../Stores/ProfileStore"
-import loadStyle from "../Styles/LoadingStyle"
-import {MAIN_TEXT_COLOR} from "../Styles/Attributes"
 
 export class LoginLoadingScreen extends React.Component {
 
@@ -78,12 +79,14 @@ export class LoginLoadingScreen extends React.Component {
     {
       console.log("---- SERVER RESPONSE ----")
       console.log(responseData)
-        if(responseData == null){
+
+        if(responseData == null){ // Most likely timeout from server
           console.log("--- COULD NOT CONNECT TO TRADELIFE SERVER ---")
             User.setError("Could not connect to server")
             navigate('Login')
         }
-        else if (responseData.error == false) //Success, allow used in
+        //Success, attempt to get user profile
+        else if (responseData.error == false)
         {
             console.log("---- LOGIN SUCCESSFUL ----");
             User.setYodleeToken(responseData.yodleeToken);
@@ -91,29 +94,37 @@ export class LoginLoadingScreen extends React.Component {
               message: "LOGIN SUCCESSFUL"})
             this.getUserProfile()
         }
+
+        // Failure, return to login and display error
         else if (responseData.error == true)
         {
             console.log("---- LOGIN FAILED ----");
-            console.log(responseData);
             User.setError(responseData.messages)
             navigate('Login');
         }
+
+        // Unkown error, most likely laravel php error as the response
         else
         {
           console.log("---- UNKOWN ERROR ----");
-          console.log(responseData);
-          User.setError(responseData.messages)
+          User.setError("Unknown Error Occured")
           navigate('Login');
         }
     })
   }
+
+  /**
+  * Attempt to get the user profile, if the user is new the server will create a
+  * 'baseProfile' which contains a creation date and name.
+  *
+  */
   getUserProfile()
   {
     const { navigate } = this.props.navigation;
     console.log("---- ATTEMPTING TO GET PROFILE ----");
     this.setState({
       message: "GETTING PROFILE"})
-    fetch(Server.profileGetURL(),
+    fetch(Server.profileRetrieveURL(),
     {
         method: 'post',
         headers:
@@ -144,22 +155,34 @@ export class LoginLoadingScreen extends React.Component {
     {
       console.log("---- SERVER RESPONSE ----")
       console.log(responseData)
-      if (responseData.error == false) //Success move on
+
+      // Success, profile controller returned profile
+      if (responseData.error == false)
       {
           const { navigate } = this.props.navigation;
           console.log("---- PROFILE SUCCESSFUL ----");
           this.setState({
             message: "PROFILE FOUND"})
+
+          // Check if the user has ever generated target companies, if the user
+          // hasn't then it's a 'baseProfile'
           if(responseData.profile['Target_Companies'] == null)
             Profile.baseProfile(responseData.profile)
-          else //User has valid keywords
+
+          //User has full profile. continue
+          else
             Profile.setProfile(responseData.profile)
       }
+
+      // Failure, this shouldn't happen since if no profile exists the Server
+      // will send a 'baseProfile'
       else if (responseData.error == true) // ERROR: display and remain
       {
           console.log("---- NO PROFILE  ----");
 
       }
+
+      // This will be shown if server responds with laravel php error
       else {
         console.log("---- UNKNOWN ERROR ----");
       }
@@ -171,30 +194,35 @@ export class LoginLoadingScreen extends React.Component {
   render() {
       const { navigate } = this.props.navigation;
     return (
+        // Main Flex Wrapper
         <View style={loadStyle.bg, loadStyle.wrapper}>
-
+            {/* Top graphic */}
             <View style={loadStyle.bg, loadStyle.topWrap}>
                 <Image style={loadStyle.logo} source={require('../Images/TradeLife.png')} />
             </View>
 
+            {/* Mid Flex */}
             <View style={loadStyle.bg, loadStyle.midWrap}>
 
-            <View style={loadStyle.bg, loadStyle.activityWrap}>
-              <ActivityIndicator
-                color = { MAIN_TEXT_COLOR }
-                style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
-              />
-            </View>
+              {/* Loading Icon */}
+              <View style={loadStyle.bg, loadStyle.activityWrap}>
+                <ActivityIndicator
+                  color = { MAIN_TEXT_COLOR }
+                  style={[loadStyle.bg, {transform: [{scale: 5.5}]}]}
+                />
+              </View>
 
-            <View style={loadStyle.bg, loadStyle.textWrap}>
-              <Text style={loadStyle.loadingText}>{this.state.message}</Text>
-            </View>
+              {/* Loading Text */}
+              <View style={loadStyle.bg, loadStyle.textWrap}>
+                <Text style={loadStyle.loadingText}>{this.state.message}</Text>
+              </View>
 
-            </View>
+            </View>{/* End Mid Flex */}
 
+            {/* Bot Flex, empty, needed for centering */}
             <View style={loadStyle.bg, loadStyle.bottomBuffer}>
             </View>
-        </View>
+        </View>// End Main Flex Wrapper
     );
   }
 }

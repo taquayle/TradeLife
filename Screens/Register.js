@@ -1,22 +1,28 @@
 // Author: Tyler Quayle
 // File: Register.js
 // Date: June 23, 2017
+// Desc: Allow user to register with TradeLife, Yodlee register is not available
+//      in the current 'sandbox' mode
 
+/******************************************************************************/
+// RN and Addons
 import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView, BackHandler} from 'react-native'
 import { StackNavigator } from 'react-navigation';
-import {
-    Button,
-    FormInput,
-    FormLabel,
-    FormValidationMessage
-  } from 'react-native-elements';
-import {COLOR_SCHEME, TEXT_SCHEME, MAIN_BG_COLOR} from './Styles/Attributes'
-import User from "./Stores/UserStore"
-import Server from "./Stores/TradeLifeStore"
-import tradeStyle from "./Styles/DefaultStyle"
+import { Button, FormInput, FormLabel, FormValidationMessage} from 'react-native-elements'
 import {observable} from "mobx"
 import {observer} from "mobx-react"
+/******************************************************************************/
+// STYLE
+import {COLOR_SCHEME, TEXT_SCHEME, MAIN_BG_COLOR} from './Styles/Attributes'
+import tradeStyle from "./Styles/DefaultStyle"
+
+/******************************************************************************/
+// STORE
+import User from "./Stores/UserStore"
+import Server from "./Stores/TradeLifeStore"
+
+
 
 @observer
 export class RegisterScreen extends React.Component {

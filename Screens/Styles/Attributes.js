@@ -4,6 +4,12 @@ Date: August 2nd, 2017
 File: Tradelife/Screens/Styles/Attributes
 Dsec: Contains the gloabl attributes for the colors seen in the app.
 */
+
+/******************************************************************************/
+// THE DIFFERENT COLOR SCHEMES I TESTED FOR THIS APP. UNCOMMENT TO SEE DIFFERENT
+// STYLES THAT I USED
+/******************************************************************************/
+
 // ORIGINAL: SHADES OF BLUE
 // export const MAIN_BG_COLOR = "#FFFFFF"
 //

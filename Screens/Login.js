@@ -1,21 +1,24 @@
 // Author: Tyler Quayle
 // File: Login.js
 // Date: June 23, 2017
+// Desc: Login page, allow users to login or register.
 
+/******************************************************************************/
+// RN and Addons
 import React from 'react';
 import { Text, View, StyleSheet, Image, BackHandler} from 'react-native'
 import {observer} from "mobx-react";
-import { Icon } from 'react-native-elements'
-import User from "./Stores/UserStore"
-import Server from "./Stores/TradeLifeStore"
+import { Icon, Button, FormInput, FormLabel, FormValidationMessage } from 'react-native-elements'
+
+/******************************************************************************/
+// STYLE
 import tradeStyle from "./Styles/DefaultStyle"
 import {COLOR_SCHEME, TEXT_SCHEME, MAIN_BG_COLOR} from './Styles/Attributes'
-import {
-    Button,
-    FormInput,
-    FormLabel,
-    FormValidationMessage
-  } from 'react-native-elements';
+
+/******************************************************************************/
+// STORE
+import User from "./Stores/UserStore"
+import Server from "./Stores/TradeLifeStore"
 
 /******************************************************************************/
 // Login Loading Screen
@@ -65,14 +68,20 @@ export class LoginScreen extends React.Component {
                   <FormLabel fontFamily = 'monospace'>USERNAME</FormLabel>
                   <FormInput
                     defaultValue = {this.state.uName}
-                    onChangeText={(uName) => this.setState({uName})}/>
+                    onChangeText={(uName) => this.setState({uName})}
+                    onSubmitEditing={(event) => { this.refs.forminput.refs.PasswordInput.focus() }}
+                    />
 
                   {/* Password Field */}
                   <FormLabel fontFamily = 'monospace'>PASSWORD</FormLabel>
                   <FormInput
                     secureTextEntry
+                    ref='forminput'
+                    textInputRef='PasswordInput'
                     defaultValue = {this.state.pWord}
-                    onChangeText={(pWord) => this.setState({pWord})}/>
+                    onChangeText={(pWord) => this.setState({pWord})}
+                    onSubmitEditing={this._onSubmit.bind(this)}
+                    />
                 </View>
 
 
@@ -108,5 +117,3 @@ export class LoginScreen extends React.Component {
         );
     }
 }
-
-/******************************************************************************/

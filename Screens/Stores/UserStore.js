@@ -8,12 +8,11 @@ import {observable } from "mobx";
 
 class  UserStore{
 
-  @observable userName = "" //
-  @observable userPass = "" //
+  @observable userName = "sbMemtaquayle1" //
+  @observable userPass = "sbMemtaquayle1#123" //
   @observable userMail = ""
   @observable tradeToken = ""
   @observable yodleeToken = ""  //Obtained through the Yodelee Servers
-  @observable sectorPref = 0  //Used to select which sector too look at
   @observable error = ""    // Used to display different errors
   @observable tempKeys = [] // Used for displaying keywords before submitted
                             // to Tradelife server
@@ -48,12 +47,6 @@ class  UserStore{
   getTradeToken(){ return this.tradeToken;}
 
   setTradeToken(token){ this.tradeToken = token;}
-  /****************************************************************************/
-
-  /****************************************************************************/
-  setSectorPref(sectorNum){ this.sectorPref = sectorNum}
-
-  getSectorPref(){  return this.sectorPref}
   /****************************************************************************/
 
   /****************************************************************************/

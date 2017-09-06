@@ -1,15 +1,23 @@
 // Author: Tyler Quayle
-// Date: August 8, 2017
+// File: Splash.js
+// Date: June 23, 2017
+// Desc: Show tradelife logo before going to login screen
 
-
+/******************************************************************************/
+// RN and Addons
 import React from 'react';
 import { View, StyleSheet, Image} from 'react-native'
 import { StackNavigator } from 'react-navigation'
+/******************************************************************************/
+// STYLE
+/******************************************************************************/
+// STORE
+
 import { MAIN_BG_COLOR } from './Styles/Attributes'
 export class SplashScreen extends React.Component {
   componentWillMount(){
     console.log("Current Screen: " + this.props.navigation.state.key)}
-    
+
   constructor(props) {
     super(props);
 
@@ -20,8 +28,8 @@ export class SplashScreen extends React.Component {
   }
   render() {
     return (
-      <View style = {styles.splashScreen}>
-        <Image source={require('./Images/TradeLife.png')} style={styles.logo}/>
+      <View style = {splashStyle.splashScreen}>
+        <Image source={require('./Images/TradeLife.png')} style={splashStyle.logo}/>
       </View>
     );
   }
@@ -31,7 +39,7 @@ export class SplashScreen extends React.Component {
 
 /******************************************************************************/
 // Style Sheet
-styles = StyleSheet.create({
+splashStyle = StyleSheet.create({
   splashScreen:{
     flex: 1,
     backgroundColor: MAIN_BG_COLOR,
